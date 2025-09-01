@@ -28,7 +28,7 @@ body{
     
 }
 
-.container p{
+ p{
     font-size: 14px;
     line-height: 20px;
     letter-spacing: 0.3px;
@@ -48,13 +48,13 @@ body{
    color: #5885ce;
 }
 
-.container h1{
+ h1{
     font-size: 24px;
     font-weight: 600;
     margin: 0 0 10px;
 }
 
-.container button{
+ button{
     background-color: #b4dc92;
     color: solid black;
     font-size: 12px;
@@ -70,11 +70,11 @@ body{
 }
 
 
-.container button.hidden{
+button.hidden{
     background-color: rgb(246, 243, 243);
     border-color: transparent;
 }
-.container button:hover{
+button:hover{
     background-color:  #bde4ad;
     transform: scale(1.05);
     transition: all 0.3s ease-in-out;
@@ -90,7 +90,7 @@ body{
     width: 100px;
 }
 
-.container form{
+form{
     background-color: #fff;
     display: flex;
     align-items: center;
@@ -100,7 +100,7 @@ body{
     height: 100%;
 }
 
-.container input{
+input{
     background-color: #eee;
     border: none;
     margin: 8px 0;
