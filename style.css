@@ -12,8 +12,8 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    height: 100vh;
+    flex-direction: row;
+    min-height: 100vh;
 }
 
 .container{
@@ -40,6 +40,7 @@ body{
 }
 
 .forgot-pass{
+    color: #0066ff;
     font-size: 13px;
     text-decoration: none;
     margin: 15px 0 10px;
@@ -65,7 +66,6 @@ body{
     text-transform: uppercase;
     margin-top: 10px;
     cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
     font-weight: bold
 }
 
@@ -75,10 +75,10 @@ button.hidden{
     border-color: transparent;
 }
 button:hover{
-    background-color:  #bde4ad;
+    background-color:  #9fd494;
     transform: scale(1.05);
     transition: all 0.3s ease-in-out;
-    border-color: #89d27a;
+    border-color: #2d771e;
 }
 
 #img1{
@@ -244,10 +244,15 @@ input.invalid {
     border: 1px solid red;
 }
 
-@media screen and (max-width: 610px) {
+@media screen and (max-width: 768px) {
+
+    body {
+        flex-direction: column;
+    }
+
     .container {
         width: 100%;
-        min-height: 600px;
+        min-height: 100vh;  /* ✅ full height on mobile */
         border-radius: 0;
         bottom: 0;
         box-shadow: none;
