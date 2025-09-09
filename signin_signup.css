@@ -12,8 +12,8 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    height: 100vh;
+    flex-direction: row;
+    min-height: 100vh;
 }
 
 .container{
@@ -28,7 +28,7 @@ body{
     
 }
 
-.container p{
+ p{
     font-size: 14px;
     line-height: 20px;
     letter-spacing: 0.3px;
@@ -40,6 +40,7 @@ body{
 }
 
 .forgot-pass{
+    color: #0066ff;
     font-size: 13px;
     text-decoration: none;
     margin: 15px 0 10px;
@@ -48,13 +49,13 @@ body{
    color: #5885ce;
 }
 
-.container h1{
+ h1{
     font-size: 24px;
     font-weight: 600;
     margin: 0 0 10px;
 }
 
-.container button{
+ button{
     background-color: #b4dc92;
     color: solid black;
     font-size: 12px;
@@ -65,20 +66,19 @@ body{
     text-transform: uppercase;
     margin-top: 10px;
     cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
     font-weight: bold
 }
 
 
-.container button.hidden{
+button.hidden{
     background-color: rgb(246, 243, 243);
     border-color: transparent;
 }
-.container button:hover{
-    background-color:  #bde4ad;
+button:hover{
+    background-color:  #9fd494;
     transform: scale(1.05);
     transition: all 0.3s ease-in-out;
-    border-color: #89d27a;
+    border-color: #2d771e;
 }
 
 #img1{
@@ -90,7 +90,7 @@ body{
     width: 100px;
 }
 
-.container form{
+form{
     background-color: #fff;
     display: flex;
     align-items: center;
@@ -100,7 +100,7 @@ body{
     height: 100%;
 }
 
-.container input{
+input{
     background-color: #eee;
     border: none;
     margin: 8px 0;
@@ -244,10 +244,15 @@ input.invalid {
     border: 1px solid red;
 }
 
-@media screen and (max-width: 610px) {
+@media screen and (max-width: 768px) {
+
+    body {
+        flex-direction: column;
+    }
+
     .container {
         width: 100%;
-        min-height: 600px;
+        min-height: 100vh;  /* ✅ full height on mobile */
         border-radius: 0;
         bottom: 0;
         box-shadow: none;
