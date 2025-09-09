@@ -720,7 +720,6 @@ button:hover {
   text-align: center;
   margin-bottom: 15px;
 }
-
 /* Medicine card images in cart and order summary */
 #cartItemsList .medicine-card img,
 #orderSummary img {
@@ -959,7 +958,122 @@ button:hover {
   min-width: 20px;
   text-align: center;
 }
+/* profile edit */
+#profileSection {
+  max-width: 500px;
+  margin: 20px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
 
+#profileSection input {
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  margin: 8px 0 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+#profileSection button {
+  background: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#profileSection button:hover {
+  background: #45a049;
+}
+/* Blood Bank Search */
+.blood-search {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 15px;
+  margin: 15px 0;
+}
+
+.blood-search select {
+  flex: 1 1 150px; /* flexible select box */
+  padding: 12px;
+  border: 1px solid #dcdcdc;
+  border-radius: 12px;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.blood-search button {
+  flex: 0 0 auto; /* button keeps its natural size */
+  padding: 12px 20px; /* smaller button */
+  border-radius: 12px;
+  font-size: 15px;
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.blood-search button:hover {
+  background-color: #d32f2f;
+}
+
+
+/* Blood List Cards */
+.blood-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.blood-card {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.blood-card:hover {
+  transform: translateY(-3px);
+}
+
+.blood-card h4 {
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.blood-card p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.blood-card button {
+  margin: 5px; 
+  padding: 8px ;
+  border: none;
+  border-radius: 6px;
+  background-color: #f44336;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.blood-card button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
 
 /* Footer */
 .footer {
@@ -1309,6 +1423,17 @@ button:hover {
   .order-box table {
     display: block; 
     overflow-x: auto;
+  }
+
+   .blood-search {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .blood-search select,
+  .blood-search button {
+    width: 100%;
+    flex: 1 1 auto;
   }
 }
 

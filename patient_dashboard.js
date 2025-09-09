@@ -422,5 +422,113 @@ function placeOrder() {
   document.getElementById("prescriptionFileName").innerText = "";
   showSection("pharmacyMedicinesSection");
 }
+// ==================== Patient Profile ====================
+
+let patientProfile = {
+  name: "Shizan Sarkar",
+  email: "shizan@example.com",
+  phone: "01712345678"
+};
+
+// Open Profile Section
+function showProfile() {
+  showSection("profileSection");
+  loadProfile();
+}
+
+// Load profile data into the form
+function loadProfile() {
+  document.getElementById("profileName").value = patientProfile.name;
+  document.getElementById("profileEmail").value = patientProfile.email;
+  document.getElementById("profilePhone").value = patientProfile.phone;
+}
+
+// Save profile changes
+document.getElementById("profileForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  // Update patientProfile object
+  patientProfile.name = document.getElementById("profileName").value;
+  patientProfile.email = document.getElementById("profileEmail").value;
+  patientProfile.phone = document.getElementById("profilePhone").value;
+
+  alert("Profile updated successfully!");
+});
+
+
+
+// ==================== Blood Bank ====================
+// Sample blood bank data
+let bloodBank = [
+  { bloodType: "A+", units: 5, donor: "John Doe", contact: "017XXXXXXXX" },
+  { bloodType: "O-", units: 2, donor: "Jane Smith", contact: "018XXXXXXXX" },
+  { bloodType: "B+", units: 0, donor: "Ali Khan", contact: "019XXXXXXXX" },
+  { bloodType: "AB+", units: 3, donor: "Sara Khan", contact: "016XXXXXXXX" },
+];
+
+// Show blood bank section
+function showBloodBank() {
+  showSection("bloodBankSection");
+  renderBloodList(bloodBank);
+}
+
+// Render blood cards
+function renderBloodList(list) {
+  const container = document.getElementById("bloodList");
+  container.innerHTML = "";
+
+  if (!list.length) {
+    container.innerHTML = "<p>No blood units found.</p>";
+    return;
+  }
+
+  list.forEach(blood => {
+    const card = document.createElement("div");
+    card.className = "blood-card";
+    card.innerHTML = `
+      <h4>Blood Type: ${blood.bloodType}</h4>
+      <p>Units Available: ${blood.units}</p>
+      <p>Donor: ${blood.donor}</p>
+      <p>Contact: ${blood.units > 0 ? blood.contact : "Not Available"}</p>
+      <button ${blood.units === 0 ? "disabled" : ""} onclick="requestBlood('${blood.bloodType}')">
+        Request Blood
+      </button>
+      <button onclick="askDonor('${blood.donor}', '${blood.contact}')">
+        Ask Donor
+      </button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// Search blood
+function searchBlood() {
+  const type = document.getElementById("bloodSearch").value;
+  if (!type) return renderBloodList(bloodBank);
+  const result = bloodBank.filter(b => b.bloodType === type);
+  renderBloodList(result);
+}
+
+// Request blood
+function requestBlood(type) {
+  const blood = bloodBank.find(b => b.bloodType === type);
+  if (blood && blood.units > 0) {
+    blood.units--;
+    alert(`You requested ${type} blood. Units left: ${blood.units}`);
+    renderBloodList(bloodBank);
+  } else {
+    alert("Requested blood is not available!");
+  }
+}
+
+// Ask donor
+function askDonor(name, contact) {
+  if (!contact) {
+    alert(`No contact info for ${name}.`);
+    return;
+  }
+  alert(`You can contact ${name} at ${contact} for donation.`);
+}
+
 
 updateDashboard();
