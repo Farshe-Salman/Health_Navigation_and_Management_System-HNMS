@@ -721,13 +721,15 @@ button:hover {
   margin-bottom: 15px;
 }
 
-.medicine-card img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 10px;
+/* Medicine card images in cart and order summary */
+#cartItemsList .medicine-card img,
+#orderSummary img {
+    width: 60px;      
+    height: 60px;     
+    object-fit: cover; 
+    border-radius: 5px; 
 }
+
 
 .medicine-card h4 {
   margin: 5px 0;
