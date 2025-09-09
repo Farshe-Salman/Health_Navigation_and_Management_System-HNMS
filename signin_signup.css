@@ -74,12 +74,15 @@ button.hidden{
     background-color: rgb(246, 243, 243);
     border-color: transparent;
 }
-button:hover{
+
+ button:hover{
     background-color:  #9fd494;
     transform: scale(1.05);
     transition: all 0.3s ease-in-out;
     border-color: #2d771e;
 }
+
+
 
 #img1{
     height: auto;
@@ -100,7 +103,7 @@ form{
     height: 100%;
 }
 
-input{
+select,input{
     background-color: #eee;
     border: none;
     margin: 8px 0;
@@ -111,6 +114,7 @@ input{
     outline: none;
 }
 
+    
 .form-container{
     position: absolute;
     top: 0;

@@ -13,11 +13,18 @@
             <form>
                 <img id="img1" src="HNMS.png" alt="Logo">
                 <h1>SIGN UP</h1>
-                <span>-use your email or phone to sign up</span>
-                <input type="text" placeholder="Name">
-                <input type="text" placeholder="E-mail or Phone">
+                <span>-use your email to sign up</span>
+                <input type="text" placeholder="Username">
+                <input type="text" placeholder="E-mail">
+                <select name="userRole" required>
+                    <option value="" disabled selected>Select User Role</option>
+                    <option value="patient">Patient</option>
+                    <option value="doctor">Doctor</option>
+                    <option value="pharmacy">Pharmacy</option>
+                    <option value="admin">Admin</option>
+                </select>
                 <input type="password" placeholder="Password">
-                <input type="password" placeholder="Confirm Password">
+
                 <button>Sign Up</button>
             </form>
         </div>
@@ -25,8 +32,8 @@
             <form>
                 <img id="img1" src="HNMS.png" alt="Logo">
                 <h1 >SIGN IN</h1>
-                <span>-use your email or phone to sign in</span>
-                <input type="text" placeholder="E-mail or Phone">
+                <span>-use your email to sign in</span>
+                <input type="text" placeholder="E-mail">
                 <input type="password" placeholder="Password">
                 <a class="forgot-pass" href="#">Forget Your Password??</a>
                 <button>Sign In</button>
