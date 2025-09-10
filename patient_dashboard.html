@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HNMS Patient Dashboard</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="patient_dashboard.css">
+<link rel="stylesheet" href="dashboard.css">
 <link rel="icon" type="image/png" href="HNMS.png">
 </head>
 <body>
@@ -42,11 +42,12 @@
       <a href="#" onclick="showBloodBank('bloodBankSection')">Blood Bank</a>
     </div>
     <div class="navbar-right">
-      <div class="profile">
-        <img src="Profile.jpg" alt="Profile Picture" onclick="showProfile(event)">
-        <p>Welcome,</p>
-        <span class="profile-name" onclick="showProfile(event)">Sarkar</span>
-      </div>
+     <div class="profile">
+  <img src="Profile.jpg" alt="Profile Picture" onclick="showProfile()">
+  <p>Welcome,</p>
+  <span class="profile-name" id="navbarProfileName" onclick="showProfile()">User</span>
+</div>
+
       <div class="notification" onclick="showNotifications()">
         <i class="fa fa-bell"></i>
         <span class="notification-count" id="notificationCount">0</span>
@@ -563,22 +564,39 @@
       </div>
     </div>
 
-    <!-- Patient Profile Section -->
+<!-- Patient Profile Section -->
 <div class="section" id="profileSection" style="display:none;">
   <h2>My Profile</h2>
   <form id="profileForm">
-    <label for="profileName">Name:</label>
-    <input type="text" id="profileName" placeholder="Full Name" required>
 
-    <label for="profileEmail">Email:</label>
-    <input type="email" id="profileEmail" placeholder="Email" required>
+    <div class="profile-field">
+      <label for="profileName">Name:</label>
+      <div class="field-row">
+      <input type="text" id="profileName" placeholder="Full Name" value="Shizan Sarkar" disabled required>
+      <button type="button" class="edit-btn" onclick="enableEdit('profileName')">Edit</button>
+      </div>
+    </div>
 
-    <label for="profilePhone">Phone:</label>
-    <input type="text" id="profilePhone" placeholder="Phone Number" required>
+    <div class="profile-field">
+      <label for="profileEmail">Email:</label>
+      <div class="field-row">
+      <input type="email" id="profileEmail" placeholder="Email" value="shizan@example.com" disabled required>
+      <button type="button" class="edit-btn" onclick="enableEdit('profileEmail')">Edit</button>
+      </div>
+    </div>
 
-    <button type="submit">Save Changes</button>
+    <div class="profile-field">
+      <label for="profilePhone">Phone:</label>
+      <div class="field-row">
+      <input type="text" id="profilePhone" placeholder="Phone Number" value="01712345678" disabled required>
+      <button type="button" class="edit-btn" onclick="enableEdit('profilePhone')">Edit</button>
+      </div>
+    </div>
+
+    <button type="submit" class="petient-btn-primary">Save Changes</button>
   </form>
 </div>
+
 
 
     <!-- Footer -->

@@ -441,6 +441,16 @@ function loadProfile() {
   document.getElementById("profileName").value = patientProfile.name;
   document.getElementById("profileEmail").value = patientProfile.email;
   document.getElementById("profilePhone").value = patientProfile.phone;
+
+
+  document.getElementById("navbarProfileName").innerText = patientProfile.name;
+}
+
+// Enable editing for a specific input field
+function enableEdit(fieldId) {
+    const input = document.getElementById(fieldId);
+    input.disabled = false;
+    input.focus();
 }
 
 // Save profile changes
@@ -451,6 +461,8 @@ document.getElementById("profileForm").addEventListener("submit", function(e) {
   patientProfile.name = document.getElementById("profileName").value;
   patientProfile.email = document.getElementById("profileEmail").value;
   patientProfile.phone = document.getElementById("profilePhone").value;
+
+  document.getElementById("navbarProfileName").innerText = patientProfile.name;
 
   alert("Profile updated successfully!");
 });

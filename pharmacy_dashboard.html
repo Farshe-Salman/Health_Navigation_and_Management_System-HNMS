@@ -1,11 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HNMS Pharmacy Dashboard</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="dashboard.css">
+<link rel="icon" type="image/png" href="HNMS.png">
 </head>
 <body>
-    <h1>fmkf</h1>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="logo">
+    <img src="HNMS.png" alt="HNMS Logo">
+    <span class="logo-text">HEALTH NAVIGATION MANAGEMENT SYSTEM</span>
+  </div>
+  <a href="#" class="active" onclick="showSection('dashboard')">Dashboard</a>
+  <a href="#" onclick="showSection('inventory')">Medicine Inventory</a>
+  <a href="#" onclick="showSection('orders')">Orders</a>
+  <a href="#" onclick="showSection('sales')">Sales & Billing</a>
+  <a href="#" onclick="showSection('analytics')">Analytics</a>
+  <a href="#" onclick="showSection('pharmacyProfile')">Pharmacy Profile</a>
+  <a href="#" onclick="showSection('staff')">Staff Management</a>
+  <a href="#" class="log-out">Logout</a>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="menubar" onclick="toggleSidebar()">
+      <i class="fa fa-bars"></i>
+    </div>
+    <div class="navbar-logo">
+      <img src="HNMS.png" alt="HNMS Logo">
+      <span>Pharmacy Dashboard</span>
+    </div>
+    <div class="navbar-links">
+      <a href="#" onclick=""></a>
+      <a href="#" onclick=""></a>
+      <a href="#" onclick=""></a>
+    </div>
+    <div class="navbar-right">
+      <div class="profile">
+    <!-- Profile Picture -->
+    <img src="Profile.jpg" alt="Profile Picture" class="profile-pic" onclick="showPharmacyProfile()">
+
+    <!-- Welcome Text -->
+    <p>Welcome,</p>
+    <span class="profile-name" id="navbarPharmacyName" onclick="showPharmacyProfile()">City Pharmacy</span>
+</div>
+
+      <div class="notification" onclick="showNotifications()">
+        <i class="fa fa-bell"></i>
+        <span class="notification-count" id="notificationCount">0</span>
+      </div>
+      <div class="settings">
+        <a href="#" onclick="showSection('changePassword')">
+          <i class="fa fa-cog"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- End Navbar -->
+
+  <!-- Dashboard Section -->
+  <div id="dashboard" class="section" style="display:block;">
+    <h2>Hello! <span id="pharmacyName">City Pharmacy</span></h2>
+    <div class="dashboard-cards">
+      <div class="card">
+        <h3>Today's Sales</h3>
+        <p>৳ <span id="todaysSales">0</span></p>
+      </div>
+      <div class="card">
+        <h3>Pending Orders</h3>
+        <p><span id="pendingOrders">0</span> Orders</p>
+      </div>
+      <div class="card">
+        <h3>Low Stock Alerts</h3>
+        <ul id="lowStockList">
+          <li>No low stock items</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Medicine Inventory -->
+  <div id="inventory" class="section" style="display:none;">
+    <h3>Medicine Inventory</h3>
+    <button class="btn-primary" onclick="addMedicine()">+ Add New Medicine</button>
+    <table class="inventory-table">
+      <thead>
+        <tr>
+          <th>Medicine Name</th>
+          <th>Category</th>
+          <th>Stock</th>
+          <th>Price (৳)</th>
+          <th>Expiry Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="medicineList">
+        <!-- Inventory items will be dynamically loaded here -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Orders Section -->
+  <div id="orders" class="section" style="display:none;">
+    <h3>Customer Orders</h3>
+    <table class="orders-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Customer</th>
+          <th>Medicines</th>
+          <th>Total (৳)</th>
+          <th>Status</th>
+          <th>Update</th>
+        </tr>
+      </thead>
+      <tbody id="ordersList">
+        <!-- Orders will be dynamically loaded here -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Sales & Billing -->
+  <div id="sales" class="section" style="display:none;">
+    <h3>Sales & Billing</h3>
+    <form id="billingForm">
+      <input type="text" id="medicineName" placeholder="Enter Medicine Name">
+      <input type="number" id="medicineQty" placeholder="Quantity">
+      <button type="button" class="btn-primary" onclick="addToBill()">Add to Bill</button>
+    </form>
+    <div id="billSummary">
+      <h4>Current Bill</h4>
+      <ul id="billItems"></ul>
+      <p>Total: ৳ <span id="billTotal">0</span></p>
+      <button class="btn-primary" onclick="generateInvoice()">Generate Invoice</button>
+    </div>
+  </div>
+
+  <!-- Analytics Section -->
+  <div id="analytics" class="section" style="display:none;">
+    <h3>Pharmacy Analytics</h3>
+    <p>📊 Sales chart, top-selling medicines, and order trends will appear here.</p>
+  </div>
+
+  <!-- Pharmacy Profile -->
+<div id="pharmacyProfile" class="section" style="display:none;">
+  <h3>Pharmacy Profile</h3>
+  <form id="pharmacyProfileForm">
+
+    <div class="profile-field">
+      <label for="profileName">Pharmacy Name:</label>
+      <div class="field-row">
+        <input type="text" id="profileName" value="City Pharmacy" disabled>
+        <button type="button" class="edit-btn" onclick="enableEdit('profileName')">Edit</button>
+      </div>
+    </div>
+
+    <div class="profile-field">
+      <label for="profileEmail">Email:</label>
+      <div class="field-row">
+        <input type="email" id="profileEmail" value="citypharmacy@example.com" disabled>
+        <button type="button" class="edit-btn" onclick="enableEdit('profileEmail')">Edit</button>
+      </div>
+    </div>
+
+    <div class="profile-field">
+      <label for="profilePhone">Contact Number:</label>
+      <div class="field-row">
+        <input type="text" id="profilePhone" value="01712345678" disabled>
+        <button class="edit-btn" onclick="enableEdit('profilePhone')">Edit</button>
+      </div>
+    </div>
+
+    <div class="profile-field">
+      <label for="profileAddress">Address:</label>
+      <div class="field-row">
+        <input type="text" id="profileAddress" value="Dhaka, Bangladesh" disabled>
+        <button class="edit-btn" onclick="enableEdit('profileAddress')">Edit</button>
+      </div>
+    </div>
+
+    <div class="profile-field">
+      <label for="profileHours">Operating Hours:</label>
+      <div class="field-row">
+        <input type="text" id="profileHours" value="9:00 AM - 10:00 PM" disabled>
+        <button class="edit-btn" onclick="enableEdit('profileHours')">Edit</button>
+      </div>
+    </div>
+
+    <button type="submit" id=".phar-btn-primary">Save Changes</button>
+  </form>
+</div>
+
+
+  <!-- Staff Management -->
+  <div id="staff" class="section" style="display:none;">
+    <h3>Staff Management</h3>
+    <button class="btn-primary" onclick="addStaff()">+ Add Staff</button>
+    <table>
+      <thead>
+        <tr><th>Name</th><th>Role</th><th>Contact</th><th>Action</th></tr>
+      </thead>
+      <tbody id="staffList">
+        <!-- Staff members will be dynamically loaded here -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Change Password -->
+  <div id="changePassword" class="section" style="display:none;">
+    <h3>Change Password</h3>
+    <form>
+      <input type="password" placeholder="Current Password" id="currentPassword">
+      <input type="password" placeholder="New Password" id="newPassword">
+      <input type="password" placeholder="Confirm Password" id="confirmPassword">
+      <button class="btn-primary" onclick="changePassword()">Update Password</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>© 2025 HNMS. All Rights Reserved.</p>
+    <p>Contact: support@hnms.com | Phone: +8801303672091</p>
+  </div>
+</div>
+
+<script src="pharmacy_dashboard.js"></script>
+
 </body>
 </html>

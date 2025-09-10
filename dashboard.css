@@ -1013,17 +1013,20 @@ button:hover {
   min-width: 20px;
   text-align: center;
 }
-/* profile edit */
-#profileSection {
-  max-width: 500px;
-  margin: 20px auto;
+/* Profile Edit Full-Width */
+#profileSection,
+#pharmacyProfile {
+  width: 100%;             
+  max-width: none;         
+  margin: 0;              
+  padding: 20px;          
   background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 0;      
+  box-shadow: none;       
 }
 
-#profileSection input {
+#profileSection input,
+#pharmacyProfile input {
   display: block;
   width: 100%;
   padding: 10px 15px;
@@ -1031,9 +1034,11 @@ button:hover {
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 14px;
+  box-sizing: border-box;
 }
 
-#profileSection button {
+#profileSection button,
+#pharmacyProfile button {
   background: #4CAF50;
   color: white;
   padding: 10px 15px;
@@ -1041,11 +1046,55 @@ button:hover {
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
+  transition: background 0.3s;
 }
 
-#profileSection button:hover {
+#profileSection button:hover,
+#pharmacyProfile button:hover {
   background: #45a049;
 }
+.profile-field {
+  margin-bottom: 15px;
+}
+
+.profile-field label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* space between input and button */
+}
+
+.field-row input {
+  flex: 1; 
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+#profileSection .edit-btn,
+#pharmacyProfile .edit-btn {
+  margin-bottom: 6px;
+  padding: auto;
+  font-size: 14px;
+  border: 1px solid #d32f2f;
+  border-radius: 5px;
+  background: #f44336;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+#profileSection .edit-btn:hover , 
+#pharmacyProfile .edit-btn:hover {
+  background: #f44300;
+}
+
 /* Blood Bank Search */
 .blood-search {
   display: flex;
@@ -1501,3 +1550,11 @@ button:hover {
     width: 100%;
   }
 }
+
+
+
+
+
+
+
+
