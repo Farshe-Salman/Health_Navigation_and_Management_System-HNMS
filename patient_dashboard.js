@@ -459,20 +459,19 @@ document.getElementById("profileForm").addEventListener("submit", function(e) {
 
 // ==================== Blood Bank ====================
 // Sample blood bank data
-let bloodBank = [
-  { bloodType: "A+", units: 5, donor: "John Doe", contact: "017XXXXXXXX" },
-  { bloodType: "O-", units: 2, donor: "Jane Smith", contact: "018XXXXXXXX" },
-  { bloodType: "B+", units: 0, donor: "Ali Khan", contact: "019XXXXXXXX" },
-  { bloodType: "AB+", units: 3, donor: "Sara Khan", contact: "016XXXXXXXX" },
+const bloodBank = [
+  { hospital: "City General Hospital", bloodGroup: "A+", units: 5, donors: [{ name: "Alice", contact: "01711112222" }, { name: "Bob", contact: "01733334444" }] },
+  { hospital: "Sunrise Diagnostics", bloodGroup: "A+", units: 3, donors: [{ name: "John", contact: "01855556666" }] },
+  { hospital: "City General Hospital", bloodGroup: "O-", units: 2, donors: [{ name: "Sarah", contact: "01977778888" }] }
 ];
 
-// Show blood bank section
+// ==================== Show Blood Bank Section ====================
 function showBloodBank() {
   showSection("bloodBankSection");
   renderBloodList(bloodBank);
 }
 
-// Render blood cards
+// ==================== Render Blood List ====================
 function renderBloodList(list) {
   const container = document.getElementById("bloodList");
   container.innerHTML = "";
@@ -482,53 +481,101 @@ function renderBloodList(list) {
     return;
   }
 
-  list.forEach(blood => {
+  list.forEach(item => {
+    const donorsHtml = item.donors.map(d =>
+      `<button class="donor-btn" onclick="askDonor('${d.name}', '${d.contact}', '${item.hospital}', '${item.bloodGroup}')">${d.name}</button>`
+    ).join(" ");
+
     const card = document.createElement("div");
     card.className = "blood-card";
     card.innerHTML = `
-      <h4>Blood Type: ${blood.bloodType}</h4>
-      <p>Units Available: ${blood.units}</p>
-      <p>Donor: ${blood.donor}</p>
-      <p>Contact: ${blood.units > 0 ? blood.contact : "Not Available"}</p>
-      <button ${blood.units === 0 ? "disabled" : ""} onclick="requestBlood('${blood.bloodType}')">
+      <p><strong>Hospital:</strong> ${item.hospital}</p>
+      <p><strong>Blood Group:</strong> ${item.bloodGroup}</p>
+      <p><strong>Units Available:</strong> ${item.units}</p>
+      <p><strong>Donors:</strong> ${donorsHtml || "No donors listed"}</p>
+      <button ${item.units === 0 ? "disabled" : ""} onclick="requestBlood('${item.hospital}', '${item.bloodGroup}')">
         Request Blood
-      </button>
-      <button onclick="askDonor('${blood.donor}', '${blood.contact}')">
-        Ask Donor
       </button>
     `;
     container.appendChild(card);
   });
 }
 
-// Search blood
+// ==================== Search Blood Units ====================
 function searchBlood() {
-  const type = document.getElementById("bloodSearch").value;
-  if (!type) return renderBloodList(bloodBank);
-  const result = bloodBank.filter(b => b.bloodType === type);
-  renderBloodList(result);
+  const bloodGroup = document.getElementById("bloodSearch").value;
+  const hospital = document.getElementById("hospitalSelectBB")?.value || "";
+
+  const results = bloodBank.filter(item =>
+    item.bloodGroup === bloodGroup && (hospital === "" || item.hospital === hospital)
+  );
+
+  renderBloodList(results);
 }
 
-// Request blood
-function requestBlood(type) {
-  const blood = bloodBank.find(b => b.bloodType === type);
-  if (blood && blood.units > 0) {
-    blood.units--;
-    alert(`You requested ${type} blood. Units left: ${blood.units}`);
-    renderBloodList(bloodBank);
-  } else {
-    alert("Requested blood is not available!");
-  }
+// ==================== Ask Donor ====================
+function askDonor(name, contact, hospital, bloodGroup) {
+  document.getElementById("donorName").textContent = name;
+  document.getElementById("donorContact").textContent = contact;
+  document.getElementById("donorHospital").textContent = hospital;
+  document.getElementById("donorBloodGroup").textContent = bloodGroup;
+
+  document.getElementById("donorModal").style.display = "flex";
 }
 
-// Ask donor
-function askDonor(name, contact) {
-  if (!contact) {
-    alert(`No contact info for ${name}.`);
+function closeDonorModal() {
+  document.getElementById("donorModal").style.display = "none";
+}
+
+
+// ==================== Request Blood ====================
+// Track blood requests
+let bloodRequests = [];
+
+// ==================== Request Blood ====================
+// Open modal with hospital and blood info
+function requestBlood(hospital, bloodGroup) {
+  const item = bloodBank.find(b => b.hospital === hospital && b.bloodGroup === bloodGroup);
+
+  if (!item || item.units <= 0) {
+    alert("Sorry, no units available for this blood group.");
     return;
   }
-  alert(`You can contact ${name} at ${contact} for donation.`);
+
+  document.getElementById("reqHospital").value = hospital;
+  document.getElementById("reqBloodGroup").value = bloodGroup;
+  document.getElementById("bloodRequestModal").style.display = "flex";
 }
+
+// Close modal
+function closeBloodRequestModal() {
+  document.getElementById("bloodRequestModal").style.display = "none";
+  document.getElementById("bloodRequestForm").reset();
+}
+
+// Handle form submission
+document.getElementById("bloodRequestForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById("reqName").value;
+  const phone = document.getElementById("reqPhone").value;
+  const note = document.getElementById("reqNote").value;
+  const hospital = document.getElementById("reqHospital").value;
+  const bloodGroup = document.getElementById("reqBloodGroup").value;
+
+  // Decrease unit
+  const item = bloodBank.find(b => b.hospital === hospital && b.bloodGroup === bloodGroup);
+  if (item) item.units -= 1;
+
+  // Record request
+  bloodRequests.push({ name, phone, note, hospital, bloodGroup, date: new Date().toLocaleString() });
+
+  alert(`Blood request successful!\n${bloodGroup} blood requested from ${hospital}.`);
+
+  // Close modal and refresh list
+  closeBloodRequestModal();
+  searchBlood();
+});
 
 
 updateDashboard();

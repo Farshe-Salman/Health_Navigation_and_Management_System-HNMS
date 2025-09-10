@@ -39,7 +39,7 @@
     <div class="navbar-links">
       <a href="#" onclick="showSection('doctors')">Find Doctor</a>
       <a href="#" onclick="showAppointmentSection()">Appointments</a>
-      <a href="#" onclick="">Blood Bank</a>
+      <a href="#" onclick="showBloodBank('bloodBankSection')">Blood Bank</a>
     </div>
     <div class="navbar-right">
       <div class="profile">
@@ -57,9 +57,7 @@
         </a>
       </div>
     </div>
- 
   </div>
-
   <!-- End Navbar -->
 
   <!-- Content Sections -->
@@ -206,9 +204,7 @@
             <button class="btn-secondary">View Doctor Profile</button>
           </div>
         </div>
-
       </div>
-   
     </div>
 
 <!-- Pharmacy Section -->
@@ -387,7 +383,12 @@
 
   <!-- Search -->
   <div class="blood-search">
-    <label for="bloodSearch">Search Blood Type:</label>
+    <select id="hospitalSelectBB">
+      <option value="">All Hospitals</option>
+      <option value="City General Hospital">City General Hospital</option>
+      <option value="Sunrise Diagnostics">Sunrise Diagnostics</option>
+    </select>
+
     <select id="bloodSearch">
       <option value="">Select Blood Type</option>
       <option value="A+">A+</option>
@@ -399,6 +400,7 @@
       <option value="AB+">AB+</option>
       <option value="AB-">AB-</option>
     </select>
+
     <button onclick="searchBlood()">Search</button>
   </div>
 
@@ -407,6 +409,33 @@
     <!-- dynamically generated blood cards will appear here -->
   </div>
 </div>
+<!-- Blood Request Modal -->
+<div id="bloodRequestModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h3>Request Blood</h3>
+    <form id="bloodRequestForm">
+      <input type="text" id="reqName" placeholder="Your Name" required>
+      <input type="text" id="reqPhone" placeholder="Phone Number" required>
+      <input type="text" id="reqNote" placeholder="Optional Note">
+      <input type="hidden" id="reqHospital">
+      <input type="hidden" id="reqBloodGroup">
+      <button type="submit">Submit Request</button>
+      <button type="button" onclick="closeBloodRequestModal()">Cancel</button>
+    </form>
+  </div>
+</div>
+<!-- Donor Details Modal -->
+<div id="donorModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h3>Donor Details</h3>
+    <p><strong>Name:</strong> <span id="donorName"></span></p>
+    <p><strong>Contact:</strong> <span id="donorContact"></span></p>
+    <p><strong>Hospital:</strong> <span id="donorHospital"></span></p>
+    <p><strong>Blood Group:</strong> <span id="donorBloodGroup"></span></p>
+    <button type="button" onclick="closeDonorModal()">Close</button>
+  </div>
+</div>
+
 
     <!-- Appointment Form -->
     <div id="appointments" class="section">

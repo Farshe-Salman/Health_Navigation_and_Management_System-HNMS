@@ -681,7 +681,6 @@ button:hover {
 
 .pharmacy-card .btn-primary:hover {
   background-color: #45a049;
-  transform: scale(1.02);
   border-color: #fc0f03;
 }
 
@@ -699,7 +698,6 @@ button:hover {
 
 .pharmacy-card .btn-secondary:hover {
   background-color: #ddd;
-  transform: scale(1.02);
   border-color: #45a049;
 }
 
@@ -798,7 +796,35 @@ button:hover {
 .modal-content h3, .modal-content h4 {
   margin-bottom: 10px;
 }
-
+.modal-content input{
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+.modal-content textarea {
+  width: 100px;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+.modal-content button {
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.modal-content button[type="submit"] {
+  background-color: #f44336;
+  color: #fff;
+  margin-right: 10px;
+}
+.modal-content button[type="button"] {
+  background-color: #ccc;
+}
 .close {
   position: absolute;
   right: 15px; top: 10px;
@@ -812,6 +838,8 @@ button:hover {
   align-items: center;
   margin: 8px 0;
 }
+
+
 
 .qty-controls button {
   padding: 3px 8px;
@@ -837,7 +865,25 @@ button:hover {
   padding: 2px 6px;
   cursor: pointer;
 }
+.cart-actions button{
+  background-color: #b4dc92;
+  color: black;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+  margin-top: 10px;
+  margin-left: 5px;
+}
 
+.cart-actions .btn-primary:hover,
+.cart-actions .btn-secondary:hover{
+  background-color: #9fd494;
+  transform: scale(1.02);
+  border-color: #2d771e;
+}
 
 /* ==================== Delivery / Checkout Section ==================== */
 .delivery-container {
@@ -897,6 +943,14 @@ button:hover {
   box-sizing: border-box;
 }
 
+.form-box input:focus,
+.form-box select:focus, 
+.form-box textarea:focus{
+  outline: none;
+  border-color: #9fd494;
+  box-shadow: 0 0 5px rgba(159, 212, 148, 0.5);
+}
+
 /* Make label look like a button */
 .btn-prescription {
   display: inline-block;
@@ -908,6 +962,7 @@ button:hover {
   font-size: 14px;
   transition: background 0.3s;
   text-align: center;
+  margin-bottom: 10px;
 
 }
 
@@ -1435,12 +1490,14 @@ button:hover {
     width: 100%;
     flex: 1 1 auto;
   }
+
+  .modal-content {
+    max-width: 80%;
+    max-height: 60%;
+    padding: 15px;
+  }
+
+  .modal-content button {
+    width: 100%;
+  }
 }
-
-
-
-
-
-
-
-
