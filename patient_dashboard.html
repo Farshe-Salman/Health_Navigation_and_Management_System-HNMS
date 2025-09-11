@@ -22,6 +22,7 @@
   <a href="#" onclick="showSection('pharmacy')">Pharmacy</a>
   <a href="#" onclick="showBloodBank('bloodBankSection')">Blood Bank</a>
   <a href="#" onclick="showAppointmentSection()">Book Appointment</a>
+  <a href="#" onclick="showSection('profileSection')">My Profile</a>
   <a href="#" class="log-out">Logout</a>
 </div>
 
@@ -45,7 +46,7 @@
      <div class="profile">
   <img src="Profile.jpg" alt="Profile Picture" onclick="showProfile()">
   <p>Welcome,</p>
-  <span class="profile-name" id="navbarProfileName" onclick="showProfile()">User</span>
+  <span class="profile-name" id="navbarProfileName" onclick="showProfile()">Shizan Sarkar</span>
 </div>
 
       <div class="notification" onclick="showNotifications()">
@@ -570,7 +571,7 @@
   <form id="profileForm">
 
     <div class="profile-field">
-      <label for="profileName">Name:</label>
+      <label for="profileName">Username:</label>
       <div class="field-row">
       <input type="text" id="profileName" placeholder="Full Name" value="Shizan Sarkar" disabled required>
       <button type="button" class="edit-btn" onclick="enableEdit('profileName')">Edit</button>
