@@ -752,6 +752,25 @@ button:hover {
 .medicine-card button:hover {
   background: #0056b3;
 }
+/* for pharmadash */
+
+.medicine-card .edit-btn {
+  background-color: #ffc107;
+  color: #fff;
+}
+
+.medicine-card .edit-btn:hover {
+  background-color: #e0a800;
+}
+
+.medicine-card .delete-btn {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.medicine-card .delete-btn:hover {
+  background-color: #b02a37;
+}
 
 /* header btn */
 .med-header {
@@ -796,7 +815,8 @@ button:hover {
 .modal-content h3, .modal-content h4 {
   margin-bottom: 10px;
 }
-.modal-content input{
+
+.modal-content input,select{
   width: 100%;
   margin: 8px 0;
   padding: 10px;
@@ -831,6 +851,75 @@ button:hover {
   font-size: 22px;
   cursor: pointer;
 }
+
+
+/* add medicine */
+/* ==================== Add Medicine Section ==================== */
+.add-medicine-container {
+  max-width: 100%;
+  margin: 20px auto;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.add-medicine-container h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.8em;
+}
+
+.add-medicine-container h4 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #555;
+  font-size: 1.2em;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.add-medicine-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.add-medicine-container label {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.add-medicine-container input[type="text"],
+.add-medicine-container input[type="number"],
+.add-medicine-container input[type="date"],
+.add-medicine-container input[type="file"],
+.add-medicine-container select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95em;
+  transition: border-color 0.3s;
+}
+
+.add-medicine-container input:focus,
+.add-medicine-container select:focus {
+  outline: none;
+  border-color: #9fd494;
+  box-shadow: 0 0 5px rgba(159, 212, 148, 0.5);
+}
+
+
+
+.add-medicine-container hr {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
 
 .cart-item {
   display: flex;
@@ -1015,7 +1104,9 @@ button:hover {
 }
 /* Profile Edit Full-Width */
 #profileSection,
-#pharmacyProfile {
+#pharmacyProfile,
+#editMedicineSection,
+#addMedicineSection {
   width: 100%;             
   max-width: none;         
   margin: 0;              
@@ -1026,7 +1117,9 @@ button:hover {
 }
 
 #profileSection input,
-#pharmacyProfile input {
+#pharmacyProfile input,
+#editMedicineSection input,
+#addMedicineSection input {
   display: block;
   width: 100%;
   padding: 10px 15px;
@@ -1038,7 +1131,9 @@ button:hover {
 }
 
 #profileSection button,
-#pharmacyProfile button {
+#pharmacyProfile button,
+#editMedicineSection button,
+#addMedicineSection button {
   background: #4CAF50;
   color: white;
   padding: 10px 15px;
@@ -1050,14 +1145,16 @@ button:hover {
 }
 
 #profileSection button:hover,
-#pharmacyProfile button:hover {
+#pharmacyProfile button:hover,
+#editMedicineSection button:hover,
+#addMedicineSection button:hover {
   background: #45a049;
 }
-.profile-field {
+.profile-field , .medicine-field{
   margin-bottom: 15px;
 }
 
-.profile-field label {
+.profile-field, .medicine-field label {
   display: block;
   margin-bottom: 5px;
   font-weight: 500;
@@ -1078,7 +1175,9 @@ button:hover {
 }
 
 #profileSection .edit-btn,
-#pharmacyProfile .edit-btn {
+#pharmacyProfile .edit-btn,
+#editMedicineSection .edit-btn,
+#addMedicineSection .edit-btn {
   margin-bottom: 6px;
   padding: auto;
   font-size: 14px;
@@ -1091,9 +1190,65 @@ button:hover {
 }
 
 #profileSection .edit-btn:hover , 
-#pharmacyProfile .edit-btn:hover {
+#pharmacyProfile .edit-btn:hover,
+#editMedicineSection .edit-btn:hover,
+#addMedicineSection .edit-btn:hover {
   background: #f44300;
 }
+
+/* Container for both sections */
+.profile-container , 
+.add-medicine-container {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+/* Each section */
+#profileInfoContainer,
+#verificationDocsContainer,
+#addmedicineInfoContainer,
+#editmedicineInfoContainer,
+#addmedicineDocsContainer,
+#editmedicineDocsContainer{
+  flex: 1;
+  min-width: 300px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Verification Items */
+.verification-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.verification-item label {
+  width: 120px;
+  font-weight: 500;
+}
+
+
+
+/* Document ITem in add//edit */
+.doc-item input{
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.doc-item label {
+  width: 120px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+
 
 /* Blood Bank Search */
 .blood-search {
@@ -1549,8 +1704,55 @@ button:hover {
   .modal-content button {
     width: 100%;
   }
-}
 
+  /* profile container in pharma profile */
+  .profile-container , 
+  .add-medicine-container{
+    flex-direction: column; 
+    gap: 20px;
+  }
+
+  #profileInfoContainer,
+  #verificationDocsContainer,
+  #addmedicineInfoContainer,
+  #editmedicineInfoContainer,
+  #addmedicineDocsContainer,
+  #editmedicineDocsContainer{
+    width: 100%;
+    min-width: 0;
+    padding: 15px;
+  }
+
+  /* Field row adjustment */
+  .field-row {
+    flex-direction: row; 
+    flex-wrap: nowrap;
+  }
+
+  .field-row input {
+    flex: 1; 
+  }
+
+  .field-row button {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  /*Verification items stack vertically  */
+  .verification-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .verification-item label {
+    width: 100%;
+  }
+.add-medicine-container {
+    padding: 20px;
+    margin: 15px;
+  }
+}
 
 
 

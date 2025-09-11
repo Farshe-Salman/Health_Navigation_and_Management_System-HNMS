@@ -20,9 +20,8 @@
   <a href="#" onclick="showSection('inventory')">Medicine Inventory</a>
   <a href="#" onclick="showSection('orders')">Orders</a>
   <a href="#" onclick="showSection('sales')">Sales & Billing</a>
-  <a href="#" onclick="showSection('analytics')">Analytics</a>
-  <a href="#" onclick="showSection('pharmacyProfile')">Pharmacy Profile</a>
-  <a href="#" onclick="showSection('staff')">Staff Management</a>
+  <a href="#" onclick="showSection('orderHistory')">Order History</a>
+  <a href="#" onclick="showSection('pharmacyProfile')">My Profile</a>
   <a href="#" class="log-out">Logout</a>
 </div>
 
@@ -38,19 +37,15 @@
       <span>Pharmacy Dashboard</span>
     </div>
     <div class="navbar-links">
-      <a href="#" onclick=""></a>
-      <a href="#" onclick=""></a>
-      <a href="#" onclick=""></a>
+      <a href="#" onclick="showSection('addMedicineSection')">Add Medicine</a>
+      <a href="#" onclick="showSection('orders')">Orders</a>
     </div>
     <div class="navbar-right">
       <div class="profile">
-    <!-- Profile Picture -->
-    <img src="Profile.jpg" alt="Profile Picture" class="profile-pic" onclick="showPharmacyProfile()">
-
-    <!-- Welcome Text -->
-    <p>Welcome,</p>
-    <span class="profile-name" id="navbarPharmacyName" onclick="showPharmacyProfile()">City Pharmacy</span>
-</div>
+        <img src="Profile.jpg" alt="Profile Picture" class="profile-pic" onclick="showPharmacyProfile()">
+        <p>Welcome,</p>
+        <span class="profile-name" id="navbarPharmacyName" onclick="showPharmacyProfile()">City Pharmacy</span>
+      </div>
 
       <div class="notification" onclick="showNotifications()">
         <i class="fa fa-bell"></i>
@@ -65,67 +60,238 @@
   </div>
   <!-- End Navbar -->
 
-  <!-- Dashboard Section -->
-  <div id="dashboard" class="section" style="display:block;">
-    <h2>Hello! <span id="pharmacyName">City Pharmacy</span></h2>
-    <div class="dashboard-cards">
-      <div class="card">
-        <h3>Today's Sales</h3>
-        <p>৳ <span id="todaysSales">0</span></p>
+<!-- Dashboard Section -->
+<div id="dashboard" class="section" style="display:block;">
+  <h2>Hello! <span id="pharmacyName">City Pharmacy</span></h2>
+  
+  <!-- Verification Notice -->
+  <div id="verificationNotice" class="verification-box" style="display:none;"></div>
+
+  <div class="dashboard-cards">
+    <div class="card">
+      <h3>Today's Sales</h3>
+      <p>৳ <span id="todaysSales">0</span></p>
+    </div>
+    <div class="card">
+      <h3>Pending Orders</h3>
+      <p><span id="pendingOrders">0</span> Orders</p>
+    </div>
+    <div class="card">
+      <h3>Low Stock Alerts</h3>
+      <ul id="lowStockList">
+        <li>No low stock items</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
+ <!-- Medicine Inventory -->
+<div id="inventory" class="section" style="display:none;">
+  <h3>Medicine Inventory</h3>
+  <button class="btn-primary" onclick="openAddMedicineSection()">Add New Medicine</button>
+
+ <div id="inventoryMedicineList" class="medicine-list">
+    <!-- Medicines will be dynamically loaded here via JS -->
+  </div>
+</div>
+
+<!-- Add Medicine Section -->
+<div id="addMedicineSection" class="section" style="display:none;">
+  <h3>Add Medicines</h3>
+
+  <div class="add-medicine-container">
+    <!-- Left: Medicine Info -->
+    <div id="addmedicineInfoContainer">
+      <h4>Medicine Information</h4><br>
+      <form id="addMedicineFormSection">
+        <div class="medicine-field">
+          <label for="medNameSection">Medicine Name:</label>
+          <input type="text" id="medNameSection" required>
+        </div>
+
+        <div class="medicine-field">
+          <label for="medCategorySection">Category:</label>
+          <select id="medCategorySection" required>
+            <option value="">select category</option>
+            <option value="medicine">Medicine</option>
+            <option value="firstAid">First Aid</option>
+            <option value="equipment">Medical Equipment</option>
+            <option value="skincare">Skincare</option>
+          </select>
+        </div>
+
+        <div class="medicine-field">
+          <label for="medStockSection">Stock:</label>
+          <input type="number" id="medStockSection" required>
+        </div>
+
+        <div class="medicine-field">
+          <label for="medPriceSection">Price (৳):</label>
+          <input type="number" id="medPriceSection" required>
+        </div>
+
+        <div class="medicine-field">
+          <label for="medExpirySection">Expiry Date:</label>
+          <input type="date" id="medExpirySection" required>
+        </div>
+
+        <div class="medicine-field">
+          <label for="prescriptionRequiredSection">Prescription Required:</label>
+          <select id="prescriptionRequiredSection" required>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <button type="submit" class="rightbtn">Save Medicine</button>
+      </form>
+    </div>
+
+    <!-- Right: Document Uploads -->
+    <div id="addmedicineDocsContainer">
+      <h4>Required Documents</h4><br>
+
+      <div class="doc-item">
+        <label>Drug Image:</label>
+        <input type="file" id="drugImageFileSection" accept=".jpg,.png" required>
       </div>
-      <div class="card">
-        <h3>Pending Orders</h3>
-        <p><span id="pendingOrders">0</span> Orders</p>
+
+      <div class="doc-item">
+        <label>Drug License (PDF/JPG):</label>
+        <input type="file" id="drugLicenseFileSection" accept=".pdf,.jpg,.png" required>
       </div>
-      <div class="card">
-        <h3>Low Stock Alerts</h3>
-        <ul id="lowStockList">
-          <li>No low stock items</li>
-        </ul>
+
+      <div class="doc-item">
+        <label>Import Certificate (if applicable):</label>
+        <input type="file" id="importCertFileSection" accept=".pdf,.jpg,.png">
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Medicine Inventory -->
-  <div id="inventory" class="section" style="display:none;">
-    <h3>Medicine Inventory</h3>
-    <button class="btn-primary" onclick="addMedicine()">+ Add New Medicine</button>
-    <table class="inventory-table">
-      <thead>
-        <tr>
-          <th>Medicine Name</th>
-          <th>Category</th>
-          <th>Stock</th>
-          <th>Price (৳)</th>
-          <th>Expiry Date</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="medicineList">
-        <!-- Inventory items will be dynamically loaded here -->
-      </tbody>
-    </table>
+<!-- Edit Medicine Section -->
+<div id="editMedicineSection" class="section" style="display:none;">
+  <h3>Edit Medicine</h3>
+
+  <div class="add-medicine-container">
+    <!-- Left: Medicine Info -->
+    <div id="editmedicineInfoContainer">
+      <h4>Medicine Information</h4><br>
+      <form id="editMedicineFormSection">
+        <div class="medicine-field">
+          <label for="medNameSection">Medicine Name:</label>
+          <div class="field-row">
+            <input type="text" id="editmedNameSection" required disabled>
+            <button type="button" class="edit-btn" onclick="enableEdit('editmedNameSection')">Edit</button>
+          </div>
+        </div>
+
+        <div class="medicine-field">
+          <label for="medCategorySection">Category:</label>
+          <div class="field-row">
+            <select id="editmedCategorySection" required disabled>
+              <option value="">select category</option>
+              <option value="medicine">Medicine</option>
+              <option value="firstAid">First Aid</option>
+              <option value="equipment">Medical Equipment</option>
+              <option value="skincare">Skincare</option>
+            </select>
+            <button type="button" class="edit-btn" onclick="enableEdit('editmedCategorySection')">Edit</button>
+          </div>
+        </div>
+
+        <div class="medicine-field">
+          <label for="medStockSection">Stock:</label>
+          <div class="field-row">
+            <input type="number" id="editmedStockSection" required disabled>
+            <button type="button" class="edit-btn" onclick="enableEdit('editmedStockSection')">Edit</button>
+          </div>
+        </div>
+
+        <div class="medicine-field">
+          <label for="medPriceSection">Price (৳):</label>
+          <div class="field-row">
+            <input type="number" id="editmedPriceSection" required disabled>
+            <button type="button" class="edit-btn" onclick="enableEdit('editmedPriceSection')">Edit</button>
+          </div>
+        </div>
+
+        <div class="medicine-field">
+          <label for="medExpirySection">Expiry Date:</label>
+          <div class="field-row">
+            <input type="date" id="editmedExpirySection" required disabled>
+            <button type="button" class="edit-btn" onclick="enableEdit('editmedExpirySection')">Edit</button>
+          </div>
+        </div>
+
+        <div class="medicine-field">
+          <label for="prescriptionRequiredSection">Prescription Required:</label>
+          <div class="field-row">
+            <select id="editprescriptionRequiredSection" required disabled>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+            <button type="button" class="edit-btn" onclick="enableEdit('editprescriptionRequiredSection')">Edit</button>
+          </div>
+        </div>
+
+        <button type="submit" class="rightbtn">Update Medicine</button>
+      </form>
+    </div>
+
+    <!-- Right: Document Uploads -->
+    <div id="editmedicineDocsContainer">
+      <h4>Required Documents</h4><br>
+
+      <div class="doc-item">
+        <label>Drug Image:</label>
+        <input type="file" id="editdrugImageFileSection" accept=".jpg,.png" disabled>
+        <button type="button" class="rightbtn" onclick="enableFile('editdrugImageFileSection')">Upload</button>
+      </div>
+
+      <div class="doc-item">
+        <label>Drug License (PDF/JPG):</label>
+        <input type="file" id="editdrugLicenseFileSection" accept=".pdf,.jpg,.png" disabled>
+        <button type="button" class="rightbtn" onclick="enableFile('editdrugLicenseFileSection')">Upload</button>
+      </div>
+
+      <div class="doc-item">
+        <label>Import Certificate (if applicable):</label>
+        <input type="file" id="editimportCertFileSection" accept=".pdf,.jpg,.png" disabled>
+        <button type="button" class="rightbtn" onclick="enableFile('editimportCertFileSection')">Upload</button>
+      </div>
+    </div>
   </div>
+</div>
 
-  <!-- Orders Section -->
+
+
+
+<!-- ORDER IN PHARMA -->
   <div id="orders" class="section" style="display:none;">
-    <h3>Customer Orders</h3>
-    <table class="orders-table">
-      <thead>
-        <tr>
-          <th>Order ID</th>
-          <th>Customer</th>
-          <th>Medicines</th>
-          <th>Total (৳)</th>
-          <th>Status</th>
-          <th>Update</th>
-        </tr>
-      </thead>
-      <tbody id="ordersList">
-        <!-- Orders will be dynamically loaded here -->
-      </tbody>
-    </table>
-  </div>
+  <h3>Customer Orders</h3>
+  <table class="orders-table">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Customer / Phone</th>
+        <th>Region / City / Area</th>
+        <th>Address</th>
+        <th>Medicines</th>
+        <th>Total (৳)</th>
+        <th>Prescription</th>
+        <th>Payment</th>
+        <th>Status</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody id="ordersList">
+      <!-- Orders will be dynamically loaded here -->
+    </tbody>
+  </table>
+</div>
 
   <!-- Sales & Billing -->
   <div id="sales" class="section" style="display:none;">
@@ -143,76 +309,116 @@
     </div>
   </div>
 
-  <!-- Analytics Section -->
-  <div id="analytics" class="section" style="display:none;">
-    <h3>Pharmacy Analytics</h3>
-    <p>📊 Sales chart, top-selling medicines, and order trends will appear here.</p>
-  </div>
-
-  <!-- Pharmacy Profile -->
-<div id="pharmacyProfile" class="section" style="display:none;">
-  <h3>Pharmacy Profile</h3>
-  <form id="pharmacyProfileForm">
-
-    <div class="profile-field">
-      <label for="profileName">Pharmacy Name:</label>
-      <div class="field-row">
-        <input type="text" id="profileName" value="City Pharmacy" disabled>
-        <button type="button" class="edit-btn" onclick="enableEdit('profileName')">Edit</button>
-      </div>
-    </div>
-
-    <div class="profile-field">
-      <label for="profileEmail">Email:</label>
-      <div class="field-row">
-        <input type="email" id="profileEmail" value="citypharmacy@example.com" disabled>
-        <button type="button" class="edit-btn" onclick="enableEdit('profileEmail')">Edit</button>
-      </div>
-    </div>
-
-    <div class="profile-field">
-      <label for="profilePhone">Contact Number:</label>
-      <div class="field-row">
-        <input type="text" id="profilePhone" value="01712345678" disabled>
-        <button class="edit-btn" onclick="enableEdit('profilePhone')">Edit</button>
-      </div>
-    </div>
-
-    <div class="profile-field">
-      <label for="profileAddress">Address:</label>
-      <div class="field-row">
-        <input type="text" id="profileAddress" value="Dhaka, Bangladesh" disabled>
-        <button class="edit-btn" onclick="enableEdit('profileAddress')">Edit</button>
-      </div>
-    </div>
-
-    <div class="profile-field">
-      <label for="profileHours">Operating Hours:</label>
-      <div class="field-row">
-        <input type="text" id="profileHours" value="9:00 AM - 10:00 PM" disabled>
-        <button class="edit-btn" onclick="enableEdit('profileHours')">Edit</button>
-      </div>
-    </div>
-
-    <button type="submit" id=".phar-btn-primary">Save Changes</button>
-  </form>
-</div>
-
-
-  <!-- Staff Management -->
-  <div id="staff" class="section" style="display:none;">
-    <h3>Staff Management</h3>
-    <button class="btn-primary" onclick="addStaff()">+ Add Staff</button>
+  <!-- Order History -->
+  <div id="orderHistory" class="section" style="display:none;">
+    <h3>Order History</h3>
     <table>
       <thead>
-        <tr><th>Name</th><th>Role</th><th>Contact</th><th>Action</th></tr>
+        <tr>
+          <th>Order ID</th>
+          <th>Date</th>
+          <th>Customer</th>
+          <th>Total</th>
+        </tr>
       </thead>
-      <tbody id="staffList">
-        <!-- Staff members will be dynamically loaded here -->
+      <tbody id="orderHistoryList">
+        <!-- Past orders will load here -->
       </tbody>
     </table>
   </div>
+<!-- Pharmacy Profile Section -->
+<div id="pharmacyProfile" class="section" style="display:none;">
+  <h3>Pharmacy Profile & Verification</h3>
 
+  <div class="profile-container">
+    <!-- Left: Profile Info -->
+    <div id="profileInfoContainer">
+      <h4>Profile Information</h4><br>
+      <form id="pharmacyProfileForm">
+        <div class="profile-field">
+          <label for="profileName">Username:</label>
+          <div class="field-row">
+            <input type="text" id="profileName" value="City Pharmacy" disabled>
+            <button type="button" class="edit-btn" onclick="enableEdit('profileName')">Edit</button>
+          </div>
+        </div>
+
+        <div class="profile-field">
+          <label for="profileEmail">Email:</label>
+          <div class="field-row">
+            <input type="email" id="profileEmail" value="citypharmacy@example.com" disabled>
+            <button type="button" class="edit-btn" onclick="enableEdit('profileEmail')">Edit</button>
+          </div>
+        </div>
+
+        <div class="profile-field">
+          <label for="profilePhone">Contact Number:</label>
+          <div class="field-row">
+            <input type="text" id="profilePhone" value="01712345678" disabled>
+            <button class="edit-btn" onclick="enableEdit('profilePhone')">Edit</button>
+          </div>
+        </div>
+
+        <div class="profile-field">
+          <label for="profileAddress">Address:</label>
+          <div class="field-row">
+            <input type="text" id="profileAddress" value="Dhaka, Bangladesh" disabled>
+            <button class="edit-btn" onclick="enableEdit('profileAddress')">Edit</button>
+          </div>
+        </div>
+
+        <div class="profile-field">
+          <label for="profileHours">Operating Hours:</label>
+          <div class="field-row">
+            <input type="text" id="profileHours" value="9:00 AM - 10:00 PM" disabled>
+            <button class="edit-btn" onclick="enableEdit('profileHours')">Edit</button>
+          </div>
+        </div>
+
+        <button type="submit" class="rightbtn">Save Changes</button>
+      </form>
+    </div>
+
+    <!-- Right: Verification Documents -->
+    <div id="verificationDocsContainer">
+      <h4>Verification Documents</h4>
+       <br>
+      <div class="verification-item">
+        <label>TIN: </label>
+        <span id="docTINStatus">❌ Not Uploaded</span>
+        <input type="file" id="tinFile">
+        <button type="button" class="rightbtn" onclick="uploadProfileDoc('tin')">Upload</button>
+      </div>
+
+      <div class="verification-item">
+        <label>Trade License: </label>
+        <span id="docDrugStatus">❌ Not Uploaded</span>
+        <input type="file" id="tradeFile">
+        <button type="button" class="rightbtn" onclick="uploadProfileDoc('trade')">Upload</button>
+      </div>
+
+      <div class="verification-item">
+        <label>GST/VAT:</label>
+        <span id="docGSTStatus">❌ Not Uploaded</span>
+        <input type="file" id="gstFile">
+        <button type="button" class="rightbtn" onclick="uploadProfileDoc('gst')">Upload</button>
+      </div>
+    </div>
+  </div>
+</div>
+ <!-- Notifications Panel -->
+    <div id="notificationsPanel" class="notification-popup" style="display:none;">
+      <div class="notification-header">
+        <span>Notifications</span>
+        <button id="closeNotifications">Close</button>
+      </div>
+      <div class="notification-body" id="notificationsList">
+        <!-- Notification items will be injected here -->
+      </div>
+      <div class="notification-footer">
+        <a href="#">See All</a>
+      </div>
+    </div>
   <!-- Change Password -->
   <div id="changePassword" class="section" style="display:none;">
     <h3>Change Password</h3>
@@ -232,6 +438,5 @@
 </div>
 
 <script src="pharmacy_dashboard.js"></script>
-
 </body>
 </html>
