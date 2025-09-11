@@ -253,7 +253,7 @@
 }
 
 .contact-form button {
-  background-color: #b4dc92;
+  background-color:  #0d6efd;
   color: white;
   padding: 12px 25px;
   border: none;
@@ -266,7 +266,7 @@
 }
 
 .contact-form button:hover {
-  background: #55da08;
+  background:  #0d6efd;
 }
 
 /* Responsive */
@@ -279,7 +279,7 @@
 /* Footer */
 footer {
   text-align: center;
-  background:#b4dc92;
+  background: #0d6efd;
   color: white;
   padding: 15px;
 }
