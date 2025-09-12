@@ -13,7 +13,7 @@
 
   <!-- Hero Section -->
   <section class="hero scroll-reveal">
-    <h2>Welcome to Health Navigation System</h2>
+    <h2>Welcome to Health Navigation System (HNMS)</h2>
     <p>
       Our Health Navigation Management System (HNMS) offers an all-in-one solution for managing your healthcare needs effortlessly. From booking doctor appointments, ordering medicines online, and scheduling diagnostic tests, to tracking your health report, HNMS ensures you stay informed and in control of your health.
     </p>
@@ -114,7 +114,7 @@
   </section>
 
   <!-- Section 6: Ambulance -->
-  <section class="section scroll-reveal" id="sectin5">
+  <section class="section scroll-reveal" id="sectin6">
     <div class="container">
       <div class="content">
         <h2>Ambulance Services</h2>
@@ -149,7 +149,7 @@
           <button type="submit">Submit</button>
         </form>
       </div>
-    </div>6
+    </div>
   </section>
 
   <!-- Footer -->
