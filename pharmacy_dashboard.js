@@ -220,7 +220,7 @@ function renderOrders() {
         if (order.status === "Pending") {
             updateContent = `
                 <button onclick="completeOrder(${index})">Mark Completed</button>
-                <button onclick="rejectOrder(${index})" style="margin-left:5px;">Reject</button>
+                <button onclick="rejectOrder(${index})" style="margin-top:5px; background: red ; color: white ;">Reject</button>
             `;
         } else {
             updateContent = order.status;
