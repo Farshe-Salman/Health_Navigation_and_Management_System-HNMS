@@ -10,48 +10,7 @@
       color: #333;
     }
 
-    /* Header */
-    header {
-      position: sticky;
-      top: 0;
-      width: 100%;
-      height: 60px;
-      padding: 15px 50px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 999;
-      background: rgba(100, 153, 70, 0.5);
-      backdrop-filter: blur(3px);
-      color: white;
-    }
-
-    header .logo {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    header .logo img {
-      height: 50px;
-    }
-
-    header .logo span {
-      font-size: 18px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
-    }
+    
 
     /* Hero Section */
     .hero {
@@ -196,85 +155,8 @@
       transform: translateY(0);
     }
 
-    /* Contact Section */
-.contact {
-  padding: 40px;
-  background: #e8e9ee;
-}
 
-.contact-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-  justify-content: space-between;
-}
 
-.contact-info {
-  flex: 1;
-  min-width: 300px;
-  text-align: center;
-  padding-left: 5%;
-}
-
-.contact-info h4 {
-  color: #0d6efd;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-.contact-info h2 {
-  font-size: 32px;
-  margin-bottom: 20px;
-}
-
-.contact-info p {
-  font-size: 16px;
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-
-/* Form */
-.contact-form {
-  flex: 1;
-}
-
-.contact-form form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  
-}
-
-.contact-form input,
-.contact-form textarea {
-  width: 100%;
-  max-width: 500px;
-  padding: 12px 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  resize: none;
-  font-size: 14px;
-}
-
-.contact-form button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: 0.3s;
-  width: 120px;
-  margin-left: 190px;
-}
-
-.contact-form button:hover {
-  background: #45a049;
-  border-color: #2d771e;
-}
-
-.hero h2,
 .features .card h3,
 .section .content h2,
 .contact-info h2,
@@ -290,11 +172,33 @@
   }
 }
 
-/* Footer */
-footer {
+.testimonials {
+  background-color: #fff;
+  padding: 80px 20px;
   text-align: center;
-  background: #b4dc92; 
-  color: #333;
-  padding: 15px;
-  font-weight: 500;
 }
+.testimonials h2 {
+  font-size: 36px;
+  margin-bottom: 40px;
+}
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+.testimonial {
+  background: #f1f1f1;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+.testimonial p {
+  font-style: italic;
+  font-size: 16px;
+}
+.testimonial h4 {
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+

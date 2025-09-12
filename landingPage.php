@@ -129,28 +129,31 @@
     </div>
   </section>
 
-  <!-- Contact Section -->
-  <section class="contact scroll-reveal" id="contact">
-    <div class="contact-container">
-      <div class="contact-info">
-        <h4>Contacts</h4>
-        <h2>GET IN TOUCH</h2>
-        <p>
-          Please fill out the form below to contact us.<br>
-          Or call/email/message between 08:00 a.m. and 12:00 p.m. ET,<br>
-          Sunday through Wednesday.
-        </p>
-      </div>
-      <div class="contact-form">
-        <form id="form">
-          <input type="text" name="name" placeholder="Name" required />
-          <input type="email" name="email" placeholder="Email" required />
-          <textarea name="message" placeholder="Message" required></textarea>
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-    </div>
-  </section>
+
+  <section class="testimonials" id="testimonials">
+            <div class="container">
+                <h2>What Our Clients Say</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial">
+                        <p>"Booking doctor appointments has never been this easy. The personalized recommendations really help me choose the right doctor."</p>
+                        <h4>- Miyoko M., Software Engineer</h4>
+                    </div>
+                    <div class="testimonial">
+                        <p>"I love how I can order medicines online and track my health reports in one place. It saves so much time!"</p>
+                        <h4>- Salman F., Student</h4>
+                    </div>
+                    <div class="testimonial">
+                        <p>"The ambulance service and blood donation program are fantastic. This platform truly cares about patients' well-being."</p>
+                        <h4>- Sizan S., Student</h4>
+                    </div>
+                    <div class="testimonial">
+                        <p>"The diagnostic services are quick and reliable. I always get my test results on time and can monitor my health easily."</p>
+                        <h4>- Raihan A., Teacher</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
   <!-- Footer -->
   <?php include "./view/footer.php";?>
