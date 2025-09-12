@@ -43,19 +43,19 @@ let bill = [];
 
 // ----- Verification -----
 let verificationDocs = {
-  tin: null,
-  drug: null,
-  gst: null,
-  status: "Pending" // Pending / Approved / Rejected
+    tin: null,
+    drug: null,
+    gst: null,
+    status: "Pending" // Pending / Approved / Rejected
 };
 
 // ----- Pharmacy Profile -----
 let pharmacyProfile = {
-  name: "City Pharmacy",
-  email: "citypharmacy@example.com",
-  phone: "01712345678",
-  address: "Dhaka, Bangladesh",
-  hours: "9:00 AM - 10:00 PM"
+    name: "City Pharmacy",
+    email: "citypharmacy@example.com",
+    phone: "01712345678",
+    address: "Dhaka, Bangladesh",
+    hours: "9:00 AM - 10:00 PM"
 };
 
 // ----- DOM Elements -----
@@ -68,6 +68,10 @@ const pendingOrders = document.getElementById('pendingOrders');
 const todaysSales = document.getElementById('todaysSales');
 const lowStockList = document.getElementById('lowStockList');
 const notificationCount = document.getElementById('notificationCount');
+const notificationsPanel = document.getElementById('notificationsPanel');
+const notificationsList = document.getElementById('notificationsList');
+const orderHistoryList = document.getElementById('orderHistoryList');
+
 
 // ==================== Inventory Functions ====================
 function renderInventory() {
@@ -110,7 +114,7 @@ function updateLowStock() {
     const medicines = JSON.parse(localStorage.getItem("medicines")) || [];
     const lowStockItems = medicines.filter(m => m.stock <= 10);
     lowStockList.innerHTML = '';
-    if(lowStockItems.length === 0){
+    if (lowStockItems.length === 0) {
         lowStockList.innerHTML = '<li>No low stock items</li>';
     } else {
         lowStockItems.forEach(item => {
@@ -123,27 +127,26 @@ function updateLowStock() {
 
 // ==================== Sidebar ====================
 function toggleSidebar() {
-  sidebar.classList.toggle("show");
+    sidebar.classList.toggle("show");
 }
 
 function showSection(sectionId, event) {
-  // Hide all sections
-  document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
+    // Hide all sections
+    document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
 
-  // Show the requested section
-  const sec = document.getElementById(sectionId);
-  if (sec) sec.style.display = "block";
+    // Show the requested section
+    const sec = document.getElementById(sectionId);
+    if (sec) sec.style.display = "block";
 
-  // Update active sidebar link
-  document.querySelectorAll(".sidebar a").forEach(link => link.classList.remove("active"));
-  if (event && event.currentTarget) event.currentTarget.classList.add("active");
+    // Update active sidebar link
+    document.querySelectorAll(".sidebar a").forEach(link => link.classList.remove("active"));
+    if (event && event.currentTarget) event.currentTarget.classList.add("active");
 
-  // On mobile, hide sidebar after clicking a link
-  if (window.innerWidth <= 768) {
-    sidebar.classList.remove("show"); // instead of toggleSidebar()
-  }
+    // On mobile, hide sidebar after clicking a link
+    if (window.innerWidth <= 768) {
+        sidebar.classList.remove("show"); // instead of toggleSidebar()
+    }
 }
-// =====================notification====================
 // ==================== Notifications ====================
 
 // We'll use pending orders as notifications
@@ -198,215 +201,305 @@ function refreshNotifications() {
 renderOrders();
 refreshNotifications();
 
-// ==================== Orders Functions ====================
 
+// ==================== Render Orders (Dashboard) ====================
 function renderOrders() {
+    const ordersList = document.getElementById('ordersList');
     ordersList.innerHTML = '';
 
-    // Fetch orders from localStorage to sync patient-side orders
-    orders = JSON.parse(localStorage.getItem("orders")) || orders;
-
-    if(orders.length === 0){
-        ordersList.innerHTML = `<tr><td colspan="10">No orders yet</td></tr>`;
-        pendingOrders.innerText = 0;
-        todaysSales.innerText = 0;
+    if (orders.length === 0) {
+        ordersList.innerHTML = `<tr><td colspan="11">No orders yet</td></tr>`;
         return;
     }
 
     orders.forEach((order, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>#${order.id}</td>
-            <td>${order.customer}<br>${order.phone}</td>
-            <td>${order.region} / ${order.city} / ${order.area || '-'}</td>
-            <td>${order.address}</td>
-            <td>${order.medicines}</td>
-            <td>৳${order.total}</td>
-            <td>${order.prescription || 'N/A'}</td>
-            <td>${order.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Digital Payment'}</td>
-            <td>${order.status}</td>
-            <td>
-                ${order.status === "Pending" ? `<button class="btn-primary" onclick="completeOrder(${index})">Mark as Completed</button>` : 'Completed'}
+        const tr = document.createElement('tr');
+
+        // Update column content
+        let updateContent = '';
+        if (order.status === "Pending") {
+            updateContent = `
+                <button onclick="completeOrder(${index})">Mark Completed</button>
+                <button onclick="rejectOrder(${index})" style="margin-left:5px;">Reject</button>
+            `;
+        } else {
+            updateContent = order.status;
+        }
+
+        tr.innerHTML = `
+            <td data-label="Order ID">#${order.id}</td>
+            <td data-label="Customer">${order.customer}<br>${order.phone}</td>
+            <td data-label="Region">${order.region} / ${order.city} / ${order.area || '-'}</td>
+            <td data-label="Address">${order.address}</td>
+            <td data-label="Medicines">${order.medicines}</td>
+            <td data-label="Total">৳${order.total}</td>
+            <td data-label="Prescription">${order.prescription || 'N/A'}</td>
+            <td data-label="Payment">${order.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Digital Payment'}</td>
+            <td data-label="Status">${order.status}</td>
+            <td data-label="Update">${updateContent}</td>
+            <td data-label="Actions">
+                ${order.status !== "Rejected" ? `<button onclick="generateInvoice(${index})">Invoice</button>` : 'N/A'}
             </td>
         `;
-        ordersList.appendChild(row);
-    });
 
-    updateDashboardMetrics();
+        ordersList.appendChild(tr);
+    });
 }
 
+// ==================== Render Order History (All Orders, No Actions) ====================
+function renderOrderHistory() {
+    const tbody = document.getElementById("orderHistoryList");
+    tbody.innerHTML = "";
+
+    if (orders.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="10">No orders yet.</td></tr>`;
+        return;
+    }
+
+    orders.forEach((order) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td data-label="Order ID">#${order.id}</td>
+            <td data-label="Date">${order.date || new Date().toLocaleString()}</td>
+            <td data-label="Customer">${order.customer}<br>${order.phone}</td>
+            <td data-label="Region">${order.region} / ${order.city} / ${order.area || '-'}</td>
+            <td data-label="Address">${order.address}</td>
+            <td data-label="Medicines">${order.medicines}</td>
+            <td data-label="Total">৳${parseFloat(order.total).toFixed(2)}</td>
+            <td data-label="Prescription">${order.prescription || 'N/A'}</td>
+            <td data-label="Payment">${order.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Digital Payment'}</td>
+            <td data-label="Status">${order.status}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+
+// ==================== Complete Order & Invoice ====================
 function completeOrder(index) {
     orders[index].status = "Completed";
-    localStorage.setItem("orders", JSON.stringify(orders)); // Persist change
     renderOrders();
+    updateNotifications();
+    refreshOrdersAndDashboard(); // This ensures sales card updates immediately
+
+}
+// ==================== Reject Order ====================
+function rejectOrder(index) {
+    // Update the order status
+    orders[index].status = "Rejected";
+    // Refresh orders table
+    renderOrders();
+    // Refresh notifications panel
+    updateNotifications();
+    // Update dashboard cards (pending orders, sales, etc.)
+    refreshOrdersAndDashboard();
 }
 
-function updateDashboardMetrics() {
-    const pending = orders.filter(o => o.status === "Pending").length;
-    pendingOrders.innerText = pending;
+// ==================== Generate Invoice ====================
+function generateInvoice(index) {
+    const order = orders[index];
+    const invoiceWindow = window.open('', 'Invoice', 'width=800,height=600');
+    invoiceWindow.document.write(`
+        <html>
+        <head>
+            <title>Invoice #${order.id}</title>
+            <style>
+                body{ font-family: Arial; padding: 20px; }
+                h2{text-align:center;}
+                table{width:100%; border-collapse: collapse; margin-top:20px;}
+                table, th, td{border:1px solid #000;}
+                th, td{padding:10px; text-align:left;}
+                .totals{margin-top:20px; float:right;}
+            </style>
+        </head>
+        <body>
+            <h2>HNMS Pharmacy</h2>
+            <p><strong>Invoice ID:</strong> #${order.id}</p>
+            <p><strong>Customer:</strong> ${order.customer} (${order.phone})</p>
+            <p><strong>Address:</strong> ${order.address}, ${order.area}, ${order.city}, ${order.region}</p>
+            <table>
+                <thead><tr><th>Medicine</th><th>Qty</th><th>Price (৳)</th></tr></thead>
+                <tbody>
+                    ${order.medicines.split(',').map(med => {
+        const parts = med.trim().split(' x ');
+        return `<tr><td>${parts[0]}</td><td>${parts[1] || 1}</td><td>৳${(parts[1] || 1) * 10}</td></tr>`;
+    }).join('')}
+                </tbody>
+            </table>
+            <div class="totals">
+                <p><strong>Total: ৳${order.total}</strong></p>
+                <p><strong>Payment Method:</strong> ${order.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Digital Payment'}</p>
+                <p><strong>Status:</strong> ${order.status}</p>
+            </div>
+            <p>Thank you for ordering from HNMS Pharmacy!</p>
+        </body>
+        </html>
+    `);
+    invoiceWindow.document.close();
+    invoiceWindow.print();
+}
 
+// ==================== Notifications ====================
+function updateNotifications() {
+    const pendingOrdersArr = orders.filter(o => o.status === "Pending");
+    notificationCount.textContent = pendingOrdersArr.length;
+
+    if (pendingOrdersArr.length > 0) {
+        notificationsList.innerHTML = pendingOrdersArr.map((o, idx) => `
+            <div class="notification-item" data-order-index="${idx}">
+                <strong>Order #${o.id} from ${o.customer}</strong>
+                <span class="date">${o.date || new Date().toLocaleString()}</span>
+            </div>
+        `).join('');
+
+        // Add click listener for each notification
+        notificationsList.querySelectorAll('.notification-item').forEach(item => {
+            item.onclick = () => {
+                const index = parseInt(item.getAttribute('data-order-index'));
+
+                // Show Orders section and scroll
+                showSection('orders');
+                renderOrders();
+                window.scrollTo({ top: document.getElementById('orders').offsetTop, behavior: 'smooth' });
+
+                // Optionally: mark notification as "viewed" by removing it
+                item.remove();
+
+                // Update notification count
+                notificationCount.textContent = notificationsList.querySelectorAll('.notification-item').length;
+
+                // Hide panel if no notifications left
+                if (notificationCount.textContent === "0") {
+                    notificationsPanel.style.display = "none";
+                }
+            };
+        });
+    } else {
+        notificationsList.innerHTML = `<div class="notification-item">No notifications at the moment.</div>`;
+        notificationCount.textContent = 0;
+    }
+}
+
+// Toggle notifications panel
+function showNotifications() {
+    if (notificationsPanel.style.display === "flex") {
+        notificationsPanel.style.display = "none";
+    } else {
+        updateNotifications();
+        notificationsPanel.style.display = "flex";
+    }
+}
+
+// ==================== Update Dashboard Cards ====================
+function updateDashboardCards() {
+    // Update Pending Orders
+    const pendingCount = orders.filter(o => o.status === "Pending").length;
+    document.getElementById("pendingOrders").textContent = pendingCount;
+
+    // Update Today's Sales (sum of completed orders)
     const totalSales = orders
         .filter(o => o.status === "Completed")
         .reduce((sum, o) => sum + parseFloat(o.total), 0);
-
-    todaysSales.innerText = totalSales;
+    document.getElementById("todaysSales").textContent = `৳ ${totalSales.toFixed(2)}`;
 }
 
-// Initial call to load orders
-renderOrders();
-
-// ==================== Billing Functions ====================
-function addToBill() {
-    const name = document.getElementById('medicineName').value.trim();
-    const qty = parseInt(document.getElementById('medicineQty').value);
-    if(!name || isNaN(qty) || qty <= 0){
-        alert("Enter valid medicine and quantity");
-        return;
-    }
-    const medicines = JSON.parse(localStorage.getItem("medicines")) || [];
-    const med = medicines.find(m => m.name.toLowerCase() === name.toLowerCase());
-    if(!med){
-        alert("Medicine not found in inventory");
-        return;
-    }
-    if(med.stock < qty){
-        alert(`Not enough stock. Available: ${med.stock}`);
-        return;
-    }
-    const existing = bill.find(b => b.name === med.name);
-    if(existing){
-        existing.qty += qty;
-    } else {
-        bill.push({name: med.name, price: med.price, qty});
-    }
-    renderBill();
+// ==================== Refresh Orders & Dashboard ====================
+function refreshOrdersAndDashboard() {
+    renderOrders();           // Refresh orders table
+    updateNotifications();    // Refresh notifications panel
+    updateDashboardCards();   // Update dashboard cards
+    renderOrderHistory();     // Refresh order history table
 }
 
-function renderBill() {
-    billItems.innerHTML = '';
-    let total = 0;
-    bill.forEach(item => {
-        const li = document.createElement('li');
-        li.innerText = `${item.name} x ${item.qty} = ৳ ${item.price * item.qty}`;
-        billItems.appendChild(li);
-        total += item.price * item.qty;
-    });
-    billTotal.innerText = total;
-}
-
-function generateInvoice() {
-    if(bill.length === 0){
-        alert("Bill is empty!");
-        return;
-    }
-    // Reduce stock
-    let medicines = JSON.parse(localStorage.getItem("medicines")) || [];
-    bill.forEach(item => {
-        const med = medicines.find(m => m.name === item.name);
-        if(med) med.stock -= item.qty;
-    });
-    localStorage.setItem("medicines", JSON.stringify(medicines));
-
-    // Add order to orders list
-    const orderId = orders.length ? orders[orders.length-1].id + 1 : 1001;
-    const medicinesStr = bill.map(b => `${b.name} x ${b.qty}`).join(', ');
-    const total = bill.reduce((sum,b) => sum + b.price*b.qty,0);
-    orders.push({id: orderId, customer: "Walk-in", medicines: medicinesStr, total, status: "Completed"});
-    bill = [];
-    renderBill();
-    renderInventory();
-    renderOrders();
-    alert("✅ Invoice generated and order completed!");
-}
 
 // ==================== Pharmacy Profile Functions ====================
 function loadPharmacyProfile() {
-  document.getElementById("profileName").value = pharmacyProfile.name;
-  document.getElementById("profileEmail").value = pharmacyProfile.email;
-  document.getElementById("profilePhone").value = pharmacyProfile.phone;
-  document.getElementById("profileAddress").value = pharmacyProfile.address;
-  document.getElementById("profileHours").value = pharmacyProfile.hours;
-  document.getElementById("navbarPharmacyName").innerText = pharmacyProfile.name;
+    document.getElementById("profileName").value = pharmacyProfile.name;
+    document.getElementById("profileEmail").value = pharmacyProfile.email;
+    document.getElementById("profilePhone").value = pharmacyProfile.phone;
+    document.getElementById("profileAddress").value = pharmacyProfile.address;
+    document.getElementById("profileHours").value = pharmacyProfile.hours;
+    document.getElementById("navbarPharmacyName").innerText = pharmacyProfile.name;
 
-  // Update document statuses
-  updateVerificationDocsStatus();
+    // Update document statuses
+    updateVerificationDocsStatus();
 }
 
 function enableEdit(fieldId) {
-  const input = document.getElementById(fieldId);
-  input.disabled = false;
-  input.focus();
+    const input = document.getElementById(fieldId);
+    input.disabled = false;
+    input.focus();
 }
 
-document.querySelector("#pharmacyProfile form").addEventListener("submit", function(e) {
-  e.preventDefault();
-  pharmacyProfile.name = document.getElementById("profileName").value;
-  pharmacyProfile.email = document.getElementById("profileEmail").value;
-  pharmacyProfile.phone = document.getElementById("profilePhone").value;
-  pharmacyProfile.address = document.getElementById("profileAddress").value;
-  pharmacyProfile.hours = document.getElementById("profileHours").value;
-  document.getElementById("navbarPharmacyName").innerText = pharmacyProfile.name;
-  alert("✅ Pharmacy profile updated successfully!");
+document.querySelector("#pharmacyProfile form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    pharmacyProfile.name = document.getElementById("profileName").value;
+    pharmacyProfile.email = document.getElementById("profileEmail").value;
+    pharmacyProfile.phone = document.getElementById("profilePhone").value;
+    pharmacyProfile.address = document.getElementById("profileAddress").value;
+    pharmacyProfile.hours = document.getElementById("profileHours").value;
+    document.getElementById("navbarPharmacyName").innerText = pharmacyProfile.name;
+    alert("✅ Pharmacy profile updated successfully!");
 });
 
 // ==================== Verification Functions ====================
 function uploadProfileDoc(docType) {
-  const fileInput = document.getElementById(`${docType}File`);
-  if(fileInput && fileInput.files.length > 0){
-    if(docType === 'trade') verificationDocs.drug = fileInput.files[0].name;
-    else verificationDocs[docType] = fileInput.files[0].name;
+    const fileInput = document.getElementById(`${docType}File`);
+    if (fileInput && fileInput.files.length > 0) {
+        if (docType === 'trade') verificationDocs.drug = fileInput.files[0].name;
+        else verificationDocs[docType] = fileInput.files[0].name;
 
-    alert(`✅ ${docType.toUpperCase()} uploaded successfully!`);
-    updateVerificationDocsStatus();
-    checkVerification();
-  } else {
-    alert("Please select a file to upload!");
-  }
+        alert(`✅ ${docType.toUpperCase()} uploaded successfully!`);
+        updateVerificationDocsStatus();
+        checkVerification();
+    } else {
+        alert("Please select a file to upload!");
+    }
 }
 
 function updateVerificationDocsStatus() {
-  document.getElementById("docTINStatus").innerText = verificationDocs.tin ? "✅ Uploaded" : "❌ Not Uploaded";
-  document.getElementById("docDrugStatus").innerText = verificationDocs.drug ? "✅ Uploaded" : "❌ Not Uploaded";
-  document.getElementById("docGSTStatus").innerText = verificationDocs.gst ? "✅ Uploaded" : "❌ Not Uploaded";
+    document.getElementById("docTINStatus").innerText = verificationDocs.tin ? "✅ Uploaded" : "❌ Not Uploaded";
+    document.getElementById("docDrugStatus").innerText = verificationDocs.drug ? "✅ Uploaded" : "❌ Not Uploaded";
+    document.getElementById("docGSTStatus").innerText = verificationDocs.gst ? "✅ Uploaded" : "❌ Not Uploaded";
 }
 
 // ==================== Verification Status on Dashboard ====================
 function checkVerification() {
-  const notice = document.getElementById("verificationNotice");
-  if (!notice) return;
+    const notice = document.getElementById("verificationNotice");
+    if (!notice) return;
 
-  // Show notice only if pharmacy is not verified
-  if (verificationDocs.status !== "Approved") {
-    notice.style.display = "block";
-    notice.innerHTML = `
+    // Show notice only if pharmacy is not verified
+    if (verificationDocs.status !== "Approved") {
+        notice.style.display = "block";
+        notice.innerHTML = `
       <p><strong>⚠️ Your pharmacy account is not verified.</strong></p>
       <p>Status: <b>${verificationDocs.status}</b></p>
       <p>Please upload <b>TIN</b>, <b>Drug License</b>, and <b>GST/VAT</b> 
       in the <a href="#" onclick="showSection('pharmacyProfile')">Profile Section</a> 
       for Superadmin approval.</p>
     `;
-  } else {
-    notice.style.display = "none"; // Hide if verified
-  }
+    } else {
+        notice.style.display = "none"; // Hide if verified
+    }
 }
 
 // Call it whenever dashboard loads
 function showSection(sectionId, event) {
-  document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
-  const sec = document.getElementById(sectionId);
-  if (sec) sec.style.display = "block";
+    document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
+    const sec = document.getElementById(sectionId);
+    if (sec) sec.style.display = "block";
 
-  document.querySelectorAll(".sidebar a").forEach(link => link.classList.remove("active"));
-  if (event && event.currentTarget) event.currentTarget.classList.add("active");
+    document.querySelectorAll(".sidebar a").forEach(link => link.classList.remove("active"));
+    if (event && event.currentTarget) event.currentTarget.classList.add("active");
 
-  if (window.innerWidth <= 768) {
-    sidebar.classList.remove("show");
-  }
+    if (window.innerWidth <= 768) {
+        sidebar.classList.remove("show");
+    }
 
-  // Check verification when opening dashboard
-  if (sectionId === "dashboard") {
-    checkVerification();
-  }
+    // Check verification when opening dashboard
+    if (sectionId === "dashboard") {
+        checkVerification();
+    }
 }
 
 // ----- Initial Call on page load -----
@@ -415,18 +508,18 @@ showSection("dashboard");
 
 // ==================== Sidebar & Sections ====================
 function showSection(sectionId, event) {
-  document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
-  const sec = document.getElementById(sectionId);
-  if (sec) sec.style.display = "block";
+    document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
+    const sec = document.getElementById(sectionId);
+    if (sec) sec.style.display = "block";
 
-  document.querySelectorAll(".sidebar a").forEach(link => link.classList.remove("active"));
-  if (event && event.currentTarget) event.currentTarget.classList.add("active");
+    document.querySelectorAll(".sidebar a").forEach(link => link.classList.remove("active"));
+    if (event && event.currentTarget) event.currentTarget.classList.add("active");
 
-  if (window.innerWidth <= 768) {
-    sidebar.classList.remove("show");
-  }
+    if (window.innerWidth <= 768) {
+        sidebar.classList.remove("show");
+    }
 
-  if (sectionId === "dashboard") checkVerification();
+    if (sectionId === "dashboard") checkVerification();
 }
 // ==================== Add Medicine (Section-based) ====================
 document.getElementById("addMedicineFormSection").addEventListener("submit", function (e) {
@@ -500,7 +593,7 @@ let medicines = [
         price: 15.0,
         expiry: "2026-12-31",
         documents: {
-            drugImage:null ,
+            drugImage: null,
             drugLicense: null,
             prescriptionRequired: "no",
             importCert: null
@@ -514,7 +607,7 @@ let medicines = [
         price: 25.0,
         expiry: "2025-09-30",
         documents: {
-            drugImage: null ,
+            drugImage: null,
             drugLicense: null,
             prescriptionRequired: "yes",
             importCert: null
@@ -644,7 +737,7 @@ function editMedicine(id) {
 
     // Handle form submission
     const form = document.getElementById("editMedicineFormSection");
-    form.onsubmit = function(e) {
+    form.onsubmit = function (e) {
         e.preventDefault();
 
         // Update medicine details
@@ -672,7 +765,8 @@ function editMedicine(id) {
 
 
 // ==================== Initial Load ====================
-renderInventory();        
+refreshOrdersAndDashboard();
+renderInventory();
 renderOrders();
-updateDashboardMetrics();
 loadPharmacyProfile();
+renderOrderHistory();
