@@ -1,0 +1,204 @@
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f8f9fc;
+      color: #333;
+    }
+
+    
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding-top: 250px;
+      padding-bottom: 250px;
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                  url('https://embed.widencdn.net/img/csdam/1lrpkwficn/1600x900px/Photo_MDA_SF_PtConsult_ChoyNicole_Pt224_004_HomePage.jpg?crop=yes&position=c') no-repeat center/cover;
+      color: white;
+    }
+
+    .hero h2 {
+      font-size: 40px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      max-width: 900px;
+      margin: 0 auto 30px auto;
+      line-height: 1.6;
+    }
+
+    .hero button {
+      background: #ffc107;
+      color: #000;
+      padding: 12px 25px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    .hero button:hover {
+      background: #e0a800;
+    }
+
+    /* Features Section */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 50px;
+    }
+
+    .features .card {
+      background: white;
+      padding: 25px;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .features .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .features .card h3 {
+      margin-bottom: 15px;
+      color: #0d6efd;
+    }
+
+    .features .card p {
+      font-size: 14px;
+    }
+
+    /* Section Template */
+    .section {
+      padding-left: 7%;
+      padding-right: 7%;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      background: #f1f3f6;
+    }
+
+    .section .container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-around;
+      gap: 30px;
+    }
+
+    .section .image {
+      flex: 1;
+      min-width: 200px;
+      text-align: center;
+    }
+
+    .section .image img {
+      width: 500px;
+      height: 500px;
+      object-fit: cover;
+      border-radius: 24px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .section .content {
+      flex: 1;
+      min-width: 250px;
+      padding-left: 3%;
+    }
+
+    .section .content h2 {
+      color: #0d6efd;
+      margin-bottom: 15px;
+    }
+
+    .section .content p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .section .content button {
+  background: #4CAF50;
+  color: #fff;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.section .content button:hover {
+  background: #45a049;
+}
+
+    /* Scroll Reveal Animation */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease-out;
+    }
+
+    .scroll-reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+
+.features .card h3,
+.section .content h2,
+.contact-info h2,
+.contact-info h4 {
+  color: #333;  /* dashboard heading color */
+  font-weight: 600;
+}
+
+/* Responsive */
+@media(max-width: 900px) {
+  .contact-container {
+    flex-direction: column;
+  }
+}
+
+.testimonials {
+  background-color: #fff;
+  padding: 80px 20px;
+  text-align: center;
+}
+.testimonials h2 {
+  font-size: 36px;
+  margin-bottom: 40px;
+}
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+.testimonial {
+  background: #f1f1f1;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+.testimonial p {
+  font-style: italic;
+  font-size: 16px;
+}
+.testimonial h4 {
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+
