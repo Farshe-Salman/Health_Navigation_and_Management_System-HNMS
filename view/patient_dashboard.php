@@ -37,7 +37,7 @@
         <i class="fa fa-bars"></i>
       </div>
       <div class="navbar-logo">
-        <img src="HNMS.png" alt="HNMS Logo">
+        <img src="../assets/image/HNMS.png" alt="HNMS Logo">
         <span>HNMS</span>
       </div>
       <div class="navbar-links">
