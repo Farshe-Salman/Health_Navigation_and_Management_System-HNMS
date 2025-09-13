@@ -1,4 +1,4 @@
-<?php include("db_connect.php"); 
+<?php include("../db_connect.php"); 
 $hospital_id=2;
 
 $sql = "SELECT name FROM hospitals WHERE hospital_id = '$hospital_id'";
@@ -28,7 +28,7 @@ if(isset($_POST['doctor_add'])){
 
     $photoName = $_FILES['photo']['name'];
     $tmp = $_FILES['photo']['tmp_name'];
-    $uploadDir = "uploads/";
+    $uploadDir = "../assets/uploads/";
     move_uploaded_file($tmp, $uploadDir . $photoName);
 
     $sql = "INSERT INTO doctors (hospital_id,name,specialization,qualification,
@@ -88,12 +88,12 @@ if(isset($_POST['surgery_add'])){
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HNMS Hospital Dashboard</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="Dash.css">
+<link rel="stylesheet" href="../assets/css/hospital_dashboard.css">
 </head>
 <body>
 <div class="sidebar" id="sidebar">
     <div class="logo">
-        <img src="HNMS.png" alt="HNMS logo">
+        <img src="../assets/image/HNMS.png" alt="HNMS logo">
         <span class="logo-text">HEALTH NAVIGATION AND MANAGEMENT</span>
     </div>
     <a href="#" onclick="showSection('dashboard')">Dashboard</a>
@@ -172,7 +172,7 @@ if(isset($_POST['surgery_add'])){
                                         <td>{$row['schedule_days']}</td>
                                         <td>{$row['start_time']}</td>
                                         <td>{$row['end_time']}</td>
-                                        <td><img src='uploads/{$row['photo']}' width='60' height='60'></td>
+                                        <td><img src='../assets/uploads/{$row['photo']}' width='60' height='60'></td>
                                         <td><a href='?doctor_delete_id={$row['doctor_id']}' onclick=\"return confirm('Are you sure?');\">Delete</a></td>
                                       </tr>";
                             }
@@ -311,7 +311,7 @@ if(isset($_POST['surgery_add'])){
     </div>
 </div>
 
-<script src="Dash.js"></script>
+<script src="../assets/js/hospital_dashboard.js"></script>
 
 <!-- <script>
 
