@@ -360,6 +360,7 @@ button:hover {
   transition: all 0.2s ease-in-out;
 }
 
+
 /* Focus Effect */
 .doctor-search select:focus,
 .doctor-search input:focus {
@@ -1826,4 +1827,3 @@ button:hover {
     font-size: 0.9em;
   }
 }
-

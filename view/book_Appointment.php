@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <!-- Appointment Form -->
+      <div id="appointments" class="section">
+        <h3>Appointment Request Form</h3>
+        <div class="card appointment-card">
+          <form id="appointmentForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Hospital*</label>
+                <select id="hospitalSelect" required>
+                  <option value="">Select Hospital</option>
+                  <option value="City General Hospital">City General Hospital</option>
+                  <option value="Sunrise Diagnostics">Sunrise Diagnostics</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Patient Name*</label>
+                <input type="text" id="patientName" placeholder="Full name" required>
+              </div>
+              <div class="form-group">
+                <label>Date of Birth*</label>
+                <input type="date" id="dob" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Gender*</label>
+                <select id="gender" required>
+                  <option value="">Select Gender</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Email*</label>
+                <input type="email" id="email" placeholder="example@gmail.com" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Contact Number*</label>
+                <input type="tel" id="contact" placeholder="+8801XXXXXXXXX" required>
+              </div>
+              <div class="form-group">
+                <label>Speciality For Consultation*</label>
+                <select id="speciality" required>
+                  <option value="">Select Speciality</option>
+                  <option>Cardiology</option>
+                  <option>Neurology</option>
+                  <option>Orthopedics</option>
+                  <option>Dermatology</option>
+                  <option>ENT & Head Neck Surgery</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group" style="flex:1; margin-right:15px;">
+                <label>Doctor*</label>
+                <select id="doctorSelect" required style="width:100%;">
+                  <option value="">Select Doctor</option>
+                </select>
+              </div>
+              <div class="form-group" style="flex:1;">
+                <label>Appointment Date*</label>
+                <input type="date" id="appointmentDate" required style="width:100%;">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Appointment Time (9:00AM -5:00PM)*</label>
+                <input type="time" id="appointmentTime" required>
+              </div>
+            </div>
+
+            <button type="submit">SUBMIT</button>
+          </form>
+        </div>
+      </div>
+</body>
+</html>

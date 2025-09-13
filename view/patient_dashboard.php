@@ -7,7 +7,7 @@
   <title>HNMS Patient Dashboard</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/dashboard.css">
-  <link rel="icon" type="image/png" href="../assets/image/HNMS.png">
+  <link rel="icon" href="../assets/image/HNMS.png?v=2" type="image/png" sizes="32x32">
 </head>
 
 <body>
@@ -97,39 +97,10 @@
         </div>
       </div>
 
-      <!-- Hospitals -->
-      <div id="hospitals" class="section">
-        <h3>Registered Hospitals</h3>
-        <input type="text" placeholder="Search hospital or facility..." id="searchHospitals">
 
-        <div class="hospital-list">
-          <div class="hospital-card">
-            <img src="hospital1.jpg" alt="City General Hospital">
-            <div class="hospital-info">
-              <h4>City General Hospital</h4>
-              <p>Category: Government | Facilities: ICU, Emergency, Lab</p>
-            </div>
-            <div class="button-group">
-              <button class="btn-primary" onclick="bookAppointmentFromHospital('City General Hospital')">Book
-                Appointment</button>
-              <button class="btn-secondary">View Details</button>
-            </div>
-          </div>
-
-          <div class="hospital-card">
-            <img src="hospital2.jpg" alt="Sunrise Diagnostics">
-            <div class="hospital-info">
-              <h4>Sunrise Diagnostics</h4>
-              <p>Category: Diagnostic Center | Facilities: Lab Tests, Imaging</p>
-            </div>
-            <div class="button-group">
-              <button class="btn-primary" onclick="bookAppointmentFromHospital('Sunrise Diagnostics')">Book
-                Appointment</button>
-              <button class="btn-secondary">View Details</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- Patient Find Hospital -->
+  <?php include "../view/patient_Find_Hospital.php";?>
+     
       
        <!-- Find Doctor -->
   <?php include "../view/find_Doctor.php";?>
@@ -365,165 +336,19 @@
       </div>
 
 
-      <!-- Appointment Form -->
-      <div id="appointments" class="section">
-        <h3>Appointment Request Form</h3>
-        <div class="card appointment-card">
-          <form id="appointmentForm">
-            <div class="form-row">
-              <div class="form-group">
-                <label>Hospital*</label>
-                <select id="hospitalSelect" required>
-                  <option value="">Select Hospital</option>
-                  <option value="City General Hospital">City General Hospital</option>
-                  <option value="Sunrise Diagnostics">Sunrise Diagnostics</option>
-                </select>
-              </div>
-            </div>
+     <!-- Book AppointMent -->
+      <?php include "../view/book_Appointment.php";?>
 
-            <div class="form-row">
-              <div class="form-group">
-                <label>Patient Name*</label>
-                <input type="text" id="patientName" placeholder="Full name" required>
-              </div>
-              <div class="form-group">
-                <label>Date of Birth*</label>
-                <input type="date" id="dob" required>
-              </div>
-            </div>
+     <!-- Patient Profile Section -->
+      <?php include "../view/patient_Profile.php";?>
 
-            <div class="form-row">
-              <div class="form-group">
-                <label>Gender*</label>
-                <select id="gender" required>
-                  <option value="">Select Gender</option>
-                  <option>Male</option>
-                  <option>Female</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Email*</label>
-                <input type="email" id="email" placeholder="example@gmail.com" required>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label>Contact Number*</label>
-                <input type="tel" id="contact" placeholder="+8801XXXXXXXXX" required>
-              </div>
-              <div class="form-group">
-                <label>Speciality For Consultation*</label>
-                <select id="speciality" required>
-                  <option value="">Select Speciality</option>
-                  <option>Cardiology</option>
-                  <option>Neurology</option>
-                  <option>Orthopedics</option>
-                  <option>Dermatology</option>
-                  <option>ENT & Head Neck Surgery</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group" style="flex:1; margin-right:15px;">
-                <label>Doctor*</label>
-                <select id="doctorSelect" required style="width:100%;">
-                  <option value="">Select Doctor</option>
-                </select>
-              </div>
-              <div class="form-group" style="flex:1;">
-                <label>Appointment Date*</label>
-                <input type="date" id="appointmentDate" required style="width:100%;">
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label>Appointment Time (9:00AM -5:00PM)*</label>
-                <input type="time" id="appointmentTime" required>
-              </div>
-            </div>
-
-            <button type="submit">SUBMIT</button>
-          </form>
-        </div>
-      </div>
 
       <!-- Change Password -->
-      <div id="changePassword" class="section" style="display:none;">
-        <h3>Change Password</h3>
-        <div class="card">
-          <form id="changePasswordForm">
-            <div class="form-row">
-              <div class="form-group">
-                <label>Current Password*</label>
-                <input type="password" id="currentPassword" placeholder="Enter current password">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>New Password*</label>
-                <input type="password" id="newPassword" placeholder="Enter new password">
-              </div>
-              <div class="form-group">
-                <label>Confirm Password*</label>
-                <input type="password" id="confirmPassword" placeholder="Confirm new password">
-              </div>
-            </div>
-            <button type="submit">UPDATE PASSWORD</button>
-          </form>
-          <p id="passwordMessage"></p>
-        </div>
-      </div>
+      <?php include "../view/change_Password.php";?>
 
-      <!-- Notifications Panel -->
-      <div id="notificationsPanel" class="notification-popup" style="display:none;">
-        <div class="notification-header">
-          <span>Notifications</span>
-          <button id="closeNotifications">Close</button>
-        </div>
-        <div class="notification-body" id="notificationsList">
-          <!-- Notification items will be injected here -->
-        </div>
-        <div class="notification-footer">
-          <a href="#">See All</a>
-        </div>
-      </div>
-
-      <!-- Patient Profile Section -->
-      <div class="section" id="profileSection" style="display:none;">
-        <h2>My Profile</h2>
-        <form id="profileForm">
-
-          <div class="profile-field">
-            <label for="profileName">Username:</label>
-            <div class="field-row">
-              <input type="text" id="profileName" placeholder="Full Name" value="Shizan Sarkar" disabled required>
-              <button type="button" class="edit-btn" onclick="enableEdit('profileName')">Edit</button>
-            </div>
-          </div>
-
-          <div class="profile-field">
-            <label for="profileEmail">Email:</label>
-            <div class="field-row">
-              <input type="email" id="profileEmail" placeholder="Email" value="shizan@example.com" disabled required>
-              <button type="button" class="edit-btn" onclick="enableEdit('profileEmail')">Edit</button>
-            </div>
-          </div>
-
-          <div class="profile-field">
-            <label for="profilePhone">Phone:</label>
-            <div class="field-row">
-              <input type="text" id="profilePhone" placeholder="Phone Number" value="01712345678" disabled required>
-              <button type="button" class="edit-btn" onclick="enableEdit('profilePhone')">Edit</button>
-            </div>
-          </div>
-
-          <button type="submit" class="petient-btn-primary">Save Changes</button>
-        </form>
-      </div>
-
+          <!--Notification Panel -->
+      <?php include "../view/notification_panel.php";?>
+      
 
 
 

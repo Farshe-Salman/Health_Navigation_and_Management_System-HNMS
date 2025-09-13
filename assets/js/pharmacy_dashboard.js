@@ -43,19 +43,19 @@ let bill = [];
 
 // ----- Verification -----
 let verificationDocs = {
-    tin: null,
-    drug: null,
-    gst: null,
-    status: "Pending" // Pending / Approved / Rejected
+  tin: null,
+  drug: null,
+  gst: null,
+  status: "Pending" // Pending / Approved / Rejected
 };
 
 // ----- Pharmacy Profile -----
 let pharmacyProfile = {
-    name: "City Pharmacy",
-    email: "citypharmacy@example.com",
-    phone: "01712345678",
-    address: "Dhaka, Bangladesh",
-    hours: "9:00 AM - 10:00 PM"
+  name: "City Pharmacy",
+  email: "citypharmacy@example.com",
+  phone: "01712345678",
+  address: "Dhaka, Bangladesh",
+  hours: "9:00 AM - 10:00 PM"
 };
 
 // ----- DOM Elements -----
@@ -114,7 +114,7 @@ function updateLowStock() {
     const medicines = JSON.parse(localStorage.getItem("medicines")) || [];
     const lowStockItems = medicines.filter(m => m.stock <= 10);
     lowStockList.innerHTML = '';
-    if (lowStockItems.length === 0) {
+    if(lowStockItems.length === 0){
         lowStockList.innerHTML = '<li>No low stock items</li>';
     } else {
         lowStockItems.forEach(item => {
@@ -127,25 +127,25 @@ function updateLowStock() {
 
 // ==================== Sidebar ====================
 function toggleSidebar() {
-    sidebar.classList.toggle("show");
+  sidebar.classList.toggle("show");
 }
 
 function showSection(sectionId, event) {
-    // Hide all sections
-    document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
+  // Hide all sections
+  document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
 
-    // Show the requested section
-    const sec = document.getElementById(sectionId);
-    if (sec) sec.style.display = "block";
+  // Show the requested section
+  const sec = document.getElementById(sectionId);
+  if (sec) sec.style.display = "block";
 
-    // Update active sidebar link
-    document.querySelectorAll(".sidebar a").forEach(link => link.classList.remove("active"));
-    if (event && event.currentTarget) event.currentTarget.classList.add("active");
+  // Update active sidebar link
+  document.querySelectorAll(".sidebar a").forEach(link => link.classList.remove("active"));
+  if (event && event.currentTarget) event.currentTarget.classList.add("active");
 
-    // On mobile, hide sidebar after clicking a link
-    if (window.innerWidth <= 768) {
-        sidebar.classList.remove("show"); // instead of toggleSidebar()
-    }
+  // On mobile, hide sidebar after clicking a link
+  if (window.innerWidth <= 768) {
+    sidebar.classList.remove("show"); // instead of toggleSidebar()
+  }
 }
 // ==================== Notifications ====================
 
@@ -276,12 +276,12 @@ function renderOrderHistory() {
 
 
 // ==================== Complete Order & Invoice ====================
-function completeOrder(index) {
+function completeOrder(index){
     orders[index].status = "Completed";
     renderOrders();
     updateNotifications();
     refreshOrdersAndDashboard(); // This ensures sales card updates immediately
-
+    
 }
 // ==================== Reject Order ====================
 function rejectOrder(index) {
@@ -292,11 +292,11 @@ function rejectOrder(index) {
     // Refresh notifications panel
     updateNotifications();
     // Update dashboard cards (pending orders, sales, etc.)
-    refreshOrdersAndDashboard();
+    refreshOrdersAndDashboard(); 
 }
 
 // ==================== Generate Invoice ====================
-function generateInvoice(index) {
+function generateInvoice(index){
     const order = orders[index];
     const invoiceWindow = window.open('', 'Invoice', 'width=800,height=600');
     invoiceWindow.document.write(`
@@ -320,10 +320,10 @@ function generateInvoice(index) {
             <table>
                 <thead><tr><th>Medicine</th><th>Qty</th><th>Price (৳)</th></tr></thead>
                 <tbody>
-                    ${order.medicines.split(',').map(med => {
-        const parts = med.trim().split(' x ');
-        return `<tr><td>${parts[0]}</td><td>${parts[1] || 1}</td><td>৳${(parts[1] || 1) * 10}</td></tr>`;
-    }).join('')}
+                    ${order.medicines.split(',').map(med=>{
+                        const parts = med.trim().split(' x ');
+                        return `<tr><td>${parts[0]}</td><td>${parts[1]||1}</td><td>৳${(parts[1]||1)*10}</td></tr>`;
+                    }).join('')}
                 </tbody>
             </table>
             <div class="totals">
@@ -340,11 +340,11 @@ function generateInvoice(index) {
 }
 
 // ==================== Notifications ====================
-function updateNotifications() {
+function updateNotifications(){
     const pendingOrdersArr = orders.filter(o => o.status === "Pending");
     notificationCount.textContent = pendingOrdersArr.length;
 
-    if (pendingOrdersArr.length > 0) {
+    if(pendingOrdersArr.length > 0){
         notificationsList.innerHTML = pendingOrdersArr.map((o, idx) => `
             <div class="notification-item" data-order-index="${idx}">
                 <strong>Order #${o.id} from ${o.customer}</strong>
@@ -356,20 +356,20 @@ function updateNotifications() {
         notificationsList.querySelectorAll('.notification-item').forEach(item => {
             item.onclick = () => {
                 const index = parseInt(item.getAttribute('data-order-index'));
-
+                
                 // Show Orders section and scroll
-                showSection('orders');
-                renderOrders();
-                window.scrollTo({ top: document.getElementById('orders').offsetTop, behavior: 'smooth' });
-
+                showSection('orders');    
+                renderOrders();           
+                window.scrollTo({top: document.getElementById('orders').offsetTop, behavior: 'smooth'});
+                
                 // Optionally: mark notification as "viewed" by removing it
                 item.remove();
 
                 // Update notification count
                 notificationCount.textContent = notificationsList.querySelectorAll('.notification-item').length;
-
+                
                 // Hide panel if no notifications left
-                if (notificationCount.textContent === "0") {
+                if(notificationCount.textContent === "0"){
                     notificationsPanel.style.display = "none";
                 }
             };
@@ -381,12 +381,12 @@ function updateNotifications() {
 }
 
 // Toggle notifications panel
-function showNotifications() {
-    if (notificationsPanel.style.display === "flex") {
+function showNotifications(){
+    if(notificationsPanel.style.display === "flex") {
         notificationsPanel.style.display = "none";
-    } else {
-        updateNotifications();
-        notificationsPanel.style.display = "flex";
+    } else { 
+        updateNotifications(); 
+        notificationsPanel.style.display = "flex"; 
     }
 }
 
@@ -414,92 +414,92 @@ function refreshOrdersAndDashboard() {
 
 // ==================== Pharmacy Profile Functions ====================
 function loadPharmacyProfile() {
-    document.getElementById("profileName").value = pharmacyProfile.name;
-    document.getElementById("profileEmail").value = pharmacyProfile.email;
-    document.getElementById("profilePhone").value = pharmacyProfile.phone;
-    document.getElementById("profileAddress").value = pharmacyProfile.address;
-    document.getElementById("profileHours").value = pharmacyProfile.hours;
-    document.getElementById("navbarPharmacyName").innerText = pharmacyProfile.name;
+  document.getElementById("profileName").value = pharmacyProfile.name;
+  document.getElementById("profileEmail").value = pharmacyProfile.email;
+  document.getElementById("profilePhone").value = pharmacyProfile.phone;
+  document.getElementById("profileAddress").value = pharmacyProfile.address;
+  document.getElementById("profileHours").value = pharmacyProfile.hours;
+  document.getElementById("navbarPharmacyName").innerText = pharmacyProfile.name;
 
-    // Update document statuses
-    updateVerificationDocsStatus();
+  // Update document statuses
+  updateVerificationDocsStatus();
 }
 
 function enableEdit(fieldId) {
-    const input = document.getElementById(fieldId);
-    input.disabled = false;
-    input.focus();
+  const input = document.getElementById(fieldId);
+  input.disabled = false;
+  input.focus();
 }
 
-document.querySelector("#pharmacyProfile form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    pharmacyProfile.name = document.getElementById("profileName").value;
-    pharmacyProfile.email = document.getElementById("profileEmail").value;
-    pharmacyProfile.phone = document.getElementById("profilePhone").value;
-    pharmacyProfile.address = document.getElementById("profileAddress").value;
-    pharmacyProfile.hours = document.getElementById("profileHours").value;
-    document.getElementById("navbarPharmacyName").innerText = pharmacyProfile.name;
-    alert("✅ Pharmacy profile updated successfully!");
+document.querySelector("#pharmacyProfile form").addEventListener("submit", function(e) {
+  e.preventDefault();
+  pharmacyProfile.name = document.getElementById("profileName").value;
+  pharmacyProfile.email = document.getElementById("profileEmail").value;
+  pharmacyProfile.phone = document.getElementById("profilePhone").value;
+  pharmacyProfile.address = document.getElementById("profileAddress").value;
+  pharmacyProfile.hours = document.getElementById("profileHours").value;
+  document.getElementById("navbarPharmacyName").innerText = pharmacyProfile.name;
+  alert("✅ Pharmacy profile updated successfully!");
 });
 
 // ==================== Verification Functions ====================
 function uploadProfileDoc(docType) {
-    const fileInput = document.getElementById(`${docType}File`);
-    if (fileInput && fileInput.files.length > 0) {
-        if (docType === 'trade') verificationDocs.drug = fileInput.files[0].name;
-        else verificationDocs[docType] = fileInput.files[0].name;
+  const fileInput = document.getElementById(`${docType}File`);
+  if(fileInput && fileInput.files.length > 0){
+    if(docType === 'trade') verificationDocs.drug = fileInput.files[0].name;
+    else verificationDocs[docType] = fileInput.files[0].name;
 
-        alert(`✅ ${docType.toUpperCase()} uploaded successfully!`);
-        updateVerificationDocsStatus();
-        checkVerification();
-    } else {
-        alert("Please select a file to upload!");
-    }
+    alert(`✅ ${docType.toUpperCase()} uploaded successfully!`);
+    updateVerificationDocsStatus();
+    checkVerification();
+  } else {
+    alert("Please select a file to upload!");
+  }
 }
 
 function updateVerificationDocsStatus() {
-    document.getElementById("docTINStatus").innerText = verificationDocs.tin ? "✅ Uploaded" : "❌ Not Uploaded";
-    document.getElementById("docDrugStatus").innerText = verificationDocs.drug ? "✅ Uploaded" : "❌ Not Uploaded";
-    document.getElementById("docGSTStatus").innerText = verificationDocs.gst ? "✅ Uploaded" : "❌ Not Uploaded";
+  document.getElementById("docTINStatus").innerText = verificationDocs.tin ? "✅ Uploaded" : "❌ Not Uploaded";
+  document.getElementById("docDrugStatus").innerText = verificationDocs.drug ? "✅ Uploaded" : "❌ Not Uploaded";
+  document.getElementById("docGSTStatus").innerText = verificationDocs.gst ? "✅ Uploaded" : "❌ Not Uploaded";
 }
 
 // ==================== Verification Status on Dashboard ====================
 function checkVerification() {
-    const notice = document.getElementById("verificationNotice");
-    if (!notice) return;
+  const notice = document.getElementById("verificationNotice");
+  if (!notice) return;
 
-    // Show notice only if pharmacy is not verified
-    if (verificationDocs.status !== "Approved") {
-        notice.style.display = "block";
-        notice.innerHTML = `
+  // Show notice only if pharmacy is not verified
+  if (verificationDocs.status !== "Approved") {
+    notice.style.display = "block";
+    notice.innerHTML = `
       <p><strong>⚠️ Your pharmacy account is not verified.</strong></p>
       <p>Status: <b>${verificationDocs.status}</b></p>
       <p>Please upload <b>TIN</b>, <b>Drug License</b>, and <b>GST/VAT</b> 
       in the <a href="#" onclick="showSection('pharmacyProfile')">Profile Section</a> 
       for Superadmin approval.</p>
     `;
-    } else {
-        notice.style.display = "none"; // Hide if verified
-    }
+  } else {
+    notice.style.display = "none"; // Hide if verified
+  }
 }
 
 // Call it whenever dashboard loads
 function showSection(sectionId, event) {
-    document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
-    const sec = document.getElementById(sectionId);
-    if (sec) sec.style.display = "block";
+  document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
+  const sec = document.getElementById(sectionId);
+  if (sec) sec.style.display = "block";
 
-    document.querySelectorAll(".sidebar a").forEach(link => link.classList.remove("active"));
-    if (event && event.currentTarget) event.currentTarget.classList.add("active");
+  document.querySelectorAll(".sidebar a").forEach(link => link.classList.remove("active"));
+  if (event && event.currentTarget) event.currentTarget.classList.add("active");
 
-    if (window.innerWidth <= 768) {
-        sidebar.classList.remove("show");
-    }
+  if (window.innerWidth <= 768) {
+    sidebar.classList.remove("show");
+  }
 
-    // Check verification when opening dashboard
-    if (sectionId === "dashboard") {
-        checkVerification();
-    }
+  // Check verification when opening dashboard
+  if (sectionId === "dashboard") {
+    checkVerification();
+  }
 }
 
 // ----- Initial Call on page load -----
@@ -508,18 +508,18 @@ showSection("dashboard");
 
 // ==================== Sidebar & Sections ====================
 function showSection(sectionId, event) {
-    document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
-    const sec = document.getElementById(sectionId);
-    if (sec) sec.style.display = "block";
+  document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
+  const sec = document.getElementById(sectionId);
+  if (sec) sec.style.display = "block";
 
-    document.querySelectorAll(".sidebar a").forEach(link => link.classList.remove("active"));
-    if (event && event.currentTarget) event.currentTarget.classList.add("active");
+  document.querySelectorAll(".sidebar a").forEach(link => link.classList.remove("active"));
+  if (event && event.currentTarget) event.currentTarget.classList.add("active");
 
-    if (window.innerWidth <= 768) {
-        sidebar.classList.remove("show");
-    }
+  if (window.innerWidth <= 768) {
+    sidebar.classList.remove("show");
+  }
 
-    if (sectionId === "dashboard") checkVerification();
+  if (sectionId === "dashboard") checkVerification();
 }
 // ==================== Add Medicine (Section-based) ====================
 document.getElementById("addMedicineFormSection").addEventListener("submit", function (e) {
@@ -593,7 +593,7 @@ let medicines = [
         price: 15.0,
         expiry: "2026-12-31",
         documents: {
-            drugImage: null,
+            drugImage:null ,
             drugLicense: null,
             prescriptionRequired: "no",
             importCert: null
@@ -607,7 +607,7 @@ let medicines = [
         price: 25.0,
         expiry: "2025-09-30",
         documents: {
-            drugImage: null,
+            drugImage: null ,
             drugLicense: null,
             prescriptionRequired: "yes",
             importCert: null
@@ -737,7 +737,7 @@ function editMedicine(id) {
 
     // Handle form submission
     const form = document.getElementById("editMedicineFormSection");
-    form.onsubmit = function (e) {
+    form.onsubmit = function(e) {
         e.preventDefault();
 
         // Update medicine details
@@ -766,7 +766,7 @@ function editMedicine(id) {
 
 // ==================== Initial Load ====================
 refreshOrdersAndDashboard();
-renderInventory();
+renderInventory();        
 renderOrders();
 loadPharmacyProfile();
 renderOrderHistory();

@@ -6,15 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HNMS Pharmacy Dashboard</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="dashboard.css">
-  <link rel="icon" type="image/png" href="HNMS.png">
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
+  <link rel="icon" href="../assets/image/HNMS.png?v=2" type="image/png" sizes="32x32">
 </head>
 
 <body>
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
     <div class="logo">
-      <img src="HNMS.png" alt="HNMS Logo">
+      <img src="../assets/image/HNMS.png" alt="HNMS Logo">
       <span class="logo-text">HEALTH NAVIGATION MANAGEMENT SYSTEM</span>
     </div>
     <a href="#" class="active" onclick="showSection('dashboard')">Dashboard</a>
@@ -33,7 +33,7 @@
         <i class="fa fa-bars"></i>
       </div>
       <div class="navbar-logo">
-        <img src="HNMS.png" alt="HNMS Logo">
+        <img src="../assets/image/HNMS.png" alt="HNMS Logo">
         <span>Pharmacy Dashboard</span>
       </div>
       <div class="navbar-links">
@@ -227,166 +227,75 @@
       </div>
     </div>
 
-    <!-- ORDER IN PHARMA -->
-    <div id="orders" class="section" style="display:none;">
-      <h3>Customer Orders</h3>
-      <div class="table-container">
-        <table class="orders-table">
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Customer / Phone</th>
-              <th>Region / City / Area</th>
-              <th>Address</th>
-              <th>Medicines</th>
-              <th>Total (৳)</th>
-              <th>Prescription</th>
-              <th>Payment</th>
-              <th>Status</th>
-              <th>Update</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="ordersList">
-            <!-- Orders will be dynamically loaded here -->
-          </tbody>
-        </table>
-      </div>
-    </div>
+   <!-- ORDER IN PHARMA -->
+<div id="orders" class="section" style="display:none;">
+  <h3>Customer Orders</h3>
+  <div class="table-container">
+    <table class="orders-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Customer / Phone</th>
+          <th>Region / City / Area</th>
+          <th>Address</th>
+          <th>Medicines</th>
+          <th>Total (৳)</th>
+          <th>Prescription</th>
+          <th>Payment</th>
+          <th>Status</th>
+          <th>Update</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="ordersList">
+        <!-- Orders will be dynamically loaded here -->
+      </tbody>
+    </table>
+  </div>
+</div>
 
     <!-- ORDER HISTORY -->
-    <div id="orderHistory" class="section" style="display:none;">
-      <h3>Order History</h3>
-      <div class="table-container">
-        <table class="orders-table">
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Date</th>
-              <th>Customer / Phone</th>
-              <th>Region / City / Area</th>
-              <th>Address</th>
-              <th>Medicines</th>
-              <th>Total (৳)</th>
-              <th>Prescription</th>
-              <th>Payment</th>
-              <th>Status</th>
+<div id="orderHistory" class="section" style="display:none;">
+  <h3>Order History</h3>
+  <div class="table-container">
+    <table class="orders-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Date</th>
+          <th>Customer / Phone</th>
+          <th>Region / City / Area</th>
+          <th>Address</th>
+          <th>Medicines</th>
+          <th>Total (৳)</th>
+          <th>Prescription</th>
+          <th>Payment</th>
+          <th>Status</th>
+        
+        </tr>
+      </thead>
+      <tbody id="orderHistoryList">
+        <!-- Past orders will be dynamically loaded here -->
+      </tbody>
+    </table>
+  </div>
+</div>
 
-            </tr>
-          </thead>
-          <tbody id="orderHistoryList">
-            <!-- Past orders will be dynamically loaded here -->
-          </tbody>
-        </table>
-      </div>
-    </div>
+<!-- Pharmacy Profile Section -->
+ <?php include "../view/pharma_Profile.php";?>
 
 
-    <!-- Pharmacy Profile Section -->
-    <div id="pharmacyProfile" class="section" style="display:none;">
-      <h3>Pharmacy Profile & Verification</h3>
-      <div class="profile-container">
-        <!-- Left: Profile Info -->
-        <div id="profileInfoContainer">
-          <h4>Profile Information</h4><br>
-          <form id="pharmacyProfileForm">
-            <div class="profile-field">
-              <label for="profileName">Username:</label>
-              <div class="field-row">
-                <input type="text" id="profileName" value="City Pharmacy" disabled>
-                <button type="button" class="edit-btn" onclick="enableEdit('profileName')">Edit</button>
-              </div>
-            </div>
-            <div class="profile-field">
-              <label for="profileEmail">Email:</label>
-              <div class="field-row">
-                <input type="email" id="profileEmail" value="citypharmacy@example.com" disabled>
-                <button type="button" class="edit-btn" onclick="enableEdit('profileEmail')">Edit</button>
-              </div>
-            </div>
-            <div class="profile-field">
-              <label for="profilePhone">Contact Number:</label>
-              <div class="field-row">
-                <input type="text" id="profilePhone" value="01712345678" disabled>
-                <button class="edit-btn" onclick="enableEdit('profilePhone')">Edit</button>
-              </div>
-            </div>
-            <div class="profile-field">
-              <label for="profileAddress">Address:</label>
-              <div class="field-row">
-                <input type="text" id="profileAddress" value="Dhaka, Bangladesh" disabled>
-                <button class="edit-btn" onclick="enableEdit('profileAddress')">Edit</button>
-              </div>
-            </div>
-            <div class="profile-field">
-              <label for="profileHours">Operating Hours:</label>
-              <div class="field-row">
-                <input type="text" id="profileHours" value="9:00 AM - 10:00 PM" disabled>
-                <button class="edit-btn" onclick="enableEdit('profileHours')">Edit</button>
-              </div>
-            </div>
-            <button type="submit" class="rightbtn">Save Changes</button>
-          </form>
-        </div>
-        <!-- Right: Verification Documents -->
-        <div id="verificationDocsContainer">
-          <h4>Verification Documents</h4>
-          <br>
-          <div class="verification-item">
-            <label>TIN: </label>
-            <span id="docTINStatus">❌ Not Uploaded</span>
-            <input type="file" id="tinFile">
-            <button type="button" class="rightbtn" onclick="uploadProfileDoc('tin')">Upload</button>
-          </div>
-          <div class="verification-item">
-            <label>Trade License: </label>
-            <span id="docDrugStatus">❌ Not Uploaded</span>
-            <input type="file" id="tradeFile">
-            <button type="button" class="rightbtn" onclick="uploadProfileDoc('trade')">Upload</button>
-          </div>
-          <div class="verification-item">
-            <label>GST/VAT:</label>
-            <span id="docGSTStatus">❌ Not Uploaded</span>
-            <input type="file" id="gstFile">
-            <button type="button" class="rightbtn" onclick="uploadProfileDoc('gst')">Upload</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Notifications Panel -->
-    <div id="notificationsPanel" class="notification-popup" style="display:none;">
-      <div class="notification-header">
-        <span>Notifications</span>
-        <button id="closeNotifications">Close</button>
-      </div>
-      <div class="notification-body" id="notificationsList">
-        <!-- Notification items will be injected here -->
-      </div>
-      <div class="notification-footer">
-        <a href="#">See All</a>
-      </div>
-    </div>
+  <!--Notification Panel -->
+      <?php include "../view/notification_panel.php";?>
 
     <!-- Change Password -->
-    <div id="changePassword" class="section" style="display:none;">
-      <h3>Change Password</h3>
-      <form>
-        <input type="password" placeholder="Current Password" id="currentPassword">
-        <input type="password" placeholder="New Password" id="newPassword">
-        <input type="password" placeholder="Confirm Password" id="confirmPassword">
-        <button class="btn-primary" onclick="changePassword()">Update Password</button>
-      </form>
-    </div>
+      <?php include "../view/change_Password.php";?>
 
-   
+   <!-- Footer -->
+  <?php include "../view/dashboard_footer.php";?>
   </div>
- <!-- Footer -->
-    <div class="footer">
-      <p>© 2025 HNMS. All Rights Reserved.</p>
-      <p>Contact: support@hnms.com | Phone: +8801303672091</p>
-    </div>
-  <script src="pharmacy_dashboard.js"></script>
+
+  <script src="../assets/js/pharmacy_dashboard.js"></script>
 </body>
 
 </html>
