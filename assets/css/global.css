@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
 /* Header Styles */
 header {
     position: sticky;
@@ -12,6 +14,7 @@ header {
     background: rgba(100, 153, 70, 0.5);
     backdrop-filter: blur(3px);
     color: white;
+    
 }
 
 header .logo {
@@ -28,6 +31,7 @@ header .logo span {
     font-size: 18px;
     font-weight: bold;
     letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 nav a {
@@ -35,6 +39,7 @@ nav a {
     margin: 0 15px;
     text-decoration: none;
     font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
 }
 
 nav a:hover {
