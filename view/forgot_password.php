@@ -53,7 +53,7 @@
             <input type="password" id="newPass" placeholder="New Password">
             <input type="password" id="confirmPass" placeholder="Confirm Password">
             <button id="resetBtn">Reset password</button>
-            <a href="signin_signup.html" id="backToLogin2">← Back to log in</a>
+            <a href="signin_signup.html" id="backToOtp">← Back</a>
         </div>
 
     </div>

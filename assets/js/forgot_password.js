@@ -13,7 +13,7 @@ const resetBtn = document.getElementById("resetBtn");
 const backLinks = [
     document.getElementById("backToLogin1"),
     document.getElementById("backToEnterMail"),
-    document.getElementById("backToLogin2")
+    document.getElementById("backToOtp")
 ];
 
 const otpInputs = document.querySelectorAll(".otp");
