@@ -18,7 +18,7 @@
       <a href="#">Features</a>
       <a href="#">About</a>
       <a href="#">Contact</a>
-      <a href="signin_signup.html"> <i class="fa-regular fa-user"></i> Login <i class="fa-solid fa-arrow-right"></i> </a>
+      <a href="../signin_signup.html"> <i class="fa-regular fa-user"></i>Sign In/Sign Up <i class="fa-solid fa-arrow-right"></i> </a>
     </nav>
   </header>
 </body>
