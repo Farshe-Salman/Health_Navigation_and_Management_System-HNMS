@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Forgot / Reset Password</title>
-<link rel="stylesheet" href="forgot_password.css">
-<link rel="icon" type="png" href="HNMS.png">
+<link rel="stylesheet" href="../assets/css/forgot_password.css">
+<link rel="icon" type="png" href="../assets/image/HNMS.png">
 </head>
 <body>
     <div class="forgot-container">
@@ -13,14 +13,14 @@
         <!-- FORGOT PASSWORD FORM -->
         <div class="forgot-card" id="forgotCard">
             <div class="logo">
-                <img id="img1" src="HNMS.png" alt="Logo" onclick="window.location.href='landingPage.html'">
+                <img id="img1" src="../assets/image/HNMS.png" alt="Logo">
                 <span>HNMS</span>
             </div> 
             <h2>Forgot password?</h2>
             <p>Enter your E-mail to get OTP.</p>
             <input type="email" id="userInput" placeholder="Enter your email">
             <button id="sendOtpBtn">Send OTP</button>
-            <a href="#" id="backToLogin1">← Back to log in</a>
+            <a href="../view/signin_signup.php" id="backToLogin">← Back to log in</a>
         </div>
 
         <!-- OTP VERIFICATION FORM -->
@@ -39,7 +39,7 @@
             </div>
             <button id="verifyOtpBtn">Verify</button>
             <p><a href="#" id="resendOtp">Didn't receive the OTP? Click to resend</a></p>
-            <a href="#" id="backToLoginOtp">← Back to log in</a>
+            <a href="#" id="backToEnterMail">← Back</a>
         </div>
 
         <!-- RESET PASSWORD FORM -->
@@ -58,6 +58,6 @@
 
     </div>
 
-<script src="forgot_password.js"></script>
+<script src="../assets/js/forgot_password.js"></script>
 </body>
 </html>

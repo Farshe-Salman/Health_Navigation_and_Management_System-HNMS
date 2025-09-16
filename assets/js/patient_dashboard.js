@@ -441,6 +441,16 @@ function loadProfile() {
   document.getElementById("profileName").value = patientProfile.name;
   document.getElementById("profileEmail").value = patientProfile.email;
   document.getElementById("profilePhone").value = patientProfile.phone;
+
+
+  document.getElementById("navbarProfileName").innerText = patientProfile.name;
+}
+
+// Enable editing for a specific input field
+function enableEdit(fieldId) {
+    const input = document.getElementById(fieldId);
+    input.disabled = false;
+    input.focus();
 }
 
 // Save profile changes
@@ -451,6 +461,8 @@ document.getElementById("profileForm").addEventListener("submit", function(e) {
   patientProfile.name = document.getElementById("profileName").value;
   patientProfile.email = document.getElementById("profileEmail").value;
   patientProfile.phone = document.getElementById("profilePhone").value;
+
+  document.getElementById("navbarProfileName").innerText = patientProfile.name;
 
   alert("Profile updated successfully!");
 });
@@ -575,6 +587,41 @@ document.getElementById("bloodRequestForm").addEventListener("submit", function(
   // Close modal and refresh list
   closeBloodRequestModal();
   searchBlood();
+});
+// ====== Profile Image Preview ======
+const profileImageInput = document.getElementById('profileImageInput');
+const profileImagePreview = document.getElementById('profileImagePreview');
+
+profileImageInput.addEventListener('change', e=>{
+  const file = e.target.files[0];
+  if(file){
+    const reader = new FileReader();
+    reader.onload = ev=> profileImagePreview.src = ev.target.result;
+    reader.readAsDataURL(file);
+  }
+});
+
+const profileDOB = document.getElementById('profileDOB');
+const profileAge = document.getElementById('profileAge');
+
+// Function to calculate age
+function calculateAge(dob) {
+    const birthDate = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
+
+// Set age on page load
+profileAge.value = calculateAge(profileDOB.value);
+
+// Update age if DOB changes
+profileDOB.addEventListener('change', () => {
+    profileAge.value = calculateAge(profileDOB.value);
 });
 
 

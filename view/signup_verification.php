@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>User Verification | HNMS</title>
-<link rel="stylesheet" href="signup_verification.css">
+<link rel="stylesheet" href="../assets/css/signup_verification.css">
+<link rel="icon" href="../assets/image/HNMS.png?v=2" type="image/png" sizes="32x32">
 </head>
 <body>
     <div class="verify-container">
@@ -12,7 +13,7 @@
         <!-- USER DETAILS / INIT VERIFICATION -->
         <div class="verify-card" id="userCard">
            <div class="logo">
-               <img src="HNMS.png" alt="HNMS Logo">
+               <img src="../assets/image/HNMS.png" alt="HNMS Logo">
                <span>HNMS</span>
            </div> 
             <h2>User Verification</h2>
@@ -24,7 +25,7 @@
         <!-- OTP VERIFICATION FORM -->
         <div class="verify-card" id="otpCard" style="display:none;">
             <div class="logo">
-                <img src="HNMS.png" alt="HNMS Logo">
+                <img src="../assets/image/HNMS.png" alt="HNMS Logo">
                 <span>HNMS</span>
             </div> 
             <h2>OTP Verification</h2>
@@ -43,7 +44,7 @@
         <!-- SUCCESS CONFIRMATION FORM -->
         <div class="verify-card" id="successCard" style="display:none;">
              <div class="logo">
-                <img src="HNMS.png" alt="HNMS Logo">
+                <img src="../assets/image/HNMS.png" alt="HNMS Logo">
                 <span>HNMS</span>
              </div> 
             <h2>Verification Successful!</h2>
@@ -53,6 +54,6 @@
 
     </div>
 
-<script src="signup_verification.js"></script>
+<script src="../assets/js/signup_verification.js"></script>
 </body>
 </html>
