@@ -42,7 +42,7 @@
       </div>
       <div class="navbar-right">
         <div class="profile">
-          <img src="Profile.jpg" alt="Profile Picture" class="profile-pic" onclick="showPharmacyProfile()">
+          <img src="" alt="Profile Picture" id="PharmacyProfile" onclick="showPharmacyProfile()">
           <p>Welcome,</p>
           <span class="profile-name" id="navbarPharmacyName" onclick="showPharmacyProfile()">City Pharmacy</span>
         </div>
@@ -82,7 +82,7 @@
       </div>
     </div>
 
-<!-- Pharmacy Profile Section -->
+<!-- Pharmacy Medicine Inventiry Section -->
  <?php include "../view/pharmacy_medicineInventory.php";?>
 
    <!-- Pharmacy Order Section -->

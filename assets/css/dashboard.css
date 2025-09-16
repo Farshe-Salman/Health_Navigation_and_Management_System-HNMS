@@ -324,7 +324,7 @@ button:hover {
   transition: all 0.3s ease-in-out;
 }
 
-#searchPharmacy, #searchHospitals{
+#searchPharmacy, #searchHospitals,#searchMedicins{
   font-size:15px;
   padding:12px; 
   width:100%; 
@@ -335,7 +335,8 @@ button:hover {
 }
 
 #searchPharmacy:focus,
-#searchHospitals:focus {
+#searchHospitals:focus,
+#searchMedicins:focus {
   outline: none;
   border-color: #9fd494;
   box-shadow: 0 0 5px rgba(159, 212, 148, 0.5);
@@ -408,6 +409,7 @@ button:hover {
   border-radius: 50%;
   margin-bottom: 15px;
   border: 3px solid #4CAF50;
+  align-content: center;
 }
 
 /* Hospital Card Info */
@@ -525,6 +527,7 @@ button:hover {
   margin-bottom: 15px;
   border: 3px solid #4CAF50;
   cursor: pointer;
+  align-content: center;
 }
 
 .doctor-card h4 {
@@ -625,6 +628,7 @@ button:hover {
   border-radius: 50%;
   margin-bottom: 15px;
   border: 3px solid #4CAF50;
+  align-content: center;
 }
 
 /* Pharmacy Card Info */
@@ -754,6 +758,18 @@ button:hover {
   background: #0056b3;
 }
 /* for pharmadash */
+#inventory input {
+  width: 100%;
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #dcdcdc;
+  border-radius: 12px;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+  margin-top: 15px;
+}
+
 
 .medicine-card .edit-btn {
   background-color: #ffc107;
@@ -1179,6 +1195,17 @@ button:hover {
   display: block;
   margin-bottom: 5px;
   font-weight: 500;
+}
+
+.profile-field img{
+  align-content: center;
+  align-items: center;
+  width:100px;
+  height:100px;
+  object-fit:cover;
+  border-radius:50%;
+  margin-bottom: 15px;
+  border:3px solid #4CAF50;
 }
 
 .field-row {

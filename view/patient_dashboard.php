@@ -22,11 +22,11 @@
     <a href="#" onclick="showSection('hospitals')">Hospitals</a>
     <a href="#" onclick="showSection('doctors')">Find Doctors</a>
     <a href="#" onclick="showSection('pharmacy')">Pharmacy</a>
-    <a href="#" onclick="showBloodBank('bloodBankSection')">Blood Bank</a>
+    <a href="#" onclick="showBloodBank('bloodBankSection')" style="color:red">Blood Bank</a>
     <a href="#" onclick="showAppointmentSection()">Book Appointment</a>
-    <a href="#" onclick="">History</a>
+    <a href="#" onclick="" style="color:red">History</a>
     <a href="#" onclick="showSection('profileSection')">My Profile</a>
-    <a href="#" class="log-out">Logout</a>
+    <a href="../controller/logout.php" class="log-out" onclick="return confirm('Are you sure you want to logout?');">Logout</a>
   </div>
 
   <!-- Main Content -->
@@ -43,7 +43,7 @@
       <div class="navbar-links">
         <a href="#" onclick="showSection('doctors')">Find Doctor</a>
         <a href="#" onclick="showAppointmentSection()">Book Appointment</a>
-        <a href="#" onclick="showBloodBank('bloodBankSection')">Blood Bank</a>
+        <a href="#" onclick="">My Appointments</a>
       </div>
       <div class="navbar-right">
         <div class="profile">

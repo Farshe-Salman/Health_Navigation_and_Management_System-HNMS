@@ -762,7 +762,18 @@ function editMedicine(id) {
         showSection("inventory");
     }
 }
+// ====== Profile Image Preview ======
+const profileImageInput = document.getElementById('profileImageFile');
+const profileImagePreview = document.getElementById('profileImagePreview');
 
+profileImageInput.addEventListener('change', e=>{
+  const file = e.target.files[0];
+  if(file){
+    const reader = new FileReader();
+    reader.onload = ev=> profileImagePreview.src = ev.target.result;
+    reader.readAsDataURL(file);
+  }
+});
 
 // ==================== Initial Load ====================
 refreshOrdersAndDashboard();

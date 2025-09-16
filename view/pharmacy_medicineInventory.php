@@ -9,7 +9,9 @@
         <!-- Medicine Inventory -->
     <div id="inventory" class="section" style="display:none;">
       <h3>Medicine Inventory</h3>
+      
       <button class="btn-primary" onclick="openAddMedicineSection()">Add New Medicine</button>
+      <input type="text" placeholder="Search Medicines..." id="searchMedicines">
       <div id="inventoryMedicineList" class="medicine-list">
         <!-- Medicines will be dynamically loaded here via JS -->
       </div>

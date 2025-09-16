@@ -1,96 +1,149 @@
-const container = document.getElementById('container');
-const registerBtn = document.getElementById('register');
-const loginBtn = document.getElementById('login');
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById('container');
+  const registerBtn = document.getElementById('register');
+  const loginBtn = document.getElementById('login');
+  
+  // ===== SHOW CORRECT PANEL BASED ON PHP MESSAGE =====
+if (document.getElementById("signupFormMessage").textContent.trim()) {
+  container.classList.add("active"); // Show Sign Up panel
+}
 
-registerBtn.addEventListener('click', () => {
-    container.classList.add("active");
+  // Toggle between Sign In / Sign Up forms
+  registerBtn.addEventListener('click', () => container.classList.add("active"));
+  loginBtn.addEventListener('click', () => container.classList.remove("active"));
+
+  // ===== Password Show/Hide =====
+  function setupPasswordToggle(inputId, toggleId) {
+    const input = document.getElementById(inputId);
+    const toggle = document.getElementById(toggleId);
+
+    toggle.addEventListener("click", () => {
+      if (input.type === "password") {
+        input.type = "text";
+        toggle.textContent = "Hide";
+      } else {
+        input.type = "password";
+        toggle.textContent = "Show";
+      }
+    });
+  }
+
+  setupPasswordToggle("signupPassword", "toggleSignupPass");
+  setupPasswordToggle("signinPassword", "toggleSigninPass");
+
+  // ===== SIGNUP VALIDATION =====
+  const signupForm = document.getElementById("signupForm");
+  const signupUsername = document.getElementById("signupUsername");
+  const signupEmail = document.getElementById("signupEmail");
+  const signupRole = document.getElementById("signupRole");
+  const signupPassword = document.getElementById("signupPassword");
+
+  const signupUsernameError = document.getElementById("signupUsernameError");
+  const signupEmailError = document.getElementById("signupEmailError");
+  const signupRoleError = document.getElementById("signupRoleError");
+  const signupPasswordError = document.getElementById("signupPasswordError");
+
+  function validateSignupUsername() {
+    if (signupUsername.value.trim().length < 3) {
+      signupUsernameError.textContent = "Username must be at least 3 characters.";
+      return false;
+    }
+    signupUsernameError.textContent = "";
+    return true;
+  }
+
+  function validateSignupEmail() {
+    if (!signupEmail.value.includes("@") || !signupEmail.value.includes(".")) {
+      signupEmailError.textContent = "Enter a valid E-mail address.";
+      return false;
+    }
+    signupEmailError.textContent = "";
+    return true;
+  }
+
+  function validateSignupRole() {
+    if (!signupRole.value) {
+      signupRoleError.textContent = "Please select a user role.";
+      return false;
+    }
+    signupRoleError.textContent = "";
+    return true;
+  }
+
+  function validateSignupPassword() {
+    const pass = signupPassword.value;
+    if (
+      pass.length < 6 ||
+      !/[A-Z]/.test(pass) ||   
+      !/[a-z]/.test(pass) ||   
+      !/\d/.test(pass)    ||  
+      !/[@$!%*?&]/.test(pass)  
+    ) {
+      signupPasswordError.textContent = "Password needs at least one upper, lower, number, special & 6+ characters.";
+      return false;
+    }
+    signupPasswordError.textContent = "";
+    return true;
+  }
+
+  // Real-time validation
+  signupUsername.addEventListener("input", validateSignupUsername);
+  signupEmail.addEventListener("input", validateSignupEmail);
+  signupRole.addEventListener("change", validateSignupRole);
+  signupPassword.addEventListener("input", validateSignupPassword);
+
+  // ===== SIGNUP SUBMIT =====
+signupForm.addEventListener("submit", (e) => {
+  // Validate each field individually
+  const usernameValid = validateSignupUsername();
+  const emailValid = validateSignupEmail();
+  const roleValid = validateSignupRole();
+  const passwordValid = validateSignupPassword();
+
+  // If any field invalid, prevent submit
+  if (!usernameValid || !emailValid || !roleValid || !passwordValid) {
+    e.preventDefault();
+  }
 });
 
-loginBtn.addEventListener('click', () => {
-    container.classList.remove("active"); 
+  // ===== SIGNIN VALIDATION =====
+  const signinForm = document.getElementById("signinForm");
+  const signinUsername = document.getElementById("signinUsername");
+  const signinPassword = document.getElementById("signinPassword");
+
+  const signinUsernameError = document.getElementById("signinUsernameError");
+  const signinPasswordError = document.getElementById("signinPasswordError");
+
+  function validateSigninUsername() {
+    if (signinUsername.value.trim() === "") {
+      signinUsernameError.textContent = "Username is required.";
+      return false;
+    }
+    signinUsernameError.textContent = "";
+    return true;
+  }
+
+  function validateSigninPassword() {
+  if (signinPassword.value.trim() === "") {
+    signinPasswordError.textContent = "Password is required.";
+    return false;
+  }
+  signinPasswordError.textContent = "";
+  return true;
+}
+
+  // Real-time validation
+  signinUsername.addEventListener("input", validateSigninUsername);
+  signinPassword.addEventListener("input", validateSigninPassword);
+
+  // ===== SIGNIN SUBMIT =====
+signinForm.addEventListener("submit", (e) => {
+  const usernameValid = validateSigninUsername();
+  const passwordValid = validateSigninPassword();
+
+  if (!usernameValid || !passwordValid) {
+    e.preventDefault();
+  }
 });
-
-
-
-
-
-
-// // Signup form validation
-// const signUpForm = document.querySelector(".sign-up form");
-// if (signUpForm) {
-//     const nameInput = signUpForm.querySelector('input[placeholder="Name"]');
-//     const emailInput = signUpForm.querySelector('input[placeholder="E-mail or Phone"]');
-//     const passwordInput = signUpForm.querySelector('input[placeholder="Password"]');
-//     const confirmInput = signUpForm.querySelector('input[placeholder="Confirm Password"]');
-
-//     function showError(input, msg) {
-//         let error = input.nextElementSibling;
-//         if (!error || !error.classList.contains("error-msg")) {
-//             error = document.createElement("div");
-//             error.className = "error-msg";
-//             input.parentNode.insertBefore(error, input.nextSibling);
-//         }
-//         error.textContent = msg;
-//         input.style.border = "1px solid red";
-//     }
-
-//     function clearError(input) {
-//         let error = input.nextElementSibling;
-//         if (error && error.classList.contains("error-msg")) error.textContent = "";
-//         input.style.border = "";
-//     }
-
-//     nameInput.addEventListener("input", () => {
-//         if (nameInput.value.trim().length < 3) showError(nameInput, "Name at least 3 letters");
-//         else clearError(nameInput);
-//     });
-
-//     emailInput.addEventListener("input", () => {
-//         const email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//         const phone = /^[0-9]{10,15}$/;
-//         if (!email.test(emailInput.value) && !phone.test(emailInput.value)) showError(emailInput, "Enter valid email or phone");
-//         else clearError(emailInput);
-//     });
-
-//     passwordInput.addEventListener("input", () => {
-//         if (passwordInput.value.length < 6) showError(passwordInput, "Password min 6 characters");
-//         else clearError(passwordInput);
-//     });
-
-//     confirmInput.addEventListener("input", () => {
-//         if (confirmInput.value !== passwordInput.value) showError(confirmInput, "Passwords do not match");
-//         else clearError(confirmInput);
-//     });
-
-//     signUpForm.addEventListener("submit", (e) => {
-//         if (
-//             nameInput.value.trim().length < 3 ||
-//             (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value) && !/^[0-9]{10,15}$/.test(emailInput.value)) ||
-//             passwordInput.value.length < 6 ||
-//             confirmInput.value !== passwordInput.value
-//         ) {
-//             e.preventDefault();
-//             alert("Error!");
-//         }
-//     });
-// }
-
-// // Signin form validation (simple)
-// const signInForm = document.querySelector(".sign-in form");
-// if (signInForm) {
-//     const emailInput = signInForm.querySelector('input[placeholder="E-mail or Phone"]');
-//     const passwordInput = signInForm.querySelector('input[placeholder="Password"]');
-
-//     signInForm.addEventListener("submit", (e) => {
-//         let valid = true;
-//         if (emailInput.value.trim() === "") {
-//             alert("Enter your email or phone");
-//             valid = false;
-//         }
-//         if (passwordInput.value.trim() === "") {
-//             alert("Enter your password");
-//             valid = false;
-//         }
-//         if (!valid) e.preventDefault();
-//     });
-// }
+ 
+});

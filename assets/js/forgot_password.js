@@ -12,7 +12,7 @@ const resetBtn = document.getElementById("resetBtn");
 
 const backLinks = [
     document.getElementById("backToLogin1"),
-    document.getElementById("backToLoginOtp"),
+    document.getElementById("backToEnterMail"),
     document.getElementById("backToLogin2")
 ];
 

@@ -31,7 +31,7 @@
         <div class="doctor-list">
           <!-- Doctor Cards -->
           <div class="doctor-card">
-            <img src="Profile.jpg" alt="Dr. Sarkar Md. Shizan">
+            <img src="../assets/image/Profile.jpg" alt="Dr. Sarkar Md. Shizan">
             <div class="doctor-info">
               <h4>Dr. Sarkar Md. Shizan</h4>
               <p><strong>MBBS, FCPS (ENT), MS (Otolaryngology)</strong></p>
