@@ -58,11 +58,11 @@ document.getElementById("resendOtp").onclick = (e) => {
     otpInputs[0].focus();
 };
 
-// Back to login links
-backLinks.forEach(link => link.onclick = (e) => {
-    e.preventDefault();
-    window.location.href = "index.html"; // Change this to your actual login page
-});
+// // Back to login links
+// backLinks.forEach(link => link.onclick = (e) => {
+//     e.preventDefault();
+//     window.location.href = "index.html"; 
+// });
 
 // OTP auto move
 otpInputs.forEach((input, i) => {
@@ -84,5 +84,5 @@ resetBtn.onclick = () => {
     if (newPass !== confirmPass) return alert("Passwords do not match.");
 
     alert("Password reset successful!");
-    window.location.href = "index.html"; // Redirect to login page
+    // window.location.href = "index.html"; // Redirect to login page
 };
