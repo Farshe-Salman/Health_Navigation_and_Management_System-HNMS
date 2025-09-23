@@ -42,7 +42,7 @@
         <form id="form">
           <input type="text" name="name" placeholder="Name" required />
           <input type="email" name="email" placeholder="Email" required />
-          <textarea name="message" placeholder="Message" required></textarea>
+          <input name="message" placeholder="Message" required>
           <button type="submit">Submit</button>
         </form>
       </div>
