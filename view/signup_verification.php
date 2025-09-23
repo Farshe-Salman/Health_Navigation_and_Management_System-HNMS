@@ -10,7 +10,9 @@
 <body>
     <div class="verify-container">
 
-        <!-- USER DETAILS / INIT VERIFICATION -->
+        <!-- ====OTP DIrectly go to the email provided on signup form FIXXXX-->
+
+        <!-- USER DETAILS / INIT VERIFICATION
         <div class="verify-card" id="userCard">
            <div class="logo">
                <img src="../assets/image/HNMS.png" alt="HNMS Logo">
@@ -18,9 +20,9 @@
            </div> 
             <h2>User Verification</h2>
             <p>Enter your E-mail to receive OTP.</p>
-            <input type="email" id="userInput" placeholder="Enter your email or phone">
+            <input type="email" id="userInput" placeholder="Enter your email">
             <button id="sendOtpBtn">Send OTP</button>
-        </div>
+        </div> -->
 
         <!-- OTP VERIFICATION FORM -->
         <div class="verify-card" id="otpCard" style="display:none;">
