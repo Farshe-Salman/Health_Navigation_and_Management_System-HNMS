@@ -7,11 +7,7 @@
 </head>
 <body>
      <!-- Change Password -->
-<<<<<<< HEAD
   <div id="changePassword" class="section" >
-=======
-  <div id="changePassword" class="section">
->>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
     <h3>Change Password</h3>
     <div class="card">
       <form id="changePasswordForm">

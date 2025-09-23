@@ -6,11 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-<<<<<<< HEAD
 <!-- Hospital Profile Section -->
-=======
-    <!-- Hospital Profile Section -->
->>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
 <div id="hospitalProfile" class="section" style="display:none;">
   <h3>Hospital Profile & Verification</h3>
   <div class="profile-container">
@@ -18,11 +14,8 @@
     <!-- Left: Profile Info -->
     <div id="hospitalInfoContainer">
       <h4>Profile Information</h4><br>
-<<<<<<< HEAD
       
       <!-- Start Form -->
-=======
->>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
       <form id="hospitalProfileForm">
 
         <!-- Profile Image -->
@@ -35,10 +28,7 @@
           </div>
         </div>
 
-<<<<<<< HEAD
         <!-- Username -->
-=======
->>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
         <div class="profile-field">
           <label for="username">Username:</label>
           <div class="field-row">
@@ -46,10 +36,7 @@
           </div>
         </div>
 
-<<<<<<< HEAD
         <!-- Hospital Name -->
-=======
->>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
         <div class="profile-field">
           <label for="hospitalName">Hospital Name:</label>
           <div class="field-row">
@@ -57,10 +44,7 @@
           </div>
         </div>
 
-<<<<<<< HEAD
         <!-- Email -->
-=======
->>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
         <div class="profile-field">
           <label for="hospitalEmail">Email:</label>
           <div class="field-row">
@@ -68,10 +52,7 @@
           </div>
         </div>
 
-<<<<<<< HEAD
         <!-- Contact Number -->
-=======
->>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
         <div class="profile-field">
           <label for="hospitalPhone">Contact Number:</label>
           <div class="field-row">
@@ -79,10 +60,7 @@
           </div>
         </div>
 
-<<<<<<< HEAD
         <!-- Address -->
-=======
->>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
         <div class="profile-field">
           <label for="hospitalAddress">Address:</label>
           <div class="field-row">
@@ -90,10 +68,7 @@
           </div>
         </div>
 
-<<<<<<< HEAD
         <!-- Category -->
-=======
->>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
         <div class="profile-field">
           <label for="hospitalCategory">Category:</label>
           <div class="field-row">
@@ -105,10 +80,7 @@
           </div>
         </div>
 
-<<<<<<< HEAD
         <!-- Facilities -->
-=======
->>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
         <div class="profile-field">
           <label>Facilities:</label>
           <div class="field-row" id="hospitalFacilities">
@@ -128,7 +100,6 @@
           <button type="button" class="edit-btn" onclick="enableAllHospitalFields()">Edit Profile</button>
           <button type="submit" class="rightbtn">Save Changes</button>
         </div>
-<<<<<<< HEAD
     </div>
 
     <!-- Verification Documents -->
@@ -161,37 +132,6 @@
     </form>
 
   </div>
-=======
-      </form>
-    </div>
-
-<!-- Verification Documents -->
-<div id="verificationDocsContainer">
-  <h4>Verification Documents</h4><br>
-
-  <div class="verification-item">
-    <label>License Certificate:</label>
-    <span id="docLicenseStatus">❌ Not Uploaded</span>
-    <input type="file" id="licenseFile" accept=".pdf,image/*" disabled>
-    <button type="button" class="rightbtn" onclick="uploadProfileDoc('license')">Upload</button>
-  </div>
-
-  <div class="verification-item">
-    <label>Accreditation Certificate:</label>
-    <span id="docAccreditationStatus">❌ Not Uploaded</span>
-    <input type="file" id="accreditationFile" accept=".pdf,image/*" disabled>
-    <button type="button" class="rightbtn" onclick="uploadProfileDoc('accreditation')">Upload</button>
-  </div>
-
-  <div class="verification-item">
-    <label>VAT Certificate:</label>
-    <span id="docVATStatus">❌ Not Uploaded</span>
-    <input type="file" id="vatFile" accept=".pdf,image/*" disabled>
-    <button type="button" class="rightbtn" onclick="uploadProfileDoc('vat')">Upload</button>
-  </div>
-</div>
-
->>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
 </div>
 
 
