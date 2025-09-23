@@ -1162,8 +1162,13 @@ button:hover {
 /* Profile Edit Full-Width */
 #profileSection,
 #hospitalProfile,
+<<<<<<< HEAD
 #editDoctorSection,
 #addDoctorSection {
+=======
+#editMedicineSection,
+#addMedicineSection {
+>>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
   width: 100%;             
   max-width: none;         
   margin: 0;              
@@ -1175,8 +1180,13 @@ button:hover {
 
 #profileSection input,
 #hospitalProfile input,
+<<<<<<< HEAD
 #editDoctorSection input,
 #addDoctorSection input {
+=======
+#editMedicineSection input,
+#addMedicineSection input {
+>>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
   display: block;
   width: 100%;
   padding: 10px 15px;
@@ -1189,8 +1199,13 @@ button:hover {
 
 #profileSection button,
 #hospitalProfile button,
+<<<<<<< HEAD
 #editDoctorSection button,
 #addDoctorSection button {
+=======
+#editMedicineSection button,
+#addMedicineSection button {
+>>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
   background: #4CAF50;
   color: white;
   padding: 10px 15px;
@@ -1203,8 +1218,13 @@ button:hover {
 
 #profileSection button:hover,
 #hospitalProfile button:hover,
+<<<<<<< HEAD
 #editDoctorSection button:hover,
 #addDoctorSection button:hover {
+=======
+#editMedicineSection button:hover,
+#addMedicineSection button:hover {
+>>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
   background: #45a049;
 }
 .profile-field , .doctor-field{
@@ -1489,6 +1509,7 @@ button:hover {
   color: #007bff;
   user-select: none;
 }
+<<<<<<< HEAD
 
 
     .error-text {
@@ -1508,6 +1529,26 @@ button:hover {
       text-align: center;
     }
 
+=======
+
+    .error-text {
+      font-size: 11px;
+      color: red;
+      margin-top: 3px;
+    }
+    .success-text {
+      font-size: 11px;
+      color: green;
+      margin-top: 3px;
+    }
+    #passwordMessage {
+      margin-top: 10px;
+      font-size: 11px;
+      color: red;
+      text-align: center;
+    }
+
+>>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
 /* ===============Footer============== */
 .footer {
   background: #bde4ad;
@@ -1732,6 +1773,47 @@ button:hover {
     gap: 10px;       
     flex-wrap: wrap;  
 }
+<<<<<<< HEAD
+=======
+
+/* ============ Hospital Facilities ========== */
+#hospitalFacilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 5px;
+}
+
+#hospitalFacilities label {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  padding:2px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+#hospitalFacilities label input[type="checkbox"] {
+  margin-right: 2px;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+/* Hover effect */
+#hospitalFacilities label:hover {
+  background: #e0f0ff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Disabled checkboxes styling */
+#hospitalFacilities input[type="checkbox"]:disabled + span,
+#hospitalFacilities input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+>>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
 
 /* ============ Hospital Facilities & Doctor Days ========== */
 #hospitalFacilities, #doctorDays {
@@ -1972,6 +2054,7 @@ button:hover {
     padding: 15px;
   }
 
+<<<<<<< HEAD
   .field-row {
     flex-direction: column;
     align-items: flex-start;
@@ -1993,6 +2076,27 @@ button:hover {
   }
 
   /* Verification items stack vertically */
+=======
+   .field-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .field-row img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 10px;
+    }
+
+    .rightbtn {
+        width: 100%;
+    }
+    
+   .profile-btn {
+        flex-direction: column;
+    }
+  /*Verification items stack vertically  */
+>>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a
   .verification-item {
     flex-direction: column;
     align-items: flex-start;
@@ -2040,6 +2144,7 @@ button:hover {
     padding: 6px 14px;
     font-size: 0.9em;
   }
+<<<<<<< HEAD
 
   /* Appointments & History */
   .appointments-table th,
@@ -2066,3 +2171,23 @@ button:hover {
     min-width: 100%;
   }
 }
+=======
+/* my appointments */
+   .appointments-table th,
+    .appointments-table td {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    /* HIStory */
+    .history-table th,
+    .history-table td {
+        padding: 8px;
+        font-size: 13px;
+    }
+     #hospitalFacilities label {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+}
+>>>>>>> dca59e9d8a046b13be8c5a77c7e592307e0a6f2a

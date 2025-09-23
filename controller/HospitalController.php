@@ -17,8 +17,4 @@ class HospitalController {
         return $this->hospitalModel->searchHospitals($keyword);
     }
 }
-
-// Usage
-$hospitalController = new HospitalController($conn);
-$hospitals = $hospitalController->getHospitals();
 ?>
