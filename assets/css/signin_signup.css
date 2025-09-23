@@ -101,8 +101,18 @@ button.hidden{
   font-size: 12px;
   user-select: none;
 }
+/* LINK */
+ a {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #0066ff;
+  text-decoration: none;
+}
 
-
+ a:hover {
+  color: #5885ce;
+}
 #img1{
     height: auto;
     width: 50px;

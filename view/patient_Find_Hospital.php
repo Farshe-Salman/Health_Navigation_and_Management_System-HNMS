@@ -6,38 +6,30 @@
     <title>Document</title>
 </head>
 <body>
-     <!-- Hospitals -->
-      <div id="hospitals" class="section">
-        <h3>Registered Hospitals</h3>
-        <input type="text" placeholder="Search hospital or facility..." id="searchHospitals">
+<div id="hospitals" class="section">
+    <h3>Registered Hospitals</h3>
+    <input type="text" placeholder="Search hospital or facility..." id="searchHospitals" onkeyup="searchHospitalAjax()">
 
-        <div class="hospital-list">
-          <div class="hospital-card">
-            <img src="hospital1.jpg" alt="City General Hospital">
-            <div class="hospital-info">
-              <h4>City General Hospital</h4>
-              <p>Category: Government | Facilities: ICU, Emergency, Lab</p>
-            </div>
-            <div class="button-group">
-              <button class="btn-primary" onclick="bookAppointmentFromHospital('City General Hospital')">Book
-                Appointment</button>
-              <button class="btn-secondary">View Details</button>
-            </div>
-          </div>
+    <div class="hospital-list" id="hospitalList">
+        <?php if(!empty($hospitals)): ?>
+            <?php foreach($hospitals as $hospital): ?>
+                <div class="hospital-card">
+                    <img src="<?= $hospital['image'] ?>" alt="<?= $hospital['name'] ?>">
+                    <div class="hospital-info">
+                        <h4><?= $hospital['name'] ?></h4>
+                        <p>Category: <?= $hospital['category'] ?> | Facilities: <?= $hospital['facilities'] ?></p>
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="bookAppointmentFromHospital('<?= $hospital['name'] ?>')">Book Appointment</button>
+                        <button class="btn-secondary">View Details</button>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No hospitals found.</p>
+        <?php endif; ?>
+    </div>
+</div>
 
-          <div class="hospital-card">
-            <img src="hospital2.jpg" alt="Sunrise Diagnostics">
-            <div class="hospital-info">
-              <h4>Sunrise Diagnostics</h4>
-              <p>Category: Diagnostic Center | Facilities: Lab Tests, Imaging</p>
-            </div>
-            <div class="button-group">
-              <button class="btn-primary" onclick="bookAppointmentFromHospital('Sunrise Diagnostics')">Book
-                Appointment</button>
-              <button class="btn-secondary">View Details</button>
-            </div>
-          </div>
-        </div>
-      </div>
 </body>
 </html>

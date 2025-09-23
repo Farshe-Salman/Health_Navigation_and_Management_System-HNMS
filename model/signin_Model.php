@@ -6,26 +6,24 @@ class signin_Model {
         $this->conn = $db;
     }
 
-    public function signin($username,$password) {
+    // Fetch user by username
+    public function signin($username) {
         $stmt = $this->conn->prepare(
             "SELECT user_id, username, usertype, password_hash, clearance_status 
              FROM users 
              WHERE username=?"
         );
-        if (!$stmt) return false;
-
+        if (!$stmt) {
+            error_log("DB Error (signin fetch): " . $this->conn->error);
+            return false;
+        }
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $result = $stmt->get_result();
-
-        if ($result->num_rows === 1) {
-            $user = $result->fetch_assoc();
-            $stmt->close();
-            return $user;
-        }
-
+        $user = $result->fetch_assoc();
         $stmt->close();
-        return false;
+        return $user ?: false;
     }
 }
 ?>
+
