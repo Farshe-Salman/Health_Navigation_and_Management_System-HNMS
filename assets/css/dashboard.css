@@ -1141,7 +1141,7 @@ button:hover {
 }
 /* Profile Edit Full-Width */
 #profileSection,
-#pharmacyProfile,
+#hospitalProfile,
 #editMedicineSection,
 #addMedicineSection {
   width: 100%;             
@@ -1154,7 +1154,7 @@ button:hover {
 }
 
 #profileSection input,
-#pharmacyProfile input,
+#hospitalProfile input,
 #editMedicineSection input,
 #addMedicineSection input {
   display: block;
@@ -1168,7 +1168,7 @@ button:hover {
 }
 
 #profileSection button,
-#pharmacyProfile button,
+#hospitalProfile button,
 #editMedicineSection button,
 #addMedicineSection button {
   background: #4CAF50;
@@ -1182,7 +1182,7 @@ button:hover {
 }
 
 #profileSection button:hover,
-#pharmacyProfile button:hover,
+#hospitalProfile button:hover,
 #editMedicineSection button:hover,
 #addMedicineSection button:hover {
   background: #45a049;
@@ -1214,7 +1214,7 @@ button:hover {
   gap: 10px; /* space between input and button */
 }
 
-.field-row input {
+.field-row input,select {
   flex: 1; 
   padding: 10px;
   border-radius: 5px;
@@ -1222,27 +1222,27 @@ button:hover {
   font-size: 14px;
 }
 
-#profileSection .edit-btn,
-#pharmacyProfile .edit-btn,
-#editMedicineSection .edit-btn,
-#addMedicineSection .edit-btn {
-  margin-bottom: 6px;
-  padding: auto;
-  font-size: 14px;
-  border: 1px solid #d32f2f;
-  border-radius: 5px;
-  background: #f44336;
-  color: #fff;
+#profileSection .edit-btn{
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
+  font-size: 14px;
+  transition: background 0.3s;
 }
 
-#profileSection .edit-btn:hover , 
-#pharmacyProfile .edit-btn:hover,
-#editMedicineSection .edit-btn:hover,
-#addMedicineSection .edit-btn:hover {
-  background: #f44300;
+#profileSection .edit-btn:hover  {
+  background: #45a049;}
+
+/* Highlight input/select on focus */
+.field-row input:focus,
+.field-row select:focus {
+    outline: none;
+  border-color: #9fd494;
+  box-shadow: 0 0 5px rgba(159, 212, 148, 0.5);
 }
+
 
 /* Container for both sections */
 .profile-container {
@@ -1252,7 +1252,7 @@ button:hover {
 }
 
 /* Each section */
-#profileInfoContainer,
+#hospitalInfoContainer,
 #verificationDocsContainer,
 #addmedicineInfoContainer,
 #editmedicineInfoContainer,
@@ -1281,95 +1281,212 @@ button:hover {
 }
 
 
-
-
-
-
-/* Blood Bank Search */
-.blood-search {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 15px;
-  margin: 15px 0;
+ /* ================== Appointments Section ================== */
+.section#appointmentsSection {
+    max-width: 100%;
+    margin: 5px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.blood-search select {
-  flex: 1 1 150px; /* flexible select box */
-  padding: 12px;
-  border: 1px solid #dcdcdc;
-  border-radius: 12px;
-  font-size: 15px;
-  outline: none;
-  transition: all 0.2s ease-in-out;
+.section#appointmentsSection:hover{
+   transform: translateY(2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
 }
 
-.blood-search button {
-  flex: 0 0 auto; /* button keeps its natural size */
-  padding: 12px 20px; /* smaller button */
-  border-radius: 12px;
-  font-size: 15px;
-  background-color: #f44336;
-  color: #fff;
-  border: none;
+
+/* Table Container for horizontal scroll on mobile */
+.appointments-table-container {
+    overflow-x: auto;
+}
+
+/* Appointments Table */
+.appointments-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.appointments-table th,
+.appointments-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.appointments-table th {
+    background-color: #bde4ad;
+    font-weight: 600;
+}
+
+.appointments-table tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+/* Status badges */
+.status-confirmed {
+    color: #155724;
+    background-color: #d4edda;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.status-pending {
+    color: #856404;
+    background-color: #fff3cd;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.status-cancelled {
+    color: #721c24;
+    background-color: #f8d7da;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+/* Action buttons */
+.app-btn {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: none;
+    font-size: 13px;
+    cursor: pointer;
+    color: #fff;
+    transition: all 0.2s ease-in-out;
+    margin: 2px 0;
+}
+
+.app-btn-view {
+    background-color: #007BFF;
+}
+
+.app-btn-view:hover {
+    background-color: #0069d9;
+}
+
+.app-btn-cancel {
+    background-color: #dc3545;
+}
+
+.app-btn-cancel:hover {
+    background-color: #c82333;
+}
+/* ================== History Section ================== */
+.section#historySection {
+    max-width: 100%;
+    margin: 5px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.section#historySection:hover{
+   transform: translateY(2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+.history-table-container {
+    overflow-x: auto; /* scroll on mobile */
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.history-table th,
+.history-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.history-table th {
+    background-color: #bde4ad;
+    font-weight: 600;
+}
+
+.history-table tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+/* Status badges */
+.status-completed {
+    color: #155724;
+    background-color: #d4edda;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.status-ongoing {
+    color: #856404;
+    background-color: #fff3cd;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.status-missed {
+    color: #721c24;
+    background-color: #f8d7da;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+/* ===============change password========== */
+    .form-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.form-group input {
+  width: 100%;
+  padding-right: 50px; 
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50px;
+  transform: translateY(-50%); 
   cursor: pointer;
-  transition: background 0.2s;
+  font-size: 12px;
+  color: #007bff;
+  user-select: none;
 }
 
-.blood-search button:hover {
-  background-color: #d32f2f;
-}
+    .error-text {
+      font-size: 11px;
+      color: red;
+      margin-top: 3px;
+    }
+    .success-text {
+      font-size: 11px;
+      color: green;
+      margin-top: 3px;
+    }
+    #passwordMessage {
+      margin-top: 10px;
+      font-size: 11px;
+      color: red;
+      text-align: center;
+    }
 
-
-/* Blood List Cards */
-.blood-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.blood-card {
-  padding: 15px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  text-align: center;
-  transition: transform 0.2s;
-}
-
-.blood-card:hover {
-  transform: translateY(-3px);
-}
-
-.blood-card h4 {
-  margin-bottom: 8px;
-  font-size: 18px;
-}
-
-.blood-card p {
-  margin: 4px 0;
-  font-size: 14px;
-}
-
-.blood-card button {
-  margin: 5px; 
-  padding: 8px ;
-  border: none;
-  border-radius: 6px;
-  background-color: #f44336;
-  color: #fff;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.blood-card button:disabled {
-  background-color: #aaa;
-  cursor: not-allowed;
-}
-
-/* Footer */
+/* ===============Footer============== */
 .footer {
   background: #bde4ad;
   color: #333;
@@ -1383,41 +1500,12 @@ button:hover {
   margin-top: auto;
 }
 
-/* ================= Orders Table Responsive ================= */
-.orders-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  font-size: 14px;
-}
-
-.orders-table th, .orders-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
-}
-
-.orders-table th {
-  background-color: #4CAF50;
-  color: white;
-  position: sticky;
-  top: 0;
-  z-index: 2;
-}
-
-.orders-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.orders-table tr:hover {
-  background-color: #f1f1f1;
-}
 
 /* Make table scrollable on small screens */
 .table-container {
   overflow-x: auto;
   width: 100%;
-}
+} */
 
 
 /* Appointment form */
@@ -1609,6 +1697,57 @@ button:hover {
   font-weight: 500;
   font-size: 14px;
 }
+/* patient profile edit btn */
+    .patient-primary-btn,
+    .patient-edit-btn{
+     display: flex;
+    gap: 10px;
+     flex-wrap: wrap;
+    }
+/* Buttons container */
+.profile-btn {
+    display: flex;
+    gap: 10px;       
+    flex-wrap: wrap;  
+}
+
+/* ============ Hospital Facilities ========== */
+#hospitalFacilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 5px;
+}
+
+#hospitalFacilities label {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  padding:2px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+#hospitalFacilities label input[type="checkbox"] {
+  margin-right: 2px;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+/* Hover effect */
+#hospitalFacilities label:hover {
+  background: #e0f0ff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Disabled checkboxes styling */
+#hospitalFacilities input[type="checkbox"]:disabled + span,
+#hospitalFacilities input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
 
 
 /* RESPONSIVE STYLES (≤768px) */
@@ -1784,7 +1923,7 @@ button:hover {
     gap: 20px;
   }
 
-  #profileInfoContainer,
+  #hospitalInfoContainer,
   #verificationDocsContainer,
   #addmedicineInfoContainer,
   #editmedicineInfoContainer,
@@ -1795,21 +1934,24 @@ button:hover {
     padding: 15px;
   }
 
-  /* Field row adjustment */
-  .field-row {
-    flex-direction: row; 
-    flex-wrap: nowrap;
-  }
+   .field-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-  .field-row input {
-    flex: 1; 
-  }
+    .field-row img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 10px;
+    }
 
-  .field-row button {
-    flex: 0 0 auto;
-    white-space: nowrap;
-  }
-
+    .rightbtn {
+        width: 100%;
+    }
+    
+   .profile-btn {
+        flex-direction: column;
+    }
   /*Verification items stack vertically  */
   .verification-item {
     flex-direction: column;
@@ -1852,5 +1994,22 @@ button:hover {
     align-self: flex-start;
     padding: 6px 14px;
     font-size: 0.9em;
+  }
+/* my appointments */
+   .appointments-table th,
+    .appointments-table td {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    /* HIStory */
+    .history-table th,
+    .history-table td {
+        padding: 8px;
+        font-size: 13px;
+    }
+     #hospitalFacilities label {
+    font-size: 13px;
+    padding: 6px 10px;
   }
 }
