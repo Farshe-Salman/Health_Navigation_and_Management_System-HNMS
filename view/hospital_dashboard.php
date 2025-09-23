@@ -71,11 +71,11 @@
         <?php include "../view/hdash_change_Password.php"; ?>
         <!-- Notification Panel -->
         <?php include "../view/notification_panel.php"; ?>
-
+<!-- Footer -->
+    <?php include "../view/dashboard_footer.php"; ?>
     </div>
 
-    <!-- Footer -->
-    <?php include "../view/dashboard_footer.php"; ?>
+    
     
     <script src="../assets/js/hospital_dashboard.js"></script>
 </body>

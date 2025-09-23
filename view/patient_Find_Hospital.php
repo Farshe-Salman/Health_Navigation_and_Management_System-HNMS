@@ -1,3 +1,11 @@
+<?php
+include "../config/db_connection.php";
+include "../controller/HospitalController.php";
+
+$hospitalController = new HospitalController($conn);
+$hospitals = $hospitalController->getHospitals();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

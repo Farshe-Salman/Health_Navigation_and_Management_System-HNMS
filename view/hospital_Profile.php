@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <!-- Hospital Profile Section -->
+<!-- Hospital Profile Section -->
 <div id="hospitalProfile" class="section" style="display:none;">
   <h3>Hospital Profile & Verification</h3>
   <div class="profile-container">
@@ -14,6 +14,8 @@
     <!-- Left: Profile Info -->
     <div id="hospitalInfoContainer">
       <h4>Profile Information</h4><br>
+      
+      <!-- Start Form -->
       <form id="hospitalProfileForm">
 
         <!-- Profile Image -->
@@ -26,6 +28,7 @@
           </div>
         </div>
 
+        <!-- Username -->
         <div class="profile-field">
           <label for="username">Username:</label>
           <div class="field-row">
@@ -33,6 +36,7 @@
           </div>
         </div>
 
+        <!-- Hospital Name -->
         <div class="profile-field">
           <label for="hospitalName">Hospital Name:</label>
           <div class="field-row">
@@ -40,6 +44,7 @@
           </div>
         </div>
 
+        <!-- Email -->
         <div class="profile-field">
           <label for="hospitalEmail">Email:</label>
           <div class="field-row">
@@ -47,6 +52,7 @@
           </div>
         </div>
 
+        <!-- Contact Number -->
         <div class="profile-field">
           <label for="hospitalPhone">Contact Number:</label>
           <div class="field-row">
@@ -54,6 +60,7 @@
           </div>
         </div>
 
+        <!-- Address -->
         <div class="profile-field">
           <label for="hospitalAddress">Address:</label>
           <div class="field-row">
@@ -61,6 +68,7 @@
           </div>
         </div>
 
+        <!-- Category -->
         <div class="profile-field">
           <label for="hospitalCategory">Category:</label>
           <div class="field-row">
@@ -72,6 +80,7 @@
           </div>
         </div>
 
+        <!-- Facilities -->
         <div class="profile-field">
           <label>Facilities:</label>
           <div class="field-row" id="hospitalFacilities">
@@ -91,35 +100,38 @@
           <button type="button" class="edit-btn" onclick="enableAllHospitalFields()">Edit Profile</button>
           <button type="submit" class="rightbtn">Save Changes</button>
         </div>
-      </form>
     </div>
 
-<!-- Verification Documents -->
-<div id="verificationDocsContainer">
-  <h4>Verification Documents</h4><br>
+    <!-- Verification Documents -->
+    <div id="verificationDocsContainer">
+      <h4>Verification Documents</h4><br>
 
-  <div class="verification-item">
-    <label>License Certificate:</label>
-    <span id="docLicenseStatus">❌ Not Uploaded</span>
-    <input type="file" id="licenseFile" accept=".pdf,image/*" disabled>
-    <button type="button" class="rightbtn" onclick="uploadProfileDoc('license')">Upload</button>
+      <div class="verification-item">
+        <label>License Certificate:</label>
+        <span id="docLicenseStatus">❌ Not Uploaded</span>
+        <input type="file" id="licenseFile" accept=".pdf,image/*" disabled>
+        <button type="button" class="rightbtn" onclick="uploadProfileDoc('license')">Upload</button>
+      </div>
+
+      <div class="verification-item">
+        <label>Accreditation Certificate:</label>
+        <span id="docAccreditationStatus">❌ Not Uploaded</span>
+        <input type="file" id="accreditationFile" accept=".pdf,image/*" disabled>
+        <button type="button" class="rightbtn" onclick="uploadProfileDoc('accreditation')">Upload</button>
+      </div>
+
+      <div class="verification-item">
+        <label>VAT/Tax Certificate:</label>
+        <span id="docVATStatus">❌ Not Uploaded</span>
+        <input type="file" id="vatFile" accept=".pdf,image/*" disabled>
+        <button type="button" class="rightbtn" onclick="uploadProfileDoc('vat')">Upload</button>
+      </div>
+    </div>
+
+    <!-- Close the Form here -->
+    </form>
+
   </div>
-
-  <div class="verification-item">
-    <label>Accreditation Certificate:</label>
-    <span id="docAccreditationStatus">❌ Not Uploaded</span>
-    <input type="file" id="accreditationFile" accept=".pdf,image/*" disabled>
-    <button type="button" class="rightbtn" onclick="uploadProfileDoc('accreditation')">Upload</button>
-  </div>
-
-  <div class="verification-item">
-    <label>VAT/Tax Certificate:</label>
-    <span id="docVATStatus">❌ Not Uploaded</span>
-    <input type="file" id="vatFile" accept=".pdf,image/*" disabled>
-    <button type="button" class="rightbtn" onclick="uploadProfileDoc('vat')">Upload</button>
-  </div>
-</div>
-
 </div>
 
 

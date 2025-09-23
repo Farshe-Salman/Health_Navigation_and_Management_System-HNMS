@@ -182,22 +182,30 @@ appointmentForm.addEventListener("submit", function(e) {
 });
 
 // ==================== Hospital Search ====================
-function searchHospitalAjax() {
+async function searchHospitalAjax() {
+  try {
     const keyword = document.getElementById('searchHospitals').value;
-    fetch(`../controller/hospital_search.php?keyword=${encodeURIComponent(keyword)}`)
-        .then(res => res.text())
-        .then(data => document.getElementById('hospitalList').innerHTML = data)
-        .catch(err => console.error("Error fetching hospitals:", err));
+    const res = await fetch(`../controller/hospital_search.php?keyword=${encodeURIComponent(keyword)}`);
+    document.getElementById('hospitalList').innerHTML = await res.text();
+  } catch (err) {
+    console.error("Error fetching hospitals:", err);
+  }
 }
 
 // ==================== Doctor Search ====================
-function searchDoctorAjax() {
+async function searchDoctorAjax() {
+  try {
     const keyword = document.getElementById('searchDoctor').value;
     const specialization = document.getElementById('doctorDepartment').value;
-    fetch(`../controller/doctor_search.php?keyword=${encodeURIComponent(keyword)}&specialization=${encodeURIComponent(specialization)}`)
-        .then(res => res.text())
-        .then(data => document.getElementById('doctorList').innerHTML = data)
-        .catch(err => console.error("Error fetching doctors:", err));
+
+    const res = await fetch(
+      `../controller/doctor_search.php?keyword=${encodeURIComponent(keyword)}&specialization=${encodeURIComponent(specialization)}`
+    );
+
+    document.getElementById('doctorList').innerHTML = await res.text();
+  } catch (err) {
+    console.error("Error fetching doctors:", err);
+  }
 }
 
 document.getElementById('searchDoctor')?.addEventListener('keyup', searchDoctorAjax);

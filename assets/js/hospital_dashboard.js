@@ -170,6 +170,8 @@ function deleteDoctor(id) {
 }
 
 // ==================== Edit Doctor ====================
+let currentEditingDoctor = null; // keep track of which doctor is being edited
+
 function editDoctor(id) {
   const doc = doctors.find(d => d.id === id);
   if (!doc) {
@@ -177,6 +179,7 @@ function editDoctor(id) {
     return;
   }
 
+  currentEditingDoctor = doc; // store reference
   showSection("editDoctorSection");
 
   // Populate fields
@@ -184,52 +187,85 @@ function editDoctor(id) {
   document.getElementById("editDoctorSpecialization").value = doc.specialization;
   document.getElementById("editDoctorPhone").value = doc.phone;
   document.getElementById("editDoctorEmail").value = doc.email;
+  document.getElementById("editDoctorQualification").value = doc.qualification || "";
   document.getElementById("editDoctorExperience").value = doc.experience;
-  document.getElementById("editDoctorAvailability").value = doc.availability;
 
-  // Make all inputs editable (remove disabled)
-  document.getElementById("editDoctorName").disabled = false;
-  document.getElementById("editDoctorSpecialization").disabled = false;
-  document.getElementById("editDoctorPhone").disabled = false;
-  document.getElementById("editDoctorEmail").disabled = false;
-  document.getElementById("editDoctorExperience").disabled = false;
-  document.getElementById("editDoctorAvailability").disabled = false;
+  // Availability
+  document.getElementById("editDoctorStartTime").value = doc.startTime || "";
+  document.getElementById("editDoctorEndTime").value = doc.endTime || "";
 
-  // Enable file inputs
-  document.getElementById("editDoctorPhoto").disabled = false;
-  document.getElementById("editDoctorLicense").disabled = false;
-  document.getElementById("editDoctorDegree").disabled = false;
+  document.querySelectorAll('input[name="editDoctorDays"]').forEach(cb => {
+    cb.checked = (doc.days || []).includes(cb.value);
+  });
 
-  // Clear file inputs
-  document.getElementById("editDoctorPhoto").value = "";
-  document.getElementById("editDoctorLicense").value = "";
-  document.getElementById("editDoctorDegree").value = "";
+  // Credentials
+  document.getElementById("editDoctorUsername").value = doc.username || "";
+  document.getElementById("editDoctorPassword").value = doc.password || "";
 
-  const form = document.getElementById("editDoctorForm");
-  form.onsubmit = function (e) {
-    e.preventDefault();
-
-    // Update doctor details
-    doc.name = document.getElementById("editDoctorName").value.trim();
-    doc.specialization = document.getElementById("editDoctorSpecialization").value.trim();
-    doc.phone = document.getElementById("editDoctorPhone").value.trim();
-    doc.email = document.getElementById("editDoctorEmail").value.trim();
-    doc.experience = parseInt(document.getElementById("editDoctorExperience").value);
-    doc.availability = document.getElementById("editDoctorAvailability").value.trim();
-
-    const photo = document.getElementById("editDoctorPhoto").files[0];
-    const license = document.getElementById("editDoctorLicense").files[0];
-    const degree = document.getElementById("editDoctorDegree").files[0];
-
-    if (photo) doc.documents.photo = photo.name;
-    if (license) doc.documents.license = license.name;
-    if (degree) doc.documents.degree = degree.name;
-
-    renderDoctors();
-    showSection("doctor");
-    alert("✅ Doctor updated successfully!");
-  };
+  // Disable all fields initially
+  document.querySelectorAll('#editDoctorForm input, #editDoctorForm select').forEach(el => {
+    el.disabled = true;
+  });
 }
+
+// ==================== Enable All Fields ====================
+function enableAllEditFields() {
+  document.querySelectorAll('#editDoctorForm input, #editDoctorForm select').forEach(el => {
+    el.disabled = false;
+  });
+
+  document.querySelectorAll('#editDoctorForm input[type="checkbox"]').forEach(cb => {
+    cb.disabled = false;
+  });
+
+ 
+
+  alert("✅ All fields are now editable!");
+}
+
+// ==================== Submit Update ====================
+document.getElementById("editDoctorForm").onsubmit = function (e) {
+  e.preventDefault();
+  if (!currentEditingDoctor) {
+    alert("Error: No doctor selected for editing!");
+    return;
+  }
+
+  // Update doctor details
+  currentEditingDoctor.name = document.getElementById("editDoctorName").value.trim();
+  currentEditingDoctor.specialization = document.getElementById("editDoctorSpecialization").value.trim();
+  currentEditingDoctor.phone = document.getElementById("editDoctorPhone").value.trim();
+  currentEditingDoctor.email = document.getElementById("editDoctorEmail").value.trim();
+  currentEditingDoctor.qualification = document.getElementById("editDoctorQualification").value.trim();
+  currentEditingDoctor.experience = parseInt(document.getElementById("editDoctorExperience").value);
+
+  currentEditingDoctor.startTime = document.getElementById("editDoctorStartTime").value;
+  currentEditingDoctor.endTime = document.getElementById("editDoctorEndTime").value;
+
+  const selectedDays = [];
+  document.querySelectorAll('input[name="editDoctorDays"]:checked').forEach(cb => {
+    selectedDays.push(cb.value);
+  });
+  currentEditingDoctor.days = selectedDays;
+
+  // Credentials
+  currentEditingDoctor.username = document.getElementById("editDoctorUsername").value.trim();
+  currentEditingDoctor.password = document.getElementById("editDoctorPassword").value.trim();
+
+  // Files (optional)
+  const photo = document.getElementById("editDoctorPhoto").files[0];
+  const license = document.getElementById("editDoctorLicense").files[0];
+  const degree = document.getElementById("editDoctorDegree").files[0];
+
+  if (photo) currentEditingDoctor.documents.photo = photo.name;
+  if (license) currentEditingDoctor.documents.license = license.name;
+  if (degree) currentEditingDoctor.documents.degree = degree.name;
+
+  // Refresh list
+  renderDoctors();
+  showSection("doctor");
+  alert("✅ Doctor updated successfully!");
+};
 
 
 // ==================== Init ====================

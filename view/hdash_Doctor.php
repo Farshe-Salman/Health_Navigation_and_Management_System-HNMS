@@ -202,7 +202,7 @@
 
     <!-- Buttons -->
     <div>
-      <button type="button" class="edit-btn" onclick="enableAllEditFields()">Edit</button>
+      <button type="button"  class="editbtn" onclick="enableAllEditFields()">Edit</button>
       <button type="submit" class="rightbtn">Update Doctor</button>
     </div>
   </form>

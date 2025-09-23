@@ -30,7 +30,7 @@ if (isset($_POST['signin'])) {
                 // Redirect based on role
                 switch ($user['usertype']) {
                     case 'admin':    header("Location: ../view/admin_dashboard.php"); break;
-                    case 'hospital': header("Location: ../view/hospital_dahsboard.php"); break;
+                    case 'hospital': header("Location: ../view/hospital_dashboard.php"); break;
                     case 'patient':  header("Location: ../view/patient_dashboard.php"); break;
                     default:
                         $_SESSION['signin_message'] = "Invalid user role!";

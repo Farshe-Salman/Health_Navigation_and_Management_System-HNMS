@@ -81,6 +81,7 @@ class signup_Model {
         if ($stmt->execute()) {
             $stmt->close();
             return ["success" => true, "signup_message" => "Sign-up successful! Please wait for admin approval."];
+            header("Location:signin_signup.php");
         } else {
             error_log("DB Insert Error: " . $stmt->error);
             $stmt->close();
