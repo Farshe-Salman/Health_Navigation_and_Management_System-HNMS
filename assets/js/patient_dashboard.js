@@ -145,41 +145,41 @@ document.getElementById("contact").addEventListener("input", validateContact);
 document.getElementById("doctorSelect").addEventListener("change", validateDoctor);
 document.getElementById("appointmentDate").addEventListener("change", validateAppointmentDate);
 
-// Submit event
-appointmentForm.addEventListener("submit", function(e) {
-  e.preventDefault();
+// // Submit event
+// appointmentForm.addEventListener("submit", function(e) {
+//   e.preventDefault();
 
-  // Validate all fields
-  const hospitalValid = validateHospital();
-  const nameValid = validateName();
-  const dobValid = validateDOB();
-  const genderValid = validateGender();
-  const contactValid = validateContact();
-  const doctorValid = validateDoctor();
-  const appointmentDateValid = validateAppointmentDate();
+//   // Validate all fields
+//   const hospitalValid = validateHospital();
+//   const nameValid = validateName();
+//   const dobValid = validateDOB();
+//   const genderValid = validateGender();
+//   const contactValid = validateContact();
+//   const doctorValid = validateDoctor();
+//   const appointmentDateValid = validateAppointmentDate();
 
-  // If any field invalid, prevent submit
-  if (!hospitalValid || !nameValid || !dobValid || !genderValid ||
-      !contactValid || !doctorValid || !appointmentDateValid) {
-    const firstError = document.querySelector(".error-text:not(:empty)");
-    if (firstError) firstError.scrollIntoView({ behavior: "smooth" });
-    return; // stop submission
-  }
+//   // If any field invalid, prevent submit
+//   if (!hospitalValid || !nameValid || !dobValid || !genderValid ||
+//       !contactValid || !doctorValid || !appointmentDateValid) {
+//     const firstError = document.querySelector(".error-text:not(:empty)");
+//     if (firstError) firstError.scrollIntoView({ behavior: "smooth" });
+//     return; // stop submission
+//   }
 
-  // All valid – Add appointment to dashboard
-  const patientName = document.getElementById("patientName").value.trim();
-  const hospital = document.getElementById("hospitalSelect").value.trim();
-  const doctor = document.getElementById("doctorSelect").value.trim();
-  const date = document.getElementById("appointmentDate").value;
-  const time = document.getElementById("appointmentTime").value;
+//   // All valid – Add appointment to dashboard
+//   const patientName = document.getElementById("patientName").value.trim();
+//   const hospital = document.getElementById("hospitalSelect").value.trim();
+//   const doctor = document.getElementById("doctorSelect").value.trim();
+//   const date = document.getElementById("appointmentDate").value;
+//   const time = document.getElementById("appointmentTime").value;
 
-  const appointmentText = `${patientName} at ${hospital} with ${doctor} on ${date} ${time}`;
-  appointments.push(appointmentText);
-  updateDashboard();
+//   const appointmentText = `${patientName} at ${hospital} with ${doctor} on ${date} ${time}`;
+//   appointments.push(appointmentText);
+//   updateDashboard();
 
-  alert("Appointment submitted successfully!");
-  this.reset();
-});
+//   alert("Appointment submitted successfully!");
+//   this.reset();
+// });
 
 // ==================== Hospital Search ====================
 async function searchHospitalAjax() {
@@ -210,6 +210,57 @@ async function searchDoctorAjax() {
 
 document.getElementById('searchDoctor')?.addEventListener('keyup', searchDoctorAjax);
 document.getElementById('doctorDepartment')?.addEventListener('change', searchDoctorAjax);
+
+// =================Find Hospitals and Find Doctors View Details Button=====================
+function viewHospitalDetails(button) {
+    document.getElementById('modalHospitalName').innerText = button.closest('.hospital-card').querySelector('h4').innerText;
+    document.getElementById('modalEmail').innerText = button.dataset.email;
+    document.getElementById('modalPhone').innerText = button.dataset.phone;
+    document.getElementById('modalAddress').innerText = button.dataset.address;
+    document.getElementById('modalCategory').innerText = button.closest('.hospital-card').querySelector('.hospital-info p').innerText.replace('Category: ', '');
+    document.getElementById('hospitalModal').style.display = 'flex';
+}
+
+function viewDoctorDetails(btn) {
+    document.getElementById('modalDoctorName').innerText = btn.dataset.name;
+    document.getElementById('modalEmail').innerText = btn.dataset.email || 'N/A';
+    document.getElementById('modalContact').innerText = btn.dataset.contact || 'N/A';
+    document.getElementById('modalSpecialization').innerText = btn.dataset.specialization || 'N/A';
+    document.getElementById('modalQualification').innerText = btn.dataset.qualification || 'N/A';
+    document.getElementById('modalExperience').innerText = btn.dataset.experience || '0';
+    document.getElementById('modalFee').innerText = btn.dataset.fee || '0';
+    document.getElementById('modalDoctorImage').src = "../assets/uploads/" + (btn.dataset.image || 'doc1.png');
+
+    document.getElementById('doctorModal').style.display = 'flex';
+}
+
+
+function closeModal() {
+    document.getElementById('hospitalModal').style.display = 'none';
+    document.getElementById('doctorModal').style.display = 'none';
+}
+
+// Close modals on outside click
+window.onclick = function(event) {
+    const hospitalModal = document.getElementById('hospitalModal');
+    const doctorModal = document.getElementById('doctorModal');
+
+    if (event.target === hospitalModal) {
+        hospitalModal.style.display = "none";
+    }
+
+    if (event.target === doctorModal) {
+        doctorModal.style.display = "none";
+    }
+}
+
+
+
+// ================Book Appointment===============
+
+
+
+
 
 // ==================== Load on Page ====================
 window.addEventListener('DOMContentLoaded', () => {
@@ -394,60 +445,66 @@ function showHistory() {
     loadHistory();
 }
 
-// ==================== Patient Profile ====================
-let patientProfile = { 
-    username: "user123",
-    name: "Shizan Sarkar", 
-    email: "shizan@example.com", 
-    phone: "01712345678" 
-};
-
+// ==================== Patient Profile load====================
 function showProfile() { 
     showSection("profileSection"); 
     loadProfile(); 
 }
 
 function loadProfile() {
-    document.getElementById("profileName").value = patientProfile.name;
-    document.getElementById("profileEmail").value = patientProfile.email;
-    document.getElementById("username").value = patientProfile.username;
-    document.getElementById("profilePhone").value = patientProfile.phone;
-    document.getElementById("navbarProfileName").innerText = patientProfile.name;
+    document.getElementById("profileName").value = patientProfile.name || "";
+    document.getElementById("profileEmail").value = patientProfile.email || "";
+    document.getElementById("username").value = patientProfile.username || "";
+    document.getElementById("profilePhone").value = patientProfile.phone || "";
+    document.getElementById("navbarProfileName").innerText = patientProfile.name || patientProfile.username;
 }
 
-function enableAllFields() {
-    // Enable all fields except username and email
-    document.querySelectorAll('#profileForm input, #profileForm select').forEach(el => {
-        if(el.id !== 'username' && el.id !== 'profileEmail'){
-            el.removeAttribute('disabled');
-        }
-    });
-    alert("You can now edit your profile!");
-}
 
-// Save profile
-document.getElementById("profileForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    patientProfile.name = document.getElementById("profileName").value;
-    patientProfile.phone = document.getElementById("profilePhone").value;
-    document.getElementById("navbarProfileName").innerText = patientProfile.name;
-    alert("Profile updated successfully!");
-
-    // Disable editable fields again
-    document.querySelectorAll('#profileForm input, #profileForm select').forEach(el => {
-        if(el.id !== 'username' && el.id !== 'profileEmail'){
+// ==================== Edit Profile Fields ====================
+function disableAllFields() {
+    // Disable all inputs, selects, textareas including file input triggers
+    document.querySelectorAll('#editPatientForm input, #editPatientForm select,#editPatientDocsContainer input, #editPatientDocsContainer button').forEach(el => {
+        // Keep buttons for file upload disabled except the Edit button itself
+        if(!el.classList.contains('editbtn')) {
             el.setAttribute('disabled', true);
         }
     });
-});
+
+    // Keep username & email readonly instead of disabled
+    document.getElementById("editPatientUsername").setAttribute("readonly", true);
+    document.getElementById("editPatientEmail").setAttribute("readonly", true);
+}
+
+function enableAllFields() {
+    // Enable all inputs, selects,  and file upload buttons except username and email
+    document.querySelectorAll('#editPatientForm input, #editPatientForm select, #editPatientDocsContainer input , #editPatientDocsContainer button').forEach(el => {
+        if(el.id !== "editPatientUsername" && el.id !== "editPatientEmail" && !el.classList.contains('editbtn')) {
+            el.removeAttribute('disabled');
+        }
+    });
+
+    // Username & email stay readonly
+    document.getElementById("editPatientUsername").setAttribute("readonly", true);
+    document.getElementById("editPatientEmail").setAttribute("readonly", true);
+
+    alert("You can now edit your profile (except username and email)!");
+}
+
+// Run on page load
+window.onload = disableAllFields;
+
 
 // ==================== Profile Image Upload ====================
 const profileImageInput = document.getElementById('profileImageInput');
 const profileImagePreview = document.getElementById('profileImagePreview');
 
-function uploadProfileDoc(type){
-    if(type === 'profileImage'){
-        profileImageInput.click(); 
+// ================ Upload Profile Document ====================
+function uploadProfileDoc(inputId) {
+    const fileInput = document.getElementById(inputId);
+    if (fileInput) {
+        fileInput.click();
+    } else {
+        console.error("No file input found with id:", inputId);
     }
 }
 
@@ -462,24 +519,6 @@ profileImageInput.addEventListener('change', e => {
         reader.readAsDataURL(file);
     }
 });
-
-// ================= Profile Age ====================
-const profileDOB = document.getElementById('profileDOB');
-const profileAge = document.getElementById('profileAge');
-
-function calculateAge(dob){
-    const birthDate = new Date(dob);
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    if(monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) age--;
-    return age;
-}
-
-if(profileDOB && profileAge){
-    profileAge.value = calculateAge(profileDOB.value);
-    profileDOB.addEventListener('change', ()=> profileAge.value = calculateAge(profileDOB.value));
-}
 
 // ==================== Initialize ====================
 updateDashboard();

@@ -1,4 +1,14 @@
+<?php
+session_start();
 
+// check login
+if (!isset($_SESSION['user']) || $_SESSION['user']['usertype'] !== 'patient') {
+    header("Location: ../view/signin_signup.php");
+    exit();
+
+}
+$patientUsername = $_SESSION['user']['username']; 
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,7 +58,9 @@
         <div class="profile">
           <img src="Profile.jpg" alt="Profile Picture" onclick="showProfile()">
           <p>Welcome,</p>
-          <span class="profile-name" id="navbarProfileName" onclick="showProfile()">Shizan Sarkar</span>
+          <span class="" id="" onclick="showSection('profileSection')">
+        <?php echo htmlspecialchars($patientUsername); ?>
+           </span>
         </div>
         <div class="notification" onclick="showNotifications()">
           <i class="fa fa-bell"></i>

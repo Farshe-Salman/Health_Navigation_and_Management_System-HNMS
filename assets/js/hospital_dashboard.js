@@ -4,10 +4,12 @@ const appointmentsList = document.getElementById('appointmentsList');
 const notificationCount = document.getElementById('notificationCount');
 let appointments = [];
 
+// Toggle sidebar
 function toggleSidebar() {
     sidebar.classList.toggle("show");
 }
 
+// Show/hide sections
 function showSection(sectionId, event) {
     document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
     const sec = document.getElementById(sectionId);
@@ -19,23 +21,18 @@ function showSection(sectionId, event) {
     if (window.innerWidth <= 768) sidebar.classList.remove("show");
 }
 
-// =============showProfile=============
-
-function showProfile() { 
-    showSection("hospitalProfile"); 
-    loadProfile(); 
-}
-
-// ========================Notifications========================
+// ======================== Notifications ========================
 function showNotifications() {
     const panel = document.getElementById("notificationsPanel");
     const list = document.getElementById("notificationsList");
+
     if (appointments.length) {
         list.innerHTML = appointments.map((a, index) => `
             <div class="notification-item">
                 <strong>${index + 1}. ${a}</strong>
                 <span class="date">${new Date().toLocaleDateString()}</span>
-            </div>`).join('');
+            </div>
+        `).join('');
     } else {
         list.innerHTML = `<div class="notification-item">No notifications at the moment.</div>`;
     }
@@ -46,452 +43,158 @@ document.getElementById("closeNotifications")?.addEventListener("click", () => {
     document.getElementById("notificationsPanel").style.display = "none";
 });
 
-
 // ==================== Doctor Inventory ====================
-let doctors = [
-  {
-    id: 1,
-    name: "Dr. Arif Rahman",
-    specialization: "Cardiologist",
-    phone: "01711111111",
-    email: "arif@example.com",
-    experience: 12,
-    availability: "Mon-Fri, 10AM-5PM",
-    documents: {
-      photo: null,
-      license: null,
-      degree: null
-    }
-  },
-  {
-    id: 2,
-    name: "Dr. Nabila Hasan",
-    specialization: "Dermatologist",
-    phone: "01722222222",
-    email: "nabila@example.com",
-    experience: 8,
-    availability: "Sun-Thu, 9AM-3PM",
-    documents: {
-      photo: null,
-      license: null,
-      degree: null
-    }
-  }
-];
+// Doctors now come from PHP (via data attributes), not from JS arrays
 
-// ==================== Open Add Doctor Section ====================
 function openDoctorSection() {
-  showSection("addDoctorSection");
+    showSection("addDoctorSection");
 }
 
-// ==================== Add Doctor ====================
-document.getElementById("addDoctorForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-
-  const name = document.getElementById("doctorName").value.trim();
-  const specialization = document.getElementById("doctorSpecialization").value.trim();
-  const phone = document.getElementById("doctorPhone").value.trim();
-  const email = document.getElementById("doctorEmail").value.trim();
-  const experience = parseInt(document.getElementById("doctorExperience").value);
-  const availability = document.getElementById("doctorAvailability").value.trim();
-
-  const photo = document.getElementById("doctorPhoto").files[0];
-  const license = document.getElementById("doctorLicense").files[0];
-  const degree = document.getElementById("doctorDegree").files[0];
-
-  // Validation
-  if (!name || !specialization || !phone || !email || isNaN(experience) || !availability) {
-    alert("⚠️ Please fill all required fields.");
-    return;
-  }
-  if (!photo || !license || !degree) {
-    alert("⚠️ Please upload all required documents.");
-    return;
-  }
-
-  const newDoctor = {
-    id: Date.now(),
-    name,
-    specialization,
-    phone,
-    email,
-    experience,
-    availability,
-    documents: {
-      photo: photo.name,
-      license: license.name,
-      degree: degree.name
-    }
-  };
-
-  doctors.push(newDoctor);
-  renderDoctors();
-
-  document.getElementById("addDoctorForm").reset();
-  showSection("doctor");
-  alert("✅ Doctor added successfully.");
-});
-
-// ==================== Render Doctors ====================
-function renderDoctors() {
-  const container = document.getElementById("inventoryDoctorList");
-  container.innerHTML = "";
-
-  if (doctors.length === 0) {
-    container.innerHTML = "<p>No doctors available. Add new doctors.</p>";
-    return;
-  }
-
-  doctors.forEach((doc) => {
-    const item = document.createElement("div");
-    item.classList.add("doctor-item");
-
-    item.innerHTML = `
-      <div class="doctor-card">
-        <img src="doctor.png" alt="${doc.name}">
-        <h4>${doc.name}</h4>
-        <p>Specialization: ${doc.specialization}</p>
-        <p>Phone: ${doc.phone}</p>
-        <p>Email: ${doc.email}</p>
-        <p>Experience: ${doc.experience} years</p>
-        <p>Availability: ${doc.availability}</p>
-        <button class="edit-btn" onclick="editDoctor(${doc.id})">Edit</button>
-        <button class="delete-btn" onclick="deleteDoctor(${doc.id})">Delete</button>
-      </div>
-    `;
-    container.appendChild(item);
-  });
-}
-
-// ==================== Delete Doctor ====================
+// Delete doctor (redirect to backend delete)
 function deleteDoctor(id) {
-  doctors = doctors.filter(d => d.id !== id);
-  renderDoctors();
-}
-
-// ==================== Edit Doctor ====================
-let currentEditingDoctor = null; // keep track of which doctor is being edited
-
-function editDoctor(id) {
-  const doc = doctors.find(d => d.id === id);
-  if (!doc) {
-    alert("Doctor not found!");
-    return;
-  }
-
-  currentEditingDoctor = doc; // store reference
-  showSection("editDoctorSection");
-
-  // Populate fields
-  document.getElementById("editDoctorName").value = doc.name;
-  document.getElementById("editDoctorSpecialization").value = doc.specialization;
-  document.getElementById("editDoctorPhone").value = doc.phone;
-  document.getElementById("editDoctorEmail").value = doc.email;
-  document.getElementById("editDoctorQualification").value = doc.qualification || "";
-  document.getElementById("editDoctorExperience").value = doc.experience;
-
-  // Availability
-  document.getElementById("editDoctorStartTime").value = doc.startTime || "";
-  document.getElementById("editDoctorEndTime").value = doc.endTime || "";
-
-  document.querySelectorAll('input[name="editDoctorDays"]').forEach(cb => {
-    cb.checked = (doc.days || []).includes(cb.value);
-  });
-
-  // Credentials
-  document.getElementById("editDoctorUsername").value = doc.username || "";
-  document.getElementById("editDoctorPassword").value = doc.password || "";
-
-  // Disable all fields initially
-  document.querySelectorAll('#editDoctorForm input, #editDoctorForm select').forEach(el => {
-    el.disabled = true;
-  });
-}
-
-// ==================== Enable All Fields ====================
-function enableAllEditFields() {
-  document.querySelectorAll('#editDoctorForm input, #editDoctorForm select').forEach(el => {
-    el.disabled = false;
-  });
-
-  document.querySelectorAll('#editDoctorForm input[type="checkbox"]').forEach(cb => {
-    cb.disabled = false;
-  });
-
- 
-
-  alert("✅ All fields are now editable!");
-}
-
-// ==================== Submit Update ====================
-document.getElementById("editDoctorForm").onsubmit = function (e) {
-  e.preventDefault();
-  if (!currentEditingDoctor) {
-    alert("Error: No doctor selected for editing!");
-    return;
-  }
-
-  // Update doctor details
-  currentEditingDoctor.name = document.getElementById("editDoctorName").value.trim();
-  currentEditingDoctor.specialization = document.getElementById("editDoctorSpecialization").value.trim();
-  currentEditingDoctor.phone = document.getElementById("editDoctorPhone").value.trim();
-  currentEditingDoctor.email = document.getElementById("editDoctorEmail").value.trim();
-  currentEditingDoctor.qualification = document.getElementById("editDoctorQualification").value.trim();
-  currentEditingDoctor.experience = parseInt(document.getElementById("editDoctorExperience").value);
-
-  currentEditingDoctor.startTime = document.getElementById("editDoctorStartTime").value;
-  currentEditingDoctor.endTime = document.getElementById("editDoctorEndTime").value;
-
-  const selectedDays = [];
-  document.querySelectorAll('input[name="editDoctorDays"]:checked').forEach(cb => {
-    selectedDays.push(cb.value);
-  });
-  currentEditingDoctor.days = selectedDays;
-
-  // Credentials
-  currentEditingDoctor.username = document.getElementById("editDoctorUsername").value.trim();
-  currentEditingDoctor.password = document.getElementById("editDoctorPassword").value.trim();
-
-  // Files (optional)
-  const photo = document.getElementById("editDoctorPhoto").files[0];
-  const license = document.getElementById("editDoctorLicense").files[0];
-  const degree = document.getElementById("editDoctorDegree").files[0];
-
-  if (photo) currentEditingDoctor.documents.photo = photo.name;
-  if (license) currentEditingDoctor.documents.license = license.name;
-  if (degree) currentEditingDoctor.documents.degree = degree.name;
-
-  // Refresh list
-  renderDoctors();
-  showSection("doctor");
-  alert("✅ Doctor updated successfully!");
-};
-
-
-// ==================== Init ====================
-renderDoctors();
-
-// ==================== Change Password ====================
-// Toggle password visibility
-    function togglePassword(fieldId) {
-      const input = document.getElementById(fieldId);
-      const toggle = input.nextElementSibling;
-      if (input.type === "password") {
-        input.type = "text";
-        toggle.textContent = "Hide";
-      } else {
-        input.type = "password";
-        toggle.textContent = "Show";
-      }
+    if (confirm("Are you sure you want to delete this doctor?")) {
+        window.location.href = `delete_doctor.php?id=${id}`;
     }
-
-    // Real-time validation
-    const currentPassword = document.getElementById("currentPassword");
-    const newPassword = document.getElementById("newPassword");
-    const confirmPassword = document.getElementById("confirmPassword");
-
-    const currentError = document.getElementById("currentError");
-    const newError = document.getElementById("newError");
-    const confirmError = document.getElementById("confirmError");
-    const message = document.getElementById("passwordMessage");
-
-    function validateCurrent() {
-      if (!currentPassword.value.trim()) {
-        currentError.textContent = "Current password is required.";
-      } else {
-        currentError.textContent = "";
-      }
-    }
-
-   function validateNew() {
-  const newVal = newPassword.value.trim();
-
-  if (!newVal) {
-    newError.textContent = "New password is required.";
-  } 
-  else if (
-    newVal.length < 6 ||               
-    !/[A-Z]/.test(newVal) ||          
-    !/[a-z]/.test(newVal) ||          
-    !/\d/.test(newVal) ||         
-    !/[@$!%*?&]/.test(newVal)         
-  ) {
-    newError.textContent = "Password must include upper, lower, number, special char & 6+ chars.";
-  } 
-  else if (newVal === currentPassword.value.trim() && newVal !== "") {
-    newError.textContent = "New password cannot be the same as current.";
-  } 
-  else {
-    newError.textContent = "";
-  }
-
-  validateConfirm(); 
 }
+// =================Edit Doctor ====================
+// Open edit form and preload doctor data
+function editDoctor(button) {
+    const doctorItem = button.closest(".doctor-item");
+    if (!doctorItem) return;
 
+    // Parse doctor data stored in data-doctor attribute
+    const doctorData = JSON.parse(doctorItem.querySelector(".doctor-card").dataset.doctor);
 
-    function validateConfirm() {
-      const newVal = newPassword.value.trim();
-      const confirmVal = confirmPassword.value.trim();
-      if (!confirmVal) {
-        confirmError.textContent = "Confirm password is required.";
-      } else if (newVal !== confirmVal) {
-        confirmError.textContent = "Passwords do not match.";
-      } else {
-        confirmError.textContent = "";
-      }
-    }
+    // Show the edit section
+    showSection("editDoctorSection");
 
-    // Attach real-time events
-    currentPassword.addEventListener("input", validateCurrent);
-    newPassword.addEventListener("input", validateNew);
-    confirmPassword.addEventListener("input", validateConfirm);
+    // Fill values into inputs
+    document.getElementById("editDoctorId").value = doctorData.doctor_id || '';
+    document.getElementById("editDoctorName").value = doctorData.doctor_name || '';
+    document.getElementById("editDoctorEmail").value = doctorData.email || '';
+    document.getElementById("editDoctorPhone").value = doctorData.contact || '';
+    document.getElementById("editDoctorSpecialization").value = doctorData.specialization || '';
+    document.getElementById("editDoctorQualification").value = doctorData.qualification || '';
+    document.getElementById("editDoctorExperience").value = doctorData.experience_years || '';
+    document.getElementById("editconsultantfee").value = doctorData.consultation_fee || '';
+    document.getElementById("editDoctorStartTime").value = doctorData.start_time || '';
+    document.getElementById("editDoctorEndTime").value = doctorData.end_time || '';
 
-    // On form submit
-    document.getElementById("changePasswordForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      validateCurrent();
-      validateNew();
-      validateConfirm();
-
-      if (!currentError.textContent && !newError.textContent && !confirmError.textContent) {
-        message.textContent = "Password updated successfully!";
-        message.style.color = "green";
-        this.reset();
-      } else {
-        message.textContent = "Please fix the errors above.";
-        message.style.color = "red";
-      }
+    // Pre-check availability days
+    const days = (doctorData.schedule_days || '').split(',').map(d => d.trim());
+    document.querySelectorAll("#editDoctorSection input[type='checkbox']").forEach(cb => {
+        cb.checked = days.includes(cb.value);
     });
 
+    // Disable all fields initially
+    document.querySelectorAll("#editDoctorSection input, #editDoctorSection select").forEach(input => {
+        input.disabled = true;
+    });
+}
+
+// Enable all inputs for editing when "Edit" button is clicked
+function enableAllEditFields() {
+    document.querySelectorAll("#editDoctorSection input, #editDoctorSection select").forEach(input => {
+        input.disabled = false; // now username and password are also editable
+    });
+}
 
 
-// ==================== Hospital Profile ====================
-let hospitalProfile = {
-    username: "user123",
-    hospitalName: "City Hospital",
-    email: "cityhospital@example.com",
-    phone: "01712345678",
-    address: "Dhaka, Bangladesh",
-    category: "general",
-    facilities: ["ICU", "Emergency", "Pharmacy", "Lab"],
-    profileImage: ""
-};
 
-// Show hospital profile and load data
-function showHospitalProfile() {
-    showSection("hospitalProfile");
-    loadHospitalProfile();
+// ==================== Doctor Search ====================
+async function searchDoctorAjax() {
+  try {
+    const keyword = document.getElementById('searchDoctors').value; // FIXED
+    const res = await fetch(
+      `../controller/hdash_doctor_search.php?keyword=${encodeURIComponent(keyword)}`
+    );
+
+    document.getElementById('inventoryDoctorList').innerHTML = await res.text(); // FIXED
+  } catch (err) {
+    console.error("Error fetching doctors:", err);
+  }
+}
+
+document.getElementById('searchDoctors')?.addEventListener('keyup', searchDoctorAjax);
+
+
+// ==================== Toggle Password ====================
+function togglePassword(fieldId) {
+    const input = document.getElementById(fieldId);
+    const toggle = input.nextElementSibling;
+    if (input.type === "password") {
+        input.type = "text";
+        toggle.textContent = "Hide";
+    } else {
+        input.type = "password";
+        toggle.textContent = "Show";
+    }
+}
+
+
+// ==================== Hospital Profile Load ====================
+function showHospitalProfile() { 
+    showSection("hospitalProfile"); 
+    loadHospitalProfile(); 
 }
 
 function loadHospitalProfile() {
-    document.getElementById("username").value = hospitalProfile.username;
-    document.getElementById("hospitalName").value = hospitalProfile.hospitalName;
-    document.getElementById("hospitalEmail").value = hospitalProfile.email;
-    document.getElementById("hospitalPhone").value = hospitalProfile.phone;
-    document.getElementById("hospitalAddress").value = hospitalProfile.address;
-    document.getElementById("hospitalCategory").value = hospitalProfile.category;
-    
-    // Load facilities checkboxes
-    const checkboxes = document.querySelectorAll('#hospitalFacilities input[type="checkbox"]');
-    checkboxes.forEach(cb => {
-        cb.checked = hospitalProfile.facilities.includes(cb.value);
-    });
+    document.getElementById("username").value = hospitalProfile.username || "";
+    document.getElementById("hospitalName").value = hospitalProfile.hospitalName || "";
+    document.getElementById("hospitalEmail").value = hospitalProfile.email || "";
+    document.getElementById("hospitalPhone").value = hospitalProfile.phone || "";
+    document.getElementById("hospitalAddress").value = hospitalProfile.address || "";
+    document.getElementById("hospitalCategory").value = hospitalProfile.category || "";
 
-    // Load profile image
-    if(hospitalProfile.profileImage) {
-        document.getElementById("profileImagePreview").src = hospitalProfile.profileImage;
+    // Set facilities checkboxes
+    const checkboxes = document.querySelectorAll('#hospitalFacilities input[type="checkbox"]');
+    checkboxes.forEach(cb => cb.checked = hospitalProfile.facilities?.includes(cb.value) || false);
+
+    // Set profile image
+    document.getElementById("profileImagePreview").src = hospitalProfile.profileImage || "default-profile.png";
+
+    // Optional: update document placeholders if files are loaded
+    if (hospitalProfile.licenseFile) {
+        document.getElementById("licenseFilePlaceholder").value = hospitalProfile.licenseFile;
+    }
+    if (hospitalProfile.accreditationFile) {
+        document.getElementById("accreditationFilePlaceholder").value = hospitalProfile.accreditationFile;
+    }
+    if (hospitalProfile.vatFile) {
+        document.getElementById("vatFilePlaceholder").value = hospitalProfile.vatFile;
     }
 }
 
-// ===========Enable all hospital fields (profile + facilities + verification docs)============
-function enableAllHospitalFields() {
-  // Enable all inputs and selects except username
-  document.querySelectorAll('#hospitalProfileForm input, #hospitalProfileForm select').forEach(el => {
-    if (el.id !== 'username'&& el.id !== 'hospitalEmail') el.disabled = false;
-  });
 
-  // Enable all checkboxes
-  document.querySelectorAll('#hospitalFacilities input[type="checkbox"]').forEach(cb => cb.disabled = false);
-
-  // Enable all file inputs
-  document.querySelectorAll('#verificationDocsContainer input[type="file"]').forEach(fileInput => fileInput.disabled = false);
-
-  alert("You can now edit the hospital profile!");
+// ==================== Edit Hospital Profile Fields ====================
+function disableAllHospitalFields() {
+    // Disable all inputs, selects, textareas including file upload buttons
+    document.querySelectorAll('#hospitalProfileForm input, #hospitalProfileForm select, #verificationDocsContainer input, #verificationDocsContainer button').forEach(el => {
+        // Keep Edit button enabled
+        if (!el.classList.contains('edit-btn')) {
+            el.setAttribute('disabled', true);
+        }
+    });
 }
 
-// =============Save hospital profile===============
-document.getElementById("hospitalProfileForm").addEventListener("submit", function(e){
-    e.preventDefault();
+function enableAllHospitalFields() {
+    // Enable all inputs, selects, and file upload buttons except the username
+    document.querySelectorAll('#hospitalProfileForm input, #hospitalProfileForm select, #verificationDocsContainer input, #verificationDocsContainer button').forEach(el => {
+        if (el.id !== "username" && !el.classList.contains('edit-btn')) {
+            el.removeAttribute('disabled');
+        }
+    });
 
-    hospitalProfile.hospitalName = document.getElementById("hospitalName").value;
-    hospitalProfile.phone = document.getElementById("hospitalPhone").value;
-    hospitalProfile.address = document.getElementById("hospitalAddress").value;
-    hospitalProfile.category = document.getElementById("hospitalCategory").value;
+    alert("You can now edit the hospital profile!");
+}
 
-    // Save facilities
-    const facilities = [];
-    const checkboxes = document.querySelectorAll('#hospitalFacilities input[type="checkbox"]:checked');
-    checkboxes.forEach(cb => facilities.push(cb.value));
-    hospitalProfile.facilities = facilities;
-
-    alert("Hospital profile updated successfully!");
-
-    // Disable fields again
-    const inputs = document.querySelectorAll('#hospitalProfileForm input, #hospitalProfileForm select');
-    inputs.forEach(el => { if(el.id !== 'username') el.disabled = true; });
-    const allCheckboxes = document.querySelectorAll('#hospitalFacilities input[type="checkbox"]');
-    allCheckboxes.forEach(cb => cb.disabled = true);
-    const verificationFiles = document.querySelectorAll('#verificationDocsContainer input[type="file"]');
-    verificationFiles.forEach(fileInput => fileInput.disabled = true);
-});
+// Run on page load
+window.onload = disableAllHospitalFields;
 
 // ==================== Uploads & Previews ====================
 const profileImageInput = document.getElementById('profileImageInput');
 const profileImagePreview = document.getElementById('profileImagePreview');
 
-const fileInputs = {
-    license: document.getElementById('licenseFile'),
-    accreditation: document.getElementById('accreditationFile'),
-    vat: document.getElementById('vatFile')
-};
-
-const statusSpans = {
-    license: document.getElementById('docLicenseStatus'),
-    accreditation: document.getElementById('docAccreditationStatus'),
-    vat: document.getElementById('docVATStatus')
-};
-
-// ==================== Unified Upload Function ====================
-function uploadProfileDoc(type) {
-    if (type === 'profileImage') {
-        profileImageInput.click();
-        return;
-    }
-
-    const fileInput = fileInputs[type];
-    const statusSpan = statusSpans[type];
-
-    if (!fileInput || !statusSpan) return;
-
-    fileInput.click();
-    fileInput.onchange = () => {
-        if (fileInput.files.length > 0) {
-            const file = fileInput.files[0];
-            const allowedTypes = ['application/pdf','image/jpeg','image/png','image/gif'];
-            if (allowedTypes.includes(file.type)) {
-                statusSpan.innerText = '✅ Uploaded';
-            } else {
-                statusSpan.innerText = '❌ Invalid file type';
-                fileInput.value = "";
-            }
-        } else {
-            statusSpan.innerText = '❌ Not Uploaded';
-        }
-    };
-}
-
-// ==================== Profile Image Preview ====================
 profileImageInput.addEventListener('change', e => {
     const file = e.target.files[0];
     if (file) {
@@ -503,11 +206,19 @@ profileImageInput.addEventListener('change', e => {
         reader.readAsDataURL(file);
     }
 });
+
+// ==================== Dashboard Update ====================
 function updateDashboard() {
-    // Example: Update navbar name and notifications
     document.getElementById('navbarProfileName').textContent = hospitalProfile.hospitalName;
     notificationCount.textContent = appointments.length;
+
+    const totalDoctors = document.querySelectorAll("#inventoryDoctorList .doctor-item").length;
+    document.getElementById("totalDoctors").textContent = totalDoctors;
+    document.getElementById("totalAppointments").textContent = appointments.length;
 }
 
 // ==================== Initialize ====================
-updateDashboard();
+document.addEventListener("DOMContentLoaded", () => {
+    updateDashboard();
+    searchDoctorAjax();
+});

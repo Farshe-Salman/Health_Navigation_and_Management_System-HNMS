@@ -1,3 +1,16 @@
+<?php
+session_start();
+
+// check login
+if (!isset($_SESSION['user']) || $_SESSION['user']['usertype'] !== 'hospital') {
+    header("Location: ../view/signin_signup.php");
+    exit();
+}
+
+$hospitalUsername = $_SESSION['user']['username']; 
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,10 +53,12 @@
             </div>
             <div class="navbar-right">
                 <div class="profile">
-                    <img src="Profile.jpg" alt="Profile Picture" onclick="showProfile()">
-                    <p>Welcome,</p>
-                    <span class="profile-name" id="navbarProfileName" onclick="showProfile()">Hospital</span>
-                </div>
+    <img src="Profile.jpg" alt="Profile Picture" onclick="showSection('hospitalProfile')">
+    <p>Welcome,</p>
+    <span class="" id="" onclick="showSection('hospitalProfile')">
+        <?php echo htmlspecialchars($hospitalUsername); ?>
+    </span>
+</div>
                 <div class="notification" onclick="showNotifications()">
                     <i class="fa fa-bell"></i>
                     <span class="notification-count" id="notificationCount">0</span>
@@ -59,11 +74,11 @@
 
         <!-- Content Sections -->
         <div class="content">
-            <!-- Patient default dashboard section -->
+            <!-- default dashboard section -->
             <?php include "../view/hdash_section.php"; ?>
             <!-- Doctor -->
             <?php include "../view/hdash_Doctor.php"; ?>
-            <!-- Patient Profile Section -->
+            <!--  Profile Section -->
             <?php include "../view/hospital_Profile.php"; ?>
         </div>
 
@@ -71,11 +86,11 @@
         <?php include "../view/hdash_change_Password.php"; ?>
         <!-- Notification Panel -->
         <?php include "../view/notification_panel.php"; ?>
-<!-- Footer -->
+
+    <!-- Footer -->
     <?php include "../view/dashboard_footer.php"; ?>
     </div>
 
-    
     
     <script src="../assets/js/hospital_dashboard.js"></script>
 </body>
