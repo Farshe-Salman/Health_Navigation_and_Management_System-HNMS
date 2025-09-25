@@ -280,7 +280,7 @@ input.invalid {
 .form-message {
     color: red;
     font-size: 12px;
-    align-content: center;
+    text-align: center;
 }
 
 

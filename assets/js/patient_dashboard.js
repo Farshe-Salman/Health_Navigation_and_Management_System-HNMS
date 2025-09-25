@@ -1,628 +1,524 @@
-// ==================== Sidebar & Dashboard Elements ====================
+// ==================== Sidebar & Dashboard ====================
 const sidebar = document.getElementById('sidebar');
 const appointmentsList = document.getElementById('appointmentsList');
 const notificationCount = document.getElementById('notificationCount');
 let appointments = [];
 
-// ==================== Hospital → Doctor mapping ====================
-const hospitalDoctors = {
-  "City General Hospital": ["Dr. Sarah Khan", "Dr. Sarkar Md. Shizan", "Dr. Michael Brown"],
-  "Sunrise Diagnostics": ["Dr. John Smith", "Dr. Emily Davis"]
-};
-
-const doctorDetails = {
-  "Dr. Sarkar Md. Shizan": { hospital: "City General Hospital", speciality: "ENT & Head Neck Surgery" },
-  "Dr. Michael Brown": { hospital: "City General Hospital", speciality: "Orthopedics" },
-  "Dr. John Smith": { hospital: "Sunrise Diagnostics", speciality: "Neurology" },
-  "Dr. Emily Davis": { hospital: "Sunrise Diagnostics", speciality: "Dermatology" },
-  "Dr. Sarah Khan": { hospital: "City General Hospital", speciality: "Cardiology Care Centre" }
-};
-
-
-// ==================== Sidebar ====================
 function toggleSidebar() {
-  sidebar.classList.toggle("show");
+    sidebar.classList.toggle("show");
 }
 
 function showSection(sectionId, event) {
-  // Hide all sections
-  document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
+    document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
+    const sec = document.getElementById(sectionId);
+    if (sec) sec.style.display = "block";
 
-  // Show the requested section
-  const sec = document.getElementById(sectionId);
-  if (sec) sec.style.display = "block";
+    document.querySelectorAll(".sidebar a").forEach(link => link.classList.remove("active"));
+    if (event && event.currentTarget) event.currentTarget.classList.add("active");
 
-  // Update active sidebar link
-  document.querySelectorAll(".sidebar a").forEach(link => link.classList.remove("active"));
-  if (event && event.currentTarget) event.currentTarget.classList.add("active");
-
-  // On mobile, hide sidebar after clicking a link
-  if (window.innerWidth <= 768) {
-    sidebar.classList.remove("show"); // instead of toggleSidebar()
-  }
+    if (window.innerWidth <= 768) sidebar.classList.remove("show");
 }
 
 // ==================== Dashboard Appointments ====================
 function updateDashboard() {
-  appointmentsList.innerHTML = appointments.length
-    ? appointments.map(a => `<li>${a}</li>`).join('')
-    : '<li>No appointments scheduled.</li>';
-  
-  notificationCount.textContent = appointments.length;
+    appointmentsList.innerHTML = appointments.length
+        ? appointments.map(a => `<li>${a}</li>`).join('')
+        : '<li>No appointments scheduled.</li>';
+    notificationCount.textContent = appointments.length;
 }
 
+// ========================Notifications========================
 function showNotifications() {
-  const panel = document.getElementById("notificationsPanel");
-  const list = document.getElementById("notificationsList");
-
-  if (appointments.length) {
-    list.innerHTML = appointments.map((a, index) => `
-      <div class="notification-item">
-        <strong>${index + 1}. ${a}</strong>
-        <span class="date">${new Date().toLocaleDateString()}</span>
-      </div>
-    `).join('');
-  } else {
-    list.innerHTML = `<div class="notification-item">No notifications at the moment.</div>`;
-  }
-
-  panel.style.display = "flex";
-}
-
-document.getElementById("closeNotifications").addEventListener("click", () => {
-  document.getElementById("notificationsPanel").style.display = "none";
-});
-
-// ==================== Doctor Appointment Logic ====================
-function updateDoctors(hospitalName) {
-  const doctorSelect = document.getElementById("doctorSelect");
-  doctorSelect.innerHTML = "<option value=''>Select Doctor</option>";
-  if (hospitalDoctors[hospitalName]) {
-    hospitalDoctors[hospitalName].forEach(doctor => {
-      let option = document.createElement("option");
-      option.value = doctor;
-      option.textContent = doctor;
-      doctorSelect.appendChild(option);
-    });
-  }
-}
-
-document.getElementById("hospitalSelect").addEventListener("change", function() {
-  updateDoctors(this.value);
-});
-
-document.getElementById("appointmentForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const hospital = document.getElementById("hospitalSelect").value;
-  const patientName = document.getElementById("patientName").value;
-  const doctor = document.getElementById("doctorSelect").value;
-  const date = document.getElementById("appointmentDate").value;
-  const time = document.getElementById("appointmentTime").value;
-
-  appointments.push(`${patientName} at ${hospital} with ${doctor} on ${date} at ${time}`);
-  updateDashboard();
-  alert("Your appointment request has been submitted!");
-  showSection('dashboard');
-  this.reset();
-  updateDoctors("");
-  document.getElementById("hospitalSelect").disabled = false;
-});
-
-function bookAppointmentFromHospital(hospitalName) {
-  showSection('appointments');
-  const hospitalSelect = document.getElementById("hospitalSelect");
-  hospitalSelect.value = hospitalName;
-  hospitalSelect.disabled = true;
-  updateDoctors(hospitalName);
-}
-
-function showAppointmentSection() {
-  showSection('appointments');
-  const hospitalSelect = document.getElementById("hospitalSelect");
-  hospitalSelect.disabled = false;
-  hospitalSelect.value = "";
-  updateDoctors("");
-}
-
-// Booking from doctor card
-document.querySelectorAll('.doctor-card .btn-primary').forEach(button => {
-  button.addEventListener('click', (e) => {
-    const doctorCard = e.currentTarget.closest('.doctor-card');
-    const doctorName = doctorCard.querySelector('h4').textContent;
-    if (doctorDetails[doctorName]) {
-      const details = doctorDetails[doctorName];
-      showSection('appointments');
-      const hospitalSelect = document.getElementById("hospitalSelect");
-      hospitalSelect.value = details.hospital;
-      hospitalSelect.disabled = true;
-      updateDoctors(details.hospital);
-      document.getElementById("doctorSelect").value = doctorName;
-      document.getElementById("speciality").value = details.speciality;
+    const panel = document.getElementById("notificationsPanel");
+    const list = document.getElementById("notificationsList");
+    if (appointments.length) {
+        list.innerHTML = appointments.map((a, index) => `
+            <div class="notification-item">
+                <strong>${index + 1}. ${a}</strong>
+                <span class="date">${new Date().toLocaleDateString()}</span>
+            </div>`).join('');
+    } else {
+        list.innerHTML = `<div class="notification-item">No notifications at the moment.</div>`;
     }
-  });
+    panel.style.display = "flex";
+}
+
+document.getElementById("closeNotifications")?.addEventListener("click", () => {
+    document.getElementById("notificationsPanel").style.display = "none";
+});
+
+//=====================book appoinments validation=================
+const appointmentForm = document.getElementById("appointmentForm");
+
+// Helper functions
+function showError(id, message) {
+  document.getElementById(id).textContent = message;
+}
+
+function clearError(id) {
+  document.getElementById(id).textContent = "";
+}
+
+// Validation functions
+function validateHospital() {
+  const val = document.getElementById("hospitalSelect").value.trim();
+  if (!val) {
+    showError("hospitalError", "Please select a hospital.");
+    return false;
+  }
+  clearError("hospitalError");
+  return true;
+}
+
+function validateName() {
+  const val = document.getElementById("patientName").value.trim();
+  if (!val) {
+    showError("nameError", "Name is required.");
+    return false;
+  } else if (!/^[a-zA-Z\s]+$/.test(val)) {
+    showError("nameError", "Only letters allowed.");
+    return false;
+  }
+  clearError("nameError");
+  return true;
+}
+
+function validateDOB() {
+  const val = document.getElementById("dob").value;
+  if (!val) {
+    showError("dobError", "Date of birth is required.");
+    return false;
+  }
+  clearError("dobError");
+  return true;
+}
+
+function validateGender() {
+  const val = document.getElementById("gender").value.trim();
+  if (!val) {
+    showError("genderError", "Please select gender.");
+    return false;
+  }
+  clearError("genderError");
+  return true;
+}
+
+function validateContact() {
+  const val = document.getElementById("contact").value.trim();
+  if (!val) {
+    showError("contactError", "Contact number is required.");
+    return false;
+  } else if (!/^\+8801[0-9]{9}$/.test(val)) {
+    showError("contactError", "Must be a valid Bangladeshi number (+8801XXXXXXXXX).");
+    return false;
+  }
+  clearError("contactError");
+  return true;
+}
+
+function validateDoctor() {
+  const val = document.getElementById("doctorSelect").value.trim();
+  if (!val) {
+    showError("doctorError", "Please select a doctor.");
+    return false;
+  }
+  clearError("doctorError");
+  return true;
+}
+
+function validateAppointmentDate() {
+  const val = document.getElementById("appointmentDate").value;
+  if (!val) {
+    showError("appointmentDateError", "Please select appointment date.");
+    return false;
+  }
+  clearError("appointmentDateError");
+  return true;
+}
+
+// Real-time validation
+document.getElementById("hospitalSelect").addEventListener("change", validateHospital);
+document.getElementById("patientName").addEventListener("input", validateName);
+document.getElementById("dob").addEventListener("change", validateDOB);
+document.getElementById("gender").addEventListener("change", validateGender);
+document.getElementById("contact").addEventListener("input", validateContact);
+document.getElementById("doctorSelect").addEventListener("change", validateDoctor);
+document.getElementById("appointmentDate").addEventListener("change", validateAppointmentDate);
+
+// // Submit event
+// appointmentForm.addEventListener("submit", function(e) {
+//   e.preventDefault();
+
+//   // Validate all fields
+//   const hospitalValid = validateHospital();
+//   const nameValid = validateName();
+//   const dobValid = validateDOB();
+//   const genderValid = validateGender();
+//   const contactValid = validateContact();
+//   const doctorValid = validateDoctor();
+//   const appointmentDateValid = validateAppointmentDate();
+
+//   // If any field invalid, prevent submit
+//   if (!hospitalValid || !nameValid || !dobValid || !genderValid ||
+//       !contactValid || !doctorValid || !appointmentDateValid) {
+//     const firstError = document.querySelector(".error-text:not(:empty)");
+//     if (firstError) firstError.scrollIntoView({ behavior: "smooth" });
+//     return; // stop submission
+//   }
+
+//   // All valid – Add appointment to dashboard
+//   const patientName = document.getElementById("patientName").value.trim();
+//   const hospital = document.getElementById("hospitalSelect").value.trim();
+//   const doctor = document.getElementById("doctorSelect").value.trim();
+//   const date = document.getElementById("appointmentDate").value;
+//   const time = document.getElementById("appointmentTime").value;
+
+//   const appointmentText = `${patientName} at ${hospital} with ${doctor} on ${date} ${time}`;
+//   appointments.push(appointmentText);
+//   updateDashboard();
+
+//   alert("Appointment submitted successfully!");
+//   this.reset();
+// });
+
+// ==================== Hospital Search ====================
+async function searchHospitalAjax() {
+  try {
+    const keyword = document.getElementById('searchHospitals').value;
+    const res = await fetch(`../controller/hospital_search.php?keyword=${encodeURIComponent(keyword)}`);
+    document.getElementById('hospitalList').innerHTML = await res.text();
+  } catch (err) {
+    console.error("Error fetching hospitals:", err);
+  }
+}
+
+// ==================== Doctor Search ====================
+async function searchDoctorAjax() {
+  try {
+    const keyword = document.getElementById('searchDoctor').value;
+    const specialization = document.getElementById('doctorDepartment').value;
+
+    const res = await fetch(
+      `../controller/doctor_search.php?keyword=${encodeURIComponent(keyword)}&specialization=${encodeURIComponent(specialization)}`
+    );
+
+    document.getElementById('doctorList').innerHTML = await res.text();
+  } catch (err) {
+    console.error("Error fetching doctors:", err);
+  }
+}
+
+document.getElementById('searchDoctor')?.addEventListener('keyup', searchDoctorAjax);
+document.getElementById('doctorDepartment')?.addEventListener('change', searchDoctorAjax);
+
+// =================Find Hospitals and Find Doctors View Details Button=====================
+function viewHospitalDetails(button) {
+    document.getElementById('modalHospitalName').innerText = button.closest('.hospital-card').querySelector('h4').innerText;
+    document.getElementById('modalEmail').innerText = button.dataset.email;
+    document.getElementById('modalPhone').innerText = button.dataset.phone;
+    document.getElementById('modalAddress').innerText = button.dataset.address;
+    document.getElementById('modalCategory').innerText = button.closest('.hospital-card').querySelector('.hospital-info p').innerText.replace('Category: ', '');
+    document.getElementById('hospitalModal').style.display = 'flex';
+}
+
+function viewDoctorDetails(btn) {
+    document.getElementById('modalDoctorName').innerText = btn.dataset.name;
+    document.getElementById('modalEmail').innerText = btn.dataset.email || 'N/A';
+    document.getElementById('modalContact').innerText = btn.dataset.contact || 'N/A';
+    document.getElementById('modalSpecialization').innerText = btn.dataset.specialization || 'N/A';
+    document.getElementById('modalQualification').innerText = btn.dataset.qualification || 'N/A';
+    document.getElementById('modalExperience').innerText = btn.dataset.experience || '0';
+    document.getElementById('modalFee').innerText = btn.dataset.fee || '0';
+    document.getElementById('modalDoctorImage').src = "../assets/uploads/" + (btn.dataset.image || 'doc1.png');
+
+    document.getElementById('doctorModal').style.display = 'flex';
+}
+
+
+function closeModal() {
+    document.getElementById('hospitalModal').style.display = 'none';
+    document.getElementById('doctorModal').style.display = 'none';
+}
+
+// Close modals on outside click
+window.onclick = function(event) {
+    const hospitalModal = document.getElementById('hospitalModal');
+    const doctorModal = document.getElementById('doctorModal');
+
+    if (event.target === hospitalModal) {
+        hospitalModal.style.display = "none";
+    }
+
+    if (event.target === doctorModal) {
+        doctorModal.style.display = "none";
+    }
+}
+
+
+
+// ================Book Appointment===============
+
+
+
+
+
+// ==================== Load on Page ====================
+window.addEventListener('DOMContentLoaded', () => {
+    searchHospitalAjax();
+    searchDoctorAjax();
+    loadAppointments(); 
+    loadHistory();
 });
 
 // ==================== Change Password ====================
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("changePasswordForm");
-  if (form) {
-    form.addEventListener("submit", function(e) {
+// Toggle password visibility
+    function togglePassword(fieldId) {
+      const input = document.getElementById(fieldId);
+      const toggle = input.nextElementSibling;
+      if (input.type === "password") {
+        input.type = "text";
+        toggle.textContent = "Hide";
+      } else {
+        input.type = "password";
+        toggle.textContent = "Show";
+      }
+    }
+
+    // Real-time validation
+    const currentPassword = document.getElementById("currentPassword");
+    const newPassword = document.getElementById("newPassword");
+    const confirmPassword = document.getElementById("confirmPassword");
+
+    const currentError = document.getElementById("currentError");
+    const newError = document.getElementById("newError");
+    const confirmError = document.getElementById("confirmError");
+    const message = document.getElementById("passwordMessage");
+
+    function validateCurrent() {
+      if (!currentPassword.value.trim()) {
+        currentError.textContent = "Current password is required.";
+      } else {
+        currentError.textContent = "";
+      }
+    }
+
+   function validateNew() {
+  const newVal = newPassword.value.trim();
+
+  if (!newVal) {
+    newError.textContent = "New password is required.";
+  } 
+  else if (
+    newVal.length < 6 ||               
+    !/[A-Z]/.test(newVal) ||          
+    !/[a-z]/.test(newVal) ||          
+    !/\d/.test(newVal) ||         
+    !/[@$!%*?&]/.test(newVal)         
+  ) {
+    newError.textContent = "Password must include upper, lower, number, special char & 6+ chars.";
+  } 
+  else if (newVal === currentPassword.value.trim() && newVal !== "") {
+    newError.textContent = "New password cannot be the same as current.";
+  } 
+  else {
+    newError.textContent = "";
+  }
+
+  validateConfirm(); 
+}
+
+
+    function validateConfirm() {
+      const newVal = newPassword.value.trim();
+      const confirmVal = confirmPassword.value.trim();
+      if (!confirmVal) {
+        confirmError.textContent = "Confirm password is required.";
+      } else if (newVal !== confirmVal) {
+        confirmError.textContent = "Passwords do not match.";
+      } else {
+        confirmError.textContent = "";
+      }
+    }
+
+    // Attach real-time events
+    currentPassword.addEventListener("input", validateCurrent);
+    newPassword.addEventListener("input", validateNew);
+    confirmPassword.addEventListener("input", validateConfirm);
+
+    // On form submit
+    document.getElementById("changePasswordForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      form.reset();
-      alert("Password change functionality is not implemented in this demo.");
+
+      validateCurrent();
+      validateNew();
+      validateConfirm();
+
+      if (!currentError.textContent && !newError.textContent && !confirmError.textContent) {
+        message.textContent = "Password updated successfully!";
+        message.style.color = "green";
+        this.reset();
+      } else {
+        message.textContent = "Please fix the errors above.";
+        message.style.color = "red";
+      }
     });
-  }
-});
-
-// ==================== Pharmacy & Cart ====================
-let cart = [];
-let currentPharmacy = null;
-
-const pharmacyMedicines = {
-  "City Pharmacy": [
-    { name: "Paracetamol", price: 20, img: "image.png" },
-    { name: "Amoxicillin", price: 120, img: "image.png" },
-    { name: "Cetirizine", price: 30, img: "image.png" },
-    { name: "Insulin", price: 550, img: "image.png" }
-  ],
-  "Lazz Pharmacy": [
-    { name: "ORS Saline", price: 15, img: "med5.jpg" },
-    { name: "Vitamin C", price: 50, img: "med6.jpg" }
-  ],
-  "Tamanna Pharmacy": [
-    { name: "Paracetamol", price: 20, img: "med7.jpg" }
-  ]
-};
-
-// Open medicine catalog
-function openMedicineCatalog(pharmacyName) {
-  currentPharmacy = pharmacyName;
-  showSection("pharmacyMedicinesSection");
-
-  document.getElementById("medSectionTitle").innerText = `${pharmacyName} - Medicines`;
-
-  renderMedicines();
-}
-
-// Render medicines for current pharmacy
-function renderMedicines() {
-  const list = document.getElementById("pharmacyMedicineList");
-  list.innerHTML = "";
-  const medicines = pharmacyMedicines[currentPharmacy] || [];
-
-  medicines.forEach((med, index) => {
-    const inCart = cart.find(i => i.name === med.name);
-    const controls = inCart
-      ? `<div class="qty-controls">
-          <button onclick="updateQty('${med.name}', -1)">-</button>
-          <span>${inCart.qty}</span>
-          <button onclick="updateQty('${med.name}', 1)">+</button>
-        </div>`
-      : `<button onclick="addToCart('${med.name}', ${med.price}, '${med.img}')">Add to Cart</button>`;
-
-    const card = document.createElement("div");
-    card.className = "medicine-card";
-    card.innerHTML = `
-      <img src="${med.img}" alt="${med.name}">
-      <h4>${med.name}</h4>
-      <p>৳${med.price}</p>
-      ${controls}`;
-    list.appendChild(card);
-  });
-}
-
-// Add to cart
-function addToCart(name, price, img) {
-  const existing = cart.find(i => i.name === name);
-  if (existing) {
-    existing.qty++;
-  } else {
-    cart.push({ name, price, img, qty: 1 });
-  }
-  renderMedicines();
-}
-
-// Update qty
-function updateQty(name, change) {
-  const item = cart.find(i => i.name === name);
-  if (!item) return;
-  item.qty += change;
-  if (item.qty <= 0) {
-    cart = cart.filter(i => i.name !== name);
-  }
-  renderMedicines();
-  renderCart();
-}
-
-// Show cart
-function showCart() {
-  if (!cart.length) {
-    alert("Your cart is empty!");
-    return;
-  }
-  showSection("pharmacyCartSection");
-  renderCart();
-}
 
 
-// Render cart items
-function renderCart() {
-  const list = document.getElementById("cartItemsList");
-  const totalSpan = document.getElementById("cartTotal");
-  list.innerHTML = "";
-  let total = 0;
-
-  cart.forEach(item => {
-    total += item.price * item.qty;
-    const card = document.createElement("div");
-    card.className = "medicine-card";
-    card.innerHTML = `
-      <img src="${item.img}" alt="${item.name}">
-      <h4>${item.name}</h4>
-      <p>৳${item.price}</p>
-      <div class="qty-controls">
-        <button onclick="updateQty('${item.name}', -1)">-</button>
-        <span>${item.qty}</span>
-        <button onclick="updateQty('${item.name}', 1)">+</button>
-      </div>
-    `;
-    list.appendChild(card);
-  });
-
-  totalSpan.innerText = "৳" + total;
-}
-
-
-// Clear cart
-function clearCart() {
-  cart = [];
-  renderCart();
-}
-
-// Back to pharmacy list
-function backToPharmacy() {
-  showSection("pharmacy");
-}
-
-// Back to medicines
-function backToMedicines() {
-  showSection("pharmacyMedicinesSection");
-  renderMedicines();
-}
-
-// Checkout
-// Checkout
-function checkoutCart() {
-  if (!cart.length) {
-    alert("Your cart is empty!");
-    return;
-  }
-  showSection("deliverySection");
-  renderOrderSummary();
-}
-
-// Render order summary with interactive controls
-function renderOrderSummary() {
-  const orderSummary = document.getElementById("orderSummary");
-  const orderTotal = document.getElementById("orderTotal");
-  orderSummary.innerHTML = "";
-  let total = 0;
-
-  if (!cart.length) {
-    orderSummary.innerHTML = "<p>Your cart is empty.</p>";
-    orderTotal.innerText = "৳0";
-    return;
-  }
-
-  // Create table
-  const table = document.createElement("table");
-  table.style.width = "100%";
-  table.style.borderCollapse = "collapse";
-
-  // Table header
-  const thead = document.createElement("thead");
-  thead.innerHTML = `
-    <tr style="background:#f0f0f0;">
-      <th style="padding:8px;">Image</th>
-      <th style="padding:8px;">Name</th>
-      <th style="padding:8px;">Unit Price</th>
-      <th style="padding:8px;">Quantity</th>
-      <th style="padding:8px;">Total</th>
-      <th style="padding:8px;">Action</th>
-    </tr>
-  `;
-  table.appendChild(thead);
-
-  // Table body
-  const tbody = document.createElement("tbody");
-
-  cart.forEach(item => {
-    total += item.price * item.qty;
-    const tr = document.createElement("tr");
-    tr.style.borderBottom = "1px solid #ccc";
-    tr.innerHTML = `
-      <td style="padding:8px; text-align:center;"><img src="${item.img}" alt="${item.name}" style="width:50px;height:50px;"></td>
-      <td style="padding:8px;">${item.name}</td>
-      <td style="padding:8px;">৳${item.price}</td>
-      <td style="padding:8px; text-align:center;">
-        <button onclick="updateQty('${item.name}', -1); renderOrderSummary();">-</button>
-        <span style="margin:0 8px;">${item.qty}</span>
-        <button onclick="updateQty('${item.name}', 1); renderOrderSummary();">+</button>
-      </td>
-      <td style="padding:8px;">৳${item.price * item.qty}</td>
-      <td style="padding:8px; text-align:center;">
-        <button onclick="removeFromCart('${item.name}'); renderOrderSummary();">X</button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-
-  table.appendChild(tbody);
-  orderSummary.appendChild(table);
-
-  orderTotal.innerText = "৳" + total;
-
-}
-
-function removeFromCart(name) {
-  cart = cart.filter(i => i.name !== name);
-  renderCart();
-  renderOrderSummary();
-}
-//prescription
-const prescriptionInput = document.getElementById("custPrescription");
-const prescriptionFileName = document.getElementById("prescriptionFileName");
-
-prescriptionInput.addEventListener("change", function() {
-  if (this.files && this.files.length > 0) {
-    prescriptionFileName.textContent = this.files[0].name;
-  } else {
-    prescriptionFileName.textContent = "No file selected";
-  }
-});
-
-
-// Place order
-function placeOrder() {
-  const name = document.getElementById("custName").value;
-  const phone = document.getElementById("custPhone").value;
-  const city = document.getElementById("custCity").value;
-  const address = document.getElementById("custAddress").value;
-  const prescriptionFile = document.getElementById("custPrescription").files[0];
-  const paymentMethod = document.querySelector("input[name='payment']:checked")?.value;
-
-  if (!phone || !city || !address) {
-    alert("Please fill all required delivery details.");
-    return;
-  }
-
-  // Build order summary
-  let orderText = "📦 Order placed successfully!\n\nItems:\n";
-  cart.forEach(item => {
-    orderText += `${item.name} x${item.qty} = ৳${item.price * item.qty}\n`;
-  });
-
-  const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
-  orderText += `\nTotal: ৳${total}\n`;
-
-  // Prescription info
-  orderText += prescriptionFile ? `Prescription: ${prescriptionFile.name}\n` : "Prescription: None\n";
-
-  // Payment method
-  orderText += `Payment: ${paymentMethod === "online" ? "Online Payment" : "Cash on Delivery"}\n`;
-
-  // Delivery details
-  orderText += `\nDelivery To:\n${name || "N/A"}\n${phone}\n${city}\n${address}`;
-
-  alert(orderText);
-
-  // Reset cart + form
-  cart = [];
-  document.getElementById("deliveryForm").reset();
-  document.getElementById("prescriptionFileName").innerText = "";
-  showSection("pharmacyMedicinesSection");
-}
-// ==================== Patient Profile ====================
-
-let patientProfile = {
-  name: "Shizan Sarkar",
-  email: "shizan@example.com",
-  phone: "01712345678"
-};
-
-// Open Profile Section
-function showProfile() {
-  showSection("profileSection");
-  loadProfile();
-}
-
-// Load profile data into the form
-function loadProfile() {
-  document.getElementById("profileName").value = patientProfile.name;
-  document.getElementById("profileEmail").value = patientProfile.email;
-  document.getElementById("profilePhone").value = patientProfile.phone;
-
-
-  document.getElementById("navbarProfileName").innerText = patientProfile.name;
-}
-
-// Enable editing for a specific input field
-function enableEdit(fieldId) {
-    const input = document.getElementById(fieldId);
-    input.disabled = false;
-    input.focus();
-}
-
-// Save profile changes
-document.getElementById("profileForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  // Update patientProfile object
-  patientProfile.name = document.getElementById("profileName").value;
-  patientProfile.email = document.getElementById("profileEmail").value;
-  patientProfile.phone = document.getElementById("profilePhone").value;
-
-  document.getElementById("navbarProfileName").innerText = patientProfile.name;
-
-  alert("Profile updated successfully!");
-});
-
-
-
-// ==================== Blood Bank ====================
-// Sample blood bank data
-const bloodBank = [
-  { hospital: "City General Hospital", bloodGroup: "A+", units: 5, donors: [{ name: "Alice", contact: "01711112222" }, { name: "Bob", contact: "01733334444" }] },
-  { hospital: "Sunrise Diagnostics", bloodGroup: "A+", units: 3, donors: [{ name: "John", contact: "01855556666" }] },
-  { hospital: "City General Hospital", bloodGroup: "O-", units: 2, donors: [{ name: "Sarah", contact: "01977778888" }] }
+// Sample appointments data
+let my_appointments = [
+    { id: 1, doctor: "Dr. Smith", department: "Cardiology", hospital: "City Hospital", address: "123 Main St", date: "2025-09-20", time: "10:00 AM", status: "Confirmed" },
+    { id: 2, doctor: "Dr. Jane", department: "Dermatology", hospital: "Green Clinic", address: "45 Park Ave", date: "2025-09-22", time: "02:30 PM", status: "Pending" },
+    { id: 3, doctor: "Dr. John", department: "Neurology", hospital: "Central Hospital", address: "78 High St", date: "2025-09-25", time: "11:15 AM", status: "Cancelled" }
 ];
 
-// ==================== Show Blood Bank Section ====================
-function showBloodBank() {
-  showSection("bloodBankSection");
-  renderBloodList(bloodBank);
+function loadAppointments() {
+    const tbody = document.getElementById("appointmentsBody");
+    tbody.innerHTML = "";
+
+    my_appointments.forEach((app, index) => {
+        let statusClass = app.status.toLowerCase();
+        tbody.innerHTML += `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${app.doctor}</td>
+                <td>${app.department}</td>
+                <td>${app.hospital}</td>
+                <td>${app.address}</td>
+                <td>${app.date}</td>
+                <td>${app.time}</td>
+                <td><span class="status-${statusClass}">${app.status}</span></td>
+                <td>
+                    <button class="app-btn app-btn-view" onclick="viewAppointment(${app.id})">View</button>
+                    <button class="app-btn app-btn-cancel" onclick="cancelAppointment(${app.id})">Cancel</button>
+                </td>
+            </tr>
+        `;
+    });
 }
 
-// ==================== Render Blood List ====================
-function renderBloodList(list) {
-  const container = document.getElementById("bloodList");
-  container.innerHTML = "";
-
-  if (!list.length) {
-    container.innerHTML = "<p>No blood units found.</p>";
-    return;
-  }
-
-  list.forEach(item => {
-    const donorsHtml = item.donors.map(d =>
-      `<button class="donor-btn" onclick="askDonor('${d.name}', '${d.contact}', '${item.hospital}', '${item.bloodGroup}')">${d.name}</button>`
-    ).join(" ");
-
-    const card = document.createElement("div");
-    card.className = "blood-card";
-    card.innerHTML = `
-      <p><strong>Hospital:</strong> ${item.hospital}</p>
-      <p><strong>Blood Group:</strong> ${item.bloodGroup}</p>
-      <p><strong>Units Available:</strong> ${item.units}</p>
-      <p><strong>Donors:</strong> ${donorsHtml || "No donors listed"}</p>
-      <button ${item.units === 0 ? "disabled" : ""} onclick="requestBlood('${item.hospital}', '${item.bloodGroup}')">
-        Request Blood
-      </button>
-    `;
-    container.appendChild(card);
-  });
+function viewAppointment(id){
+    alert("View details for appointment #" + id);
 }
 
-// ==================== Search Blood Units ====================
-function searchBlood() {
-  const bloodGroup = document.getElementById("bloodSearch").value;
-  const hospital = document.getElementById("hospitalSelectBB")?.value || "";
-
-  const results = bloodBank.filter(item =>
-    item.bloodGroup === bloodGroup && (hospital === "" || item.hospital === hospital)
-  );
-
-  renderBloodList(results);
+function cancelAppointment(id){
+    alert("Cancel appointment #" + id);
 }
 
-// ==================== Ask Donor ====================
-function askDonor(name, contact, hospital, bloodGroup) {
-  document.getElementById("donorName").textContent = name;
-  document.getElementById("donorContact").textContent = contact;
-  document.getElementById("donorHospital").textContent = hospital;
-  document.getElementById("donorBloodGroup").textContent = bloodGroup;
-
-  document.getElementById("donorModal").style.display = "flex";
+// Show the appointments section
+function showAppointments(){
+    showSection("appointmentsSection"); 
+    loadAppointments();
 }
 
-function closeDonorModal() {
-  document.getElementById("donorModal").style.display = "none";
+// ================Sample patient history data=================
+// Sample history data
+let my_history = [
+    { id: 1, doctor: "Dr. Smith", department: "Cardiology", hospital: "City Hospital", address: "123 Main St", date: "2025-01-15", diagnosis: "Hypertension", treatment: "Medication", status: "Completed" },
+    { id: 2, doctor: "Dr. Jane", department: "Dermatology", hospital: "Green Clinic", address: "45 Park Ave", date: "2025-03-10", diagnosis: "Acne", treatment: "Topical Cream", status: "Completed" },
+    { id: 3, doctor: "Dr. John", department: "Neurology", hospital: "Central Hospital", address: "78 High St", date: "2025-08-05", diagnosis: "Migraine", treatment: "Prescription", status: "Ongoing" }
+];
+
+function loadHistory() {
+    const tbody = document.getElementById("historyBody");
+    tbody.innerHTML = "";
+
+    my_history.forEach((item, index) => {
+        let statusClass = item.status.toLowerCase();
+        tbody.innerHTML += `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${item.doctor}</td>
+                <td>${item.department}</td>
+                <td>${item.hospital}</td>
+                <td>${item.address}</td>
+                <td>${item.date}</td>
+                <td>${item.diagnosis}</td>
+                <td>${item.treatment}</td>
+                <td><span class="status-${statusClass}">${item.status}</span></td>
+            </tr>
+        `;
+    });
+}
+
+function showHistory() {
+    showSection("historySection");
+    loadHistory();
+}
+
+// ==================== Patient Profile load====================
+function showProfile() { 
+    showSection("profileSection"); 
+    loadProfile(); 
+}
+
+function loadProfile() {
+    document.getElementById("profileName").value = patientProfile.name || "";
+    document.getElementById("profileEmail").value = patientProfile.email || "";
+    document.getElementById("username").value = patientProfile.username || "";
+    document.getElementById("profilePhone").value = patientProfile.phone || "";
+    document.getElementById("navbarProfileName").innerText = patientProfile.name || patientProfile.username;
 }
 
 
-// ==================== Request Blood ====================
-// Track blood requests
-let bloodRequests = [];
+// ==================== Edit Profile Fields ====================
+function disableAllFields() {
+    // Disable all inputs, selects, textareas including file input triggers
+    document.querySelectorAll('#editPatientForm input, #editPatientForm select,#editPatientDocsContainer input, #editPatientDocsContainer button').forEach(el => {
+        // Keep buttons for file upload disabled except the Edit button itself
+        if(!el.classList.contains('editbtn')) {
+            el.setAttribute('disabled', true);
+        }
+    });
 
-// ==================== Request Blood ====================
-// Open modal with hospital and blood info
-function requestBlood(hospital, bloodGroup) {
-  const item = bloodBank.find(b => b.hospital === hospital && b.bloodGroup === bloodGroup);
-
-  if (!item || item.units <= 0) {
-    alert("Sorry, no units available for this blood group.");
-    return;
-  }
-
-  document.getElementById("reqHospital").value = hospital;
-  document.getElementById("reqBloodGroup").value = bloodGroup;
-  document.getElementById("bloodRequestModal").style.display = "flex";
+    // Keep username & email readonly instead of disabled
+    document.getElementById("editPatientUsername").setAttribute("readonly", true);
+    document.getElementById("editPatientEmail").setAttribute("readonly", true);
 }
 
-// Close modal
-function closeBloodRequestModal() {
-  document.getElementById("bloodRequestModal").style.display = "none";
-  document.getElementById("bloodRequestForm").reset();
+function enableAllFields() {
+    // Enable all inputs, selects,  and file upload buttons except username and email
+    document.querySelectorAll('#editPatientForm input, #editPatientForm select, #editPatientDocsContainer input , #editPatientDocsContainer button').forEach(el => {
+        if(el.id !== "editPatientUsername" && el.id !== "editPatientEmail" && !el.classList.contains('editbtn')) {
+            el.removeAttribute('disabled');
+        }
+    });
+
+    // Username & email stay readonly
+    document.getElementById("editPatientUsername").setAttribute("readonly", true);
+    document.getElementById("editPatientEmail").setAttribute("readonly", true);
+
+    alert("You can now edit your profile (except username and email)!");
 }
 
-// Handle form submission
-document.getElementById("bloodRequestForm").addEventListener("submit", function(e) {
-  e.preventDefault();
+// Run on page load
+window.onload = disableAllFields;
 
-  const name = document.getElementById("reqName").value;
-  const phone = document.getElementById("reqPhone").value;
-  const note = document.getElementById("reqNote").value;
-  const hospital = document.getElementById("reqHospital").value;
-  const bloodGroup = document.getElementById("reqBloodGroup").value;
 
-  // Decrease unit
-  const item = bloodBank.find(b => b.hospital === hospital && b.bloodGroup === bloodGroup);
-  if (item) item.units -= 1;
-
-  // Record request
-  bloodRequests.push({ name, phone, note, hospital, bloodGroup, date: new Date().toLocaleString() });
-
-  alert(`Blood request successful!\n${bloodGroup} blood requested from ${hospital}.`);
-
-  // Close modal and refresh list
-  closeBloodRequestModal();
-  searchBlood();
-});
-// ====== Profile Image Preview ======
+// ==================== Profile Image Upload ====================
 const profileImageInput = document.getElementById('profileImageInput');
 const profileImagePreview = document.getElementById('profileImagePreview');
 
-profileImageInput.addEventListener('change', e=>{
-  const file = e.target.files[0];
-  if(file){
-    const reader = new FileReader();
-    reader.onload = ev=> profileImagePreview.src = ev.target.result;
-    reader.readAsDataURL(file);
-  }
-});
-
-const profileDOB = document.getElementById('profileDOB');
-const profileAge = document.getElementById('profileAge');
-
-// Function to calculate age
-function calculateAge(dob) {
-    const birthDate = new Date(dob);
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
+// ================ Upload Profile Document ====================
+function uploadProfileDoc(inputId) {
+    const fileInput = document.getElementById(inputId);
+    if (fileInput) {
+        fileInput.click();
+    } else {
+        console.error("No file input found with id:", inputId);
     }
-    return age;
 }
 
-// Set age on page load
-profileAge.value = calculateAge(profileDOB.value);
-
-// Update age if DOB changes
-profileDOB.addEventListener('change', () => {
-    profileAge.value = calculateAge(profileDOB.value);
+profileImageInput.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if(file){
+        const reader = new FileReader();
+        reader.onload = ev => {
+            profileImagePreview.src = ev.target.result;
+            patientProfile.profileImage = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
 });
 
-
+// ==================== Initialize ====================
 updateDashboard();

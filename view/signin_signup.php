@@ -28,7 +28,7 @@
           <option value="" disabled selected>Select User Role</option>
           <option value="patient">Patient</option>
           <option value="hospital">Hospital</option>
-          <option value="pharmacy">Pharmacy</option>
+          <!-- <option value="pharmacy">Pharmacy</option> -->
           <option value="doctor">Doctor</option>
         </select>
         <div class="error" id="signupRoleError"></div>

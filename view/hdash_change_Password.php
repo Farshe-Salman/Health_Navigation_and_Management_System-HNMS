@@ -7,7 +7,7 @@
 </head>
 <body>
      <!-- Change Password -->
-  <div id="changePassword" class="section">
+  <div id="changePassword" class="section" >
     <h3>Change Password</h3>
     <div class="card">
       <form id="changePasswordForm">

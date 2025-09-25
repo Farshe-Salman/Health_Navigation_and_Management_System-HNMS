@@ -26,7 +26,7 @@
         <!-- OTP VERIFICATION FORM -->
         <div class="forgot-card" id="otpCard" style="display:none;">
             <div class="logo">
-                <img src="HNMS.png" alt="HNMS Logo">
+                <img src="../assets/image/HNMS.png" alt="HNMS Logo">
                 <span>HNMS</span>
             </div> 
             <h2>OTP Verification</h2>
@@ -45,15 +45,25 @@
         <!-- RESET PASSWORD FORM -->
         <div class="forgot-card" id="resetCard" style="display:none;">
             <div class="logo">
-                <img src="HNMS.png" alt="HNMS Logo">
+                <img src="../assets/image/HNMS.png" alt="HNMS Logo">
                 <span>HNMS</span>
             </div> 
             <h2>Set new password</h2>
             <p>Must be at least 8 characters.</p>
-            <input type="password" id="newPass" placeholder="New Password">
-            <input type="password" id="confirmPass" placeholder="Confirm Password">
+           <div class="input-wrapper">
+  <input type="password" id="newPass" placeholder="New Password">
+  <span class="toggle-pass" id="newPassword">Show</span>
+  <div class="error" id="newPasswordError"></div>
+</div>
+
+<div class="input-wrapper">
+  <input type="password" id="confirmPass" placeholder="Confirm Password">
+  <span class="toggle-pass" id="confirmPassword">Show</span>
+  <div class="error" id="conPasswordError"></div>
+</div>
+
             <button id="resetBtn">Reset password</button>
-            <a href="signin_signup.html" id="backToLogin2">← Back to log in</a>
+           <a href="../view/signin_signup.php" id="backToLogin">← Back to log in</a>
         </div>
 
     </div>
