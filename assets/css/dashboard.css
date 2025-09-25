@@ -478,23 +478,9 @@ button:hover {
   border-color: #fc0f03;
 }
 
-.hospital-card .btn-secondary {
-  background-color: #f1f1f1;
-  color: #333;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  margin: 5px;
-  border: 1px solid transparent;
-  transition: all 0.3s ease;
-}
 
-.hospital-card .btn-secondary:hover {
-  background-color: #ddd;
-  transform: scale(1.02);
-  border-color: #45a049;
-}
+
+
 
 /* ----------Doctor Section-------------*/
 .doctor-list {
@@ -553,7 +539,7 @@ button:hover {
 .doctor-card p {
   font-size: 14px;
   color: #f60707;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
 .doctor-card .designation {
@@ -573,35 +559,47 @@ button:hover {
 }
 
 .doctor-card .button-group {
-  margin-top: auto;
+  margin-top: 5px;
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
 .doctor-card .btn-primary {
-  background-color: #4CAF50;
+ background-color: #4CAF50;
   color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  margin: 5px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
 }
 .doctor-card .btn-primary:hover {
   background-color: #45a049;
   transform: scale(1.02);
   border-color: #fc0f03;
-  transition: all 0.3s ease-in-out;
 }
 .doctor-card .btn-secondary {
   background-color: #f1f1f1;
   color: #333;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  margin: 5px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
 }
+
 
 .doctor-card .btn-secondary:hover {
   background-color: #ddd;
   transform: scale(1.02);
   border-color: #45a049;
-  transition: all 0.3s ease-in-out;
+
 }
-
-
 /* ---------------- PHARMACY SECTION ---------------- */
 
 /* Pharmacy List Grid */

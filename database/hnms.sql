@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 23, 2025 at 11:03 PM
+-- Generation Time: Sep 25, 2025 at 01:33 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -67,7 +67,9 @@ CREATE TABLE `doctors` (
 INSERT INTO `doctors` (`doctor_id`, `hospital_username`, `doctor_name`, `email`, `contact`, `specialization`, `qualification`, `experience_years`, `consultation_fee`, `start_time`, `end_time`, `schedule_days`, `profile_image`, `medical_license`, `degree_certificate`, `username`, `password_hash`) VALUES
 (1, '', 'Miyoko Mahzabin', 'miyoko@gmail.com', '23456', 'Cardiologist', 'MBBS', 3, 1000.00, '00:00:16', '18:00:00', 'Mon,Tue', 'doc3.png', '', '', '', '$2y$10$sA6JKNKvvkhCcFly2S/3iO156qjiLie.hbVux1jn2MhZQHPAlfQNa'),
 (3, '', 'mim', 'mim@gmail.com', '23456', 'Cardiologist', 'MBBS', 3, 1000.00, '00:00:16', '18:00:00', 'Mon,Tue', 'doc3.png', '', '', 'mim', '$2y$10$4K63FefGjWYf94H2WQOnI.WyF8qBHjRKaOEtZIRXb87l0B.e.lOS6'),
-(4, '', 'mim', 'mim@gmail.com', '01723456345', 'Cardiologist', 'MBBS', 4, 1000.00, '00:00:17', '19:13:00', 'Mon,Wed,Fri', 'doc3.png', '', '', 'mim', '$2y$10$I9PRW1RQkfE5EGkyrSjEhO7Bwqe/pyFu9AvdCKb.Vl6IGhHTUI9Wa');
+(4, '', 'mim', 'mim@gmail.com', '01723456345', 'Cardiologist', 'MBBS', 4, 1000.00, '00:00:17', '19:13:00', 'Mon,Wed,Fri', 'doc3.png', '', '', 'mim', '$2y$10$I9PRW1RQkfE5EGkyrSjEhO7Bwqe/pyFu9AvdCKb.Vl6IGhHTUI9Wa'),
+(6, 'green_clinic', 'Dr. Jane Smith', 'janesmith@example.com', '01887654321', 'Dermatology', 'MBBS, DDV', 7, 900.00, '10:00:00', '16:00:00', 'Tue-Sat', 'jane_smith.jpg', 'license_jane.pdf', 'degree_jane.pdf', 'janesmith', 'hashed_password2'),
+(7, 'city_hospital', 'Dr. Alex Brown', 'alexbrown@example.com', '01911223344', 'Pediatrics', 'MBBS, MD', 5, 800.00, '08:30:00', '14:30:00', 'Mon-Fri', 'alex_brown.jpg', 'license_alex.pdf', 'degree_alex.pdf', 'alexbrown', 'hashed_password3');
 
 -- --------------------------------------------------------
 
@@ -94,7 +96,7 @@ CREATE TABLE `hospitals` (
 --
 
 INSERT INTO `hospitals` (`hospital_id`, `username`, `hospital_name`, `email`, `phone`, `address`, `category`, `profile_image`, `license_file`, `accreditation_file`, `vat_file`) VALUES
-(1, 'abc', 'ABC', 'abc@123', '0171223456767', 'Dhaka', 'specialized', NULL, NULL, NULL, NULL);
+(10, 'abcd', NULL, 'abcd@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -104,17 +106,28 @@ INSERT INTO `hospitals` (`hospital_id`, `username`, `hospital_name`, `email`, `p
 
 CREATE TABLE `patients` (
   `patient_id` int(11) NOT NULL,
-  `username` varchar(100) NOT NULL,
-  `full_name` varchar(255) DEFAULT NULL,
-  `email` varchar(255) NOT NULL,
-  `phone` varchar(20) DEFAULT NULL,
+  `username` varchar(50) NOT NULL,
+  `full_name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `contact` varchar(20) DEFAULT NULL,
   `gender` enum('Male','Female','Other') DEFAULT NULL,
-  `date_of_birth` date DEFAULT NULL,
-  `age` int(11) DEFAULT NULL,
-  `blood_group` enum('A+','A-','B+','B-','AB+','AB-','O+','O-') DEFAULT NULL,
-  `address` varchar(500) DEFAULT NULL,
-  `profile_image` varchar(255) DEFAULT NULL
+  `dob` date DEFAULT NULL,
+  `blood_group` varchar(5) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `profile_image` varchar(255) DEFAULT NULL,
+  `id_proof` varchar(255) DEFAULT NULL,
+  `medical_record` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `patients`
+--
+
+INSERT INTO `patients` (`patient_id`, `username`, `full_name`, `email`, `contact`, `gender`, `dob`, `blood_group`, `address`, `profile_image`, `id_proof`, `medical_record`, `created_at`, `updated_at`) VALUES
+(1, 'SuperDuckSpecialist11', 'Md shizan Sarkar', 'shizansarkar11@gmail.com', '01303672091', 'Male', '2025-02-18', 'B-', '1231,dhaka', '1758756399_d4a60a47_Profile.jpg', '1758756495_e757870d_ART1.png', '1758765138_ec4a984b_greenlife.jpg', '2025-09-24 21:52:20', '2025-09-25 01:52:18'),
+(2, 'mee', '', 'mee@me.com', '', '', NULL, '', '', '', '', '', '2025-09-25 10:53:35', '2025-09-25 10:53:35');
 
 -- --------------------------------------------------------
 
@@ -138,16 +151,14 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `email`, `usertype`, `password_hash`, `clearance_status`, `created_at`, `updated_at`) VALUES
-(1, 'shizan', 'shizansarkar@gmail.com', 'patient', 'Shizan711@', 'approved', '2025-09-16 07:45:58', '2025-09-16 07:48:55'),
-(12, 'ss', 'ssss@hh.com', 'patient', 'sd12@@S', 'approved', '2025-09-16 09:19:12', '2025-09-16 09:19:12'),
-(19, 'rrr', 'salmanfarshe3071@gmail.com', 'patient', 'Shizna711@@jhsf', 'pending', '2025-09-16 09:40:52', '2025-09-16 09:40:52'),
-(20, 'shizansarkar@gmail.com', 'shizansarkdewar@gmail.com', 'patient', 'Shiza711@@', 'pending', '2025-09-16 10:39:20', '2025-09-16 10:39:20'),
-(21, 'SuperDuckSpecialist6', 'shizansarkdefwar@gmail.com', 'doctor', 'Shiznah711@', 'pending', '2025-09-16 17:50:21', '2025-09-16 17:50:21'),
-(23, 'sss', 'shizansarkarsd@gmail.com', 'patient', '$2y$10$a.pWgAumYeXfah5cVyNvFee8o3tViC1K2XlDe50LlW1vQnxgNxLrO', 'approved', '2025-09-21 20:27:43', '2025-09-21 20:31:45'),
-(24, 'miyoko', 'miyoko@gmail.com', 'patient', '$2y$10$zzKgCg5x5xU1VJyzmfbJwuNly26ItxUkQXtFd3VlVeYG4dflqQYv2', 'approved', '2025-09-23 06:13:47', '2025-09-23 06:19:35'),
-(25, 'Islami hospital, Dhaka', 'islamihospital@gmail.com', 'hospital', '$2y$10$KA.tozc2yHTPM1YpDlPXS.9O02jsZn097KJsX3CPCpDKAybyjDIbO', 'approved', '2025-09-23 06:45:44', '2025-09-23 06:45:59'),
-(26, 'islamia', 'islamia@gmail.com', 'hospital', '$2y$10$1O9fk5Bx2C7idRRDgLgwD.odQ0J8tHj7tA2nbmBUidH7vQEhG/P1S', 'approved', '2025-09-23 16:52:31', '2025-09-23 16:54:44'),
-(27, 'abc', 'abc@gmail.com', 'hospital', '$2y$10$3VMw8dONtu4QeYQpCVKh1uV62qf5seP1TTBdLcVP0mKReRkOJRNVq', 'approved', '2025-09-23 16:56:58', '2025-09-23 16:57:12');
+(39, 'shizan', 'shizansarkar@gmail.com', 'patient', '$2y$10$KSc9gjxZ6MCuehyc/KjV3uYm8pTRJvu2RJu62GW/ZHPOrOTOjncBu', 'approved', '2025-09-24 15:13:17', '2025-09-24 15:13:31'),
+(40, 'Al Modina Hospital', 'almodina@gmail.com', 'hospital', '$2y$10$dBWSJ8d/Z0rB87ubrzhJ9.6RmmcP30w5twa2mMxeD2TFsarMa3e72', 'approved', '2025-09-24 15:14:51', '2025-09-24 15:15:46'),
+(43, 'shizansarkar', 'shizansssarkar@gmail.com', 'patient', '$2y$10$y3DcqJ/wS1A.nQh99QDXDuj7L8iXOhUMriENy.8UBgvBmsqPURmjy', 'approved', '2025-09-24 18:54:37', '2025-09-24 18:54:49'),
+(44, 'shizanasa', 'shizansarkarssss@gmail.com', 'patient', '$2y$10$acXKrMXD23O79oW6tSLR2ud9tb3eOa8ZPRF42nKJtM/iXWWUTqRPe', 'pending', '2025-09-24 21:47:25', '2025-09-24 21:47:25'),
+(45, 'SuperDuckSpecialist11', 'shizansarkar11@gmail.com', 'patient', '$2y$10$JI9Uz1YZfIz0iyTn4GsDnO6DPT05Zmb8kN9LCJJH4HK6Gojx7ZKZa', 'approved', '2025-09-24 21:52:20', '2025-09-24 21:52:47'),
+(49, 'abc', 'abc@gmail.com', 'hospital', '$2y$10$wj0g3wTysmR6tDxOnoPZReX.0/PiENuWVmc2TWiz0q7H6bwc1lPL6', 'pending', '2025-09-25 09:30:25', '2025-09-25 10:59:20'),
+(55, 'abcd', 'abcd@gmail.com', 'hospital', '$2y$10$BbgZnUTjW8PoSAZOfn1Od.r19EdrF11TF0FYRvBzG15im4bgyi12e', 'approved', '2025-09-25 09:56:28', '2025-09-25 11:08:38'),
+(59, 'admin', 'admin@gmail.com', 'admin', '$2y$10$cFZghSbRIz4nlKabVYh4OOC9ZsqDqV5dupIktfK22J.XEBBcg1z4K', 'approved', '2025-09-25 10:48:06', '2025-09-25 10:53:55');
 
 --
 -- Indexes for dumped tables
@@ -164,7 +175,7 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `doctors`
   ADD PRIMARY KEY (`doctor_id`),
-  ADD KEY `hospital_username` (`hospital_username`);
+  ADD KEY `hospital_username` (`hospital_username`) USING BTREE;
 
 --
 -- Indexes for table `hospitals`
@@ -203,25 +214,25 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
-  MODIFY `doctor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `doctor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `hospitals`
 --
 ALTER TABLE `hospitals`
-  MODIFY `hospital_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `hospital_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `patients`
 --
 ALTER TABLE `patients`
-  MODIFY `patient_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `patient_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `user_id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

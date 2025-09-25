@@ -221,20 +221,30 @@ function viewHospitalDetails(button) {
     document.getElementById('hospitalModal').style.display = 'flex';
 }
 
-function viewDoctorDetails(btn) {
-    document.getElementById('modalDoctorName').innerText = btn.dataset.name;
-    document.getElementById('modalEmail').innerText = btn.dataset.email || 'N/A';
-    document.getElementById('modalContact').innerText = btn.dataset.contact || 'N/A';
-    document.getElementById('modalSpecialization').innerText = btn.dataset.specialization || 'N/A';
-    document.getElementById('modalQualification').innerText = btn.dataset.qualification || 'N/A';
-    document.getElementById('modalExperience').innerText = btn.dataset.experience || '0';
-    document.getElementById('modalFee').innerText = btn.dataset.fee || '0';
-    document.getElementById('modalDoctorImage').src = "../assets/uploads/" + (btn.dataset.image || 'doc1.png');
+// Show doctor details in modal
+function viewDoctorDetails(button) {
+    const name = button.dataset.name;
+    const email = button.dataset.email;
+    const contact = button.dataset.contact;
+    const specialization = button.dataset.specialization;
+    const qualification = button.dataset.qualification;
+    const fee = button.dataset.fee;
+    const experience = button.dataset.experience;
+    const image = button.dataset.image;
+    const hospital = button.dataset.hospital; // Add this
 
-    document.getElementById('doctorModal').style.display = 'flex';
+    document.getElementById("modalDoctorName").textContent = name;
+    document.getElementById("modalEmail").textContent = email || 'N/A';
+    document.getElementById("modalContact").textContent = contact || 'N/A';
+    document.getElementById("modalSpecialization").textContent = specialization || 'N/A';
+    document.getElementById("modalQualification").textContent = qualification || 'N/A';
+    document.getElementById("modalExperience").textContent = experience || '0';
+    document.getElementById("modalFee").textContent = fee || '0';
+    document.getElementById("modalDoctorImage").src = `../assets/uploads/doctors_document/${image}`;
+    document.getElementById("modalHospital").textContent = hospital || 'N/A'; 
+
+    document.getElementById("doctorModal").style.display = "flex";
 }
-
-
 function closeModal() {
     document.getElementById('hospitalModal').style.display = 'none';
     document.getElementById('doctorModal').style.display = 'none';
@@ -258,6 +268,31 @@ window.onclick = function(event) {
 
 // ================Book Appointment===============
 
+// Open appointment section & prefill
+function bookAppointmentFromDoctor(doctorName, hospitalName) {
+    const section = document.getElementById('appointments');
+    section.style.display = 'block';
+    section.scrollIntoView({ behavior: 'smooth' });
+
+    // Prefill doctor
+    const doctorSelect = document.getElementById('doctorSelect');
+    doctorSelect.innerHTML = '<option value="'+doctorName+'">'+doctorName+'</option>';
+    doctorSelect.value = doctorName;
+
+    // Prefill hospital
+    document.getElementById('hospitalSelect').value = hospitalName;
+
+    // Close modal if it's open
+    closeModal();
+}
+
+// Triggered by modal button
+function bookAppointmentFromModal() {
+    const doctorName = document.getElementById('modalDoctorName').textContent.trim();
+    const hospitalName = document.getElementById('modalHospital').textContent.trim();
+
+    bookAppointmentFromDoctor(doctorName, hospitalName);
+}
 
 
 
@@ -364,7 +399,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
 
-// Sample appointments data
+// =================Sample appointments data=================
 let my_appointments = [
     { id: 1, doctor: "Dr. Smith", department: "Cardiology", hospital: "City Hospital", address: "123 Main St", date: "2025-09-20", time: "10:00 AM", status: "Confirmed" },
     { id: 2, doctor: "Dr. Jane", department: "Dermatology", hospital: "Green Clinic", address: "45 Park Ave", date: "2025-09-22", time: "02:30 PM", status: "Pending" },

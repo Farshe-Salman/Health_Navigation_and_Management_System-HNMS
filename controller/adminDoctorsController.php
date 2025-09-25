@@ -14,7 +14,7 @@ class AdminDoctorsController {
 
     public function addDoctor($data) {
         // Handle file upload
-        $target_dir = "../assets/uploads/doctors_document/";
+        $target_dir = "../assets/uploads/doctor_documents/";
         $target_file = $target_dir . basename($_FILES["profile_image"]["name"]);
         move_uploaded_file($_FILES["profile_image"]["tmp_name"], $target_file);
         $data['profile_image'] = basename($_FILES["profile_image"]["name"]);
