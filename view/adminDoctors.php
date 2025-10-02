@@ -30,7 +30,7 @@ $doctors = $controller->index();
                         <td><?php echo htmlspecialchars($doctor['specialization']); ?></td>
                         <td><?php echo htmlspecialchars($doctor['qualification']); ?></td>
                         <td><?php echo htmlspecialchars($doctor['consultation_fee']); ?></td>
-                        <td><img src="../assets/uploads/doctors_document/<?php echo htmlspecialchars($doctor['profile_image']); ?>" alt="Profile" width="50"></td>
+                        <td><img src="../assets/uploads/doctor_documents/<?php echo htmlspecialchars($doctor['profile_image']); ?>" alt="Profile" width="50"></td>
                         <td>
                             <a href="#" class="view-btn-doctor" data-doctor='<?php echo htmlspecialchars(json_encode($doctor)); ?>'>View</a>
                             <a href="#" class="delete-btn-doctor" data-id="<?php echo htmlspecialchars($doctor['doctor_id']); ?>">Delete</a>

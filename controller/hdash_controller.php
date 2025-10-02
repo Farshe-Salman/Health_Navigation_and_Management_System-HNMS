@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Upload directory
-    $uploadDir = '../assets/uploads/doctors_document/';
+    $uploadDir = '../assets/uploads/doctor_documents/';
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0777, true);
     }

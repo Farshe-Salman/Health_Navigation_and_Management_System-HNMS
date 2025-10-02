@@ -20,8 +20,8 @@
           </div>
           <div class="card">
             <h3>Nearest Hospital / Pharmacy</h3>
-            <iframe src="https://www.google.com/maps/embed/v1/search?q=hospitals+near+me&key=YOUR_GOOGLE_MAPS_API_KEY"
-              width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d29199.16045070734!2d90.42967790596899!3d23.82233052693511!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1shospital%2C%20pharrma%20near%20me!5e0!3m2!1sen!2sbd!4v1758910592189!5m2!1sen!2sbd" frameborder="0"
+            border-radius="10px "width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
           </div>
           <div class="card">
             <h3>Health Tips</h3>

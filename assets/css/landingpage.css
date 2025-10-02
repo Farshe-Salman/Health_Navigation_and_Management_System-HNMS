@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
 * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: Arial, sans-serif;
+      font-family: 'Montserrat', sans-serif;
     }
 
     body {
@@ -62,12 +64,15 @@
       padding: 25px;
       text-align: center;
       border-radius: 10px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
       transition: 0.3s;
       cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border: 2px solid rgb(165, 165, 165);
     }
 
     .features .card:hover {
+      border-color: #4CAF50;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
       transform: translateY(-5px);
     }
 
@@ -201,4 +206,28 @@
   font-weight: 600;
 }
 
-
+@media screen and (max-width: 768px) {
+.hero {
+    padding: 100px 10px;
+  }
+  .hero h2 {
+    font-size: 24px;
+  }
+  .hero p {
+    font-size: 14px;
+  }
+  .features {
+    padding: 30px 10px;
+    gap: 15px;
+  }
+   .section .image img {
+    max-width: 100%;
+    height: auto;
+  }
+  h1 { font-size: 28px; }
+  h2 { font-size: 24px; }
+  h3 { font-size: 20px; }
+  h4 { font-size: 18px; }
+  h5 { font-size: 16px; }
+  h6 { font-size: 14px; }
+}

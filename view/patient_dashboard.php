@@ -31,7 +31,6 @@ $patientUsername = $_SESSION['user']['username'];
     <a href="#" class="active" onclick="showSection('dashboard')">Dashboard</a>
     <a href="#" onclick="showSection('hospitals')">Hospitals</a>
     <a href="#" onclick="showSection('doctors')">Find Doctors</a>
-    <a href="#" onclick="showSection('appointments')">Book Appointment</a>
     <a href="#" onclick="showSection('appointmentsSection')">My Appointments</a>
     <a href="#" onclick="showSection('historySection')">History</a>
     <a href="#" onclick="showSection('profileSection')">My Profile</a>
@@ -51,7 +50,6 @@ $patientUsername = $_SESSION['user']['username'];
       </div>
       <div class="navbar-links">
         <a href="#" onclick="showSection('doctors')">Find Doctor</a>
-        <a href="#" onclick="showSection('appointments')">Book Appointment</a>
         <a href="#" onclick="showSection('appointmentsSection')">My Appointments</a>
       </div>
       <div class="navbar-right">

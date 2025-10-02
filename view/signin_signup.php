@@ -1,4 +1,5 @@
-<?php session_start();?>
+<?php 
+session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,7 +49,7 @@
           ?>
         </div>
         <button type="submit" name="signup">Sign Up</button>
-        <a href="../view/landingPage.php" id="backToHome">← Back to Home</a>
+        <a class="nohome" href="../view/landingPage.php" id="backToHome">← Back to Home</a>
       </form>
       
     </div>
@@ -79,7 +80,7 @@
         </div>
         <a class="forgot-pass" href="../view/forgot_password.php">Forget Your Password??</a>
         <button type="submit" name="signin">Sign In</button>
-        <a href="../view/landingPage.php" id="backToHome">← Back to Home</a>
+        <a class="home" href="../view/landingPage.php" id="backToHome">← Back to Home</a>
       </form>
     </div>
 

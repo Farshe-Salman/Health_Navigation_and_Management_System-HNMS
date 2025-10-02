@@ -201,15 +201,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Handle sidebar clicks
-    sidebarLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const page = this.getAttribute('data-page');
-            // Update URL without reloading
-            history.pushState({page: page}, ``, `adminDashboard.php?page=${page}`);
-            loadContent(page);
-        });
+sidebarLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        // Skip logout link (allow normal navigation)
+        if (this.classList.contains('log-out')) {
+            return; 
+        }
+
+        e.preventDefault();
+        const page = this.getAttribute('data-page');
+        // Update URL without reloading
+        history.pushState({page: page}, ``, `adminDashboard.php?page=${page}`);
+        loadContent(page);
     });
+});
+
 
     // Load initial page based on URL or default to adminOverview
     const initialPage = getPageFromUrl() || 'adminOverview';

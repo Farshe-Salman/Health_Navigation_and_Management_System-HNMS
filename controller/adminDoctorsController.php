@@ -14,7 +14,7 @@ class AdminDoctorsController {
 
     public function addDoctor($data) {
         // Handle file upload
-        $target_dir = "../assets/uploads/doctors_document/";
+        $target_dir = "../assets/uploads/doctor_documents/";
         $target_file = $target_dir . basename($_FILES["profile_image"]["name"]);
         move_uploaded_file($_FILES["profile_image"]["tmp_name"], $target_file);
         $data['profile_image'] = basename($_FILES["profile_image"]["name"]);
@@ -40,7 +40,7 @@ class AdminDoctorsController {
                 echo '<td>' . htmlspecialchars($doctor['specialization']) . '</td>';
                 echo '<td>' . htmlspecialchars($doctor['qualification']) . '</td>';
                 echo '<td>' . htmlspecialchars($doctor['consultation_fee']) . '</td>';
-                echo '<td><img src="../assets/uploads/doctors_document/' . htmlspecialchars($doctor['profile_image']) . '" alt="Profile" width="50"></td>';
+                echo '<td><img src="../assets/uploads/doctor_documents/' . htmlspecialchars($doctor['profile_image']) . '" alt="Profile" width="50"></td>';
                 echo '<td>
                           <a href="#" class="view-btn-doctor" data-doctor=' . htmlspecialchars(json_encode($doctor)) . '>View</a>
                           <a href="#" class="delete-btn-doctor" data-id="' . htmlspecialchars($doctor['doctor_id']) . '">Delete</a>
@@ -53,7 +53,6 @@ class AdminDoctorsController {
     }
 }
 
-// Handle POST for adding a doctor
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_doctor'])) {
     $controller = new AdminDoctorsController();
     $controller->addDoctor($_POST);

@@ -11,10 +11,9 @@ header {
     justify-content: space-between;
     align-items: center;
     z-index: 999;
-    background: rgba(100, 153, 70, 0.5);
+    background: linear-gradient(to right, #b4dc92, #b4dc92);
     backdrop-filter: blur(3px);
-    color: white;
-    
+    color: rgb(0, 0, 0);
 }
 
 header .logo {
@@ -143,4 +142,52 @@ footer {
 
 .social a:hover {
     transform: scale(1.2);
+}
+
+
+/* Mobile devices */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+
+    header .logo span {
+        font-size: 16px;
+    }
+
+   
+       nav {
+        display: none;
+    }
+    
+
+    nav a {
+        display: block;
+        margin: 8px 0;
+        font-size: 14px;
+    }
+
+    .contact-info h2 {
+        font-size: 24px;
+    }
+
+    .contact-info p {
+        font-size: 14px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        max-width: 100%;
+    }
+
+    .contact-form button {
+        width: 100%;
+    }
+
+    footer {
+        font-size: 14px;
+        padding: 10px;
+    }
 }

@@ -7,8 +7,9 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['usertype'] !== 'admin') {
     exit();
 
 }
-$AdminUsername = $_SESSION['user']['username']; 
+$adminUsername = $_SESSION['user']['username']; 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,11 +27,15 @@ $AdminUsername = $_SESSION['user']['username'];
     <header class="header">
         <div class="header-left">
             <img src="../assets/image/HNMS.png" alt="HNMS Logo">
-            <h1>HNMS</h1>
+            <span>HNMS</span>
         </div>
-        <div class="header-right">
-    <span>Welcome, <?php echo $AdminUsername; ?></span>
-</div>
+
+        <div class="header-center">
+            <span>Admin Dashboard</span>
+        </div>
+       <div class="header-right">
+            <span> Welcome, <?php echo htmlspecialchars($adminUsername); ?></span>
+        </div>
 
     </header>
 
@@ -41,6 +46,7 @@ $AdminUsername = $_SESSION['user']['username'];
                 <a href="#" data-page="adminOverview">Overview</a>
                 <a href="#" data-page="adminDoctors">Doctors</a>
                 <a href="#" data-page="adminHospitals">Hospitals</a>
+                <a href="#" data-page="adminPatients">Patients</a>
                 <a href="#" data-page="adminUserApproval">User Approval</a>
             </div>
             <div class="sidebar-footer">
@@ -49,7 +55,7 @@ $AdminUsername = $_SESSION['user']['username'];
         </aside>
 
         <main class="content" id="content">
-            <!-- dynamic content loads here -->
+            <!-- dynamic content loads here lol-->
         </main>
     </div>
 </div>

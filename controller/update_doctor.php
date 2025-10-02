@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($_POST['editDoctorDays'])) $data['schedule_days'] = implode(',', $_POST['editDoctorDays']);
 
     // Handle file uploads
-    $uploadDir = '../assets/uploads/doctors_document/';
+    $uploadDir = '../assets/uploads/doctor_documents/';
     if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
 
     if (!empty($_FILES['editDoctorPhoto']['name'])) {

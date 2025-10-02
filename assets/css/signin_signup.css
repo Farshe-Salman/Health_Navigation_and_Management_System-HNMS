@@ -408,9 +408,12 @@ input.invalid {
         height: auto;
     }
 
-    .forgot-pass{
+    .forgot-pass, .home{
         font-size: 10px;
         margin: 10px 0 5px;
+    }
+    .nohome{
+        display: none;
     }
 
     .container form{

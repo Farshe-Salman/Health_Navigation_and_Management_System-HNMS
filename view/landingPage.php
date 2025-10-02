@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Health Navigation Management System</title>
   <link rel="stylesheet" href="../assets/css/landingpage.css">
+  <link rel="icon" href="../assets/image/HNMS.png?v=2" type="image/png" sizes="32x32">
 </head>
 <body>
 
@@ -13,11 +14,11 @@
 
   <!-- Hero Section -->
   <section class="hero scroll-reveal">
-    <h2>Welcome to Health Navigation System (HNMS)</h2>
+    <h2>Welcome to Health Navigation Management System (HNMS)</h2>
     <p>
       Our Health Navigation Management System (HNMS) offers an all-in-one solution for managing your healthcare needs effortlessly. From booking doctor appointments, ordering medicines online, and scheduling diagnostic tests, to tracking your health report, HNMS ensures you stay informed and in control of your health.
     </p>
-    <button>Get Started</button>
+  <button onclick="window.location.href='../view/signin_signup.php'">Get Started</button>
   </section>
 
   <!-- Features Section -->
@@ -44,7 +45,10 @@
           You can search and book your preferred doctor with ease. We ensure personalized care and timely support 
           for every patient.
         </p>
-        <button>Find Doctor</button>
+        <a href="../view/landingPageDoctor.php">
+           <button>Find Doctor</button>
+        </a>
+        
       </div>
     </div>
   </section>
@@ -53,11 +57,14 @@
   <section class="section scroll-reveal" id="section2">
     <div class="container">
       <div class="content">
-        <h2>Comprehensive Health Services</h2>
+        <h2>Comprehensive Surgery Services</h2>
         <p>
           We provide a wide range of health services to keep you and your family healthy. From routine check-ups to specialized treatments, our platform ensures you get timely, reliable, and professional care whenever you need it.
         </p>
-        <button>Explore Services</button>
+        <a href="../view/landingPageSurgeryPackages.php">
+           <button>Explore Services</button>
+        </a>
+        
       </div>
             <div class="image">
         <img src="https://shombhob.com/images/prescription.png" alt="Health Services Image">
@@ -89,7 +96,10 @@
         <p>
           Schedule lab tests and diagnostic services with ease. Get accurate results on time and keep track of your health through our online portal, making monitoring and managing your health simpler than ever.
         </p>
-        <button>Book Diagnostic</button>
+        <a href="../view/landingPageDiagnostic.php">
+           <button>See Diagnostic Services</button>
+        </a>
+
       </div>
       <div class="image">
         <img src="https://static.wixstatic.com/media/f02d5f_9807dc1cc512469aa0f733271d6c49ca~mv2.jpeg/v1/fill/w_640,h_424,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/f02d5f_9807dc1cc512469aa0f733271d6c49ca~mv2.jpeg" alt="Diagnostic Image">
@@ -108,7 +118,10 @@
         <p>
           Join our blood donation program and save lives. Find donation centers nearby and contribute to the community by giving blood regularly. Your donation can make a real difference.
         </p>
-        <button>Donate Blood</button>
+        <a href="../view/landingPageBloodDonor.php">
+           <button>FInd Blood Donor</button>
+        </a>
+        
       </div>
     </div>
   </section>
@@ -121,7 +134,10 @@
         <p>
           Reliable and fast ambulance services available 24/7. Reach medical facilities safely and quickly in case of emergencies, ensuring prompt care when every second counts.
         </p>
-        <button>Call Ambulance</button>
+        <a href="../view/landingPageAmbulance.php">
+           <button>Find Ambulance</button>
+        </a>
+        
       </div>
       <div class="image">
         <img src="https://www.ambulance.nsw.gov.au/__data/assets/image/0006/552264/Calling-an-Ambulance.jpg" alt="Ambulance Image">
@@ -136,19 +152,19 @@
                 <div class="testimonials-grid">
                     <div class="testimonial">
                         <p>"Booking doctor appointments has never been this easy. The personalized recommendations really help me choose the right doctor."</p>
-                        <h4>- Miyoko M., Software Engineer</h4>
+                        <h4>-Miyoko Mahzabin,Software Engineer</h4>
                     </div>
                     <div class="testimonial">
                         <p>"I love how I can order medicines online and track my health reports in one place. It saves so much time!"</p>
-                        <h4>- Salman F., Student</h4>
+                        <h4>-Salman Farshe, Student</h4>
                     </div>
                     <div class="testimonial">
                         <p>"The ambulance service and blood donation program are fantastic. This platform truly cares about patients' well-being."</p>
-                        <h4>- Sizan S., Student</h4>
+                        <h4>-Shizan Sarkar,Student</h4>
                     </div>
                     <div class="testimonial">
                         <p>"The diagnostic services are quick and reliable. I always get my test results on time and can monitor my health easily."</p>
-                        <h4>- Raihan A., Teacher</h4>
+                        <h4>-Raihan Mahmud,Faculty,AIUB</h4>
                     </div>
                 </div>
             </div>

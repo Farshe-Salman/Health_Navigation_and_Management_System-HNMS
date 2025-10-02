@@ -10,11 +10,14 @@
 <body>
     <header>
     <div class="logo">
-      <img src="../assets/image/HNMS.png" alt="HNMS Logo">
-      <span>HEALTH NAVIGATION AND MANAGEMENT SYSTEM</span>
+      <a href="../view/landingpage.php" style="text-decoration: none; color: inherit; display: inline-flex; align-items: center;">
+  <img src="../assets/image/HNMS.png" alt="HNMS Logo" style="height:40px; margin-right:8px;">
+  <span>HEALTH NAVIGATION AND MANAGEMENT SYSTEM</span>
+</a>
+
     </div>
     <nav>
-      <a href="#">Home</a>
+      <a href="../view/landingpage.php">Home</a>
       <a href="#">Features</a>
       <a href="#">About</a>
       <a href="#">Contact</a>

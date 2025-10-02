@@ -31,17 +31,32 @@ $fileFields = [
     'vatFile' => 'vat_file'
 ];
 
+
 foreach ($fileFields as $inputName => $dbField) {
     if (!empty($_FILES[$inputName]['name']) && is_uploaded_file($_FILES[$inputName]['tmp_name'])) {
-        $ext = pathinfo($_FILES[$inputName]['name'], PATHINFO_EXTENSION);
-        $safeBase = preg_replace('/[^A-Za-z0-9_-]/', '_', pathinfo($_FILES[$inputName]['name'], PATHINFO_FILENAME));
-        $filename = time() . '_' . bin2hex(random_bytes(4)) . '_' . $safeBase . '.' . $ext;
+        // Get the original uploaded name
+        $originalName = basename($_FILES[$inputName]['name']); 
+
+        // Optional: replace dangerous characters with underscores
+        $filename = preg_replace('/[^A-Za-z0-9._-]/', '_', $originalName);
+
         $target = $uploadDir . $filename;
+
+        // Prevent overwriting if file already exists
+        $counter = 1;
+        $fileInfo = pathinfo($filename);
+        while (file_exists($target)) {
+            $filename = $fileInfo['filename'] . '_' . $counter . '.' . $fileInfo['extension'];
+            $target = $uploadDir . $filename;
+            $counter++;
+        }
+
         if (move_uploaded_file($_FILES[$inputName]['tmp_name'], $target)) {
             $data[$dbField] = $filename;
         }
     }
 }
+
 
 // Update hospital
 if (!empty($data)) {

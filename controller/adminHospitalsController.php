@@ -13,7 +13,7 @@ class AdminHospitalsController {
     }
 
     public function addHospital($data) {
-        $target_dir = "../assets/uploads/doctors_document/";
+        $target_dir = "../assets/uploads/doctor_documents/";
         $target_file = $target_dir . basename($_FILES["profile_image"]["name"]);
         move_uploaded_file($_FILES["profile_image"]["tmp_name"], $target_file);
         $data['profile_image'] = basename($_FILES["profile_image"]["name"]);
@@ -40,7 +40,7 @@ class AdminHospitalsController {
                 echo '<td>' . htmlspecialchars($hospital['email']) . '</td>';
                 echo '<td>' . htmlspecialchars($hospital['phone']) . '</td>';
                 echo '<td>' . htmlspecialchars($hospital['address']) . '</td>';
-                echo '<td><img src="../assets/uploads/doctors_document/' . htmlspecialchars($hospital['profile_image']) . '" alt="Profile Image" width="50"></td>';
+                echo '<td><img src="../assets/uploads/hospital_documents/' . htmlspecialchars($hospital['profile_image']) . '" alt="Profile Image" width="50"></td>';
                 echo '<td><a href="../controllers/adminHospitalsController.php?action=delete&username=' . urlencode($hospital['username']) . '" class="delete-btn">Delete</a></td>';
                 echo '</tr>';
             }
